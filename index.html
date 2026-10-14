@@ -3,32 +3,35 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PAVLIKneMOROZOFF | AI Sound Lab &amp; Neural Audio Hub</title>
+  <title>PAVLIKneMOROZOFF | Креативный хаб & Студия авторского контента</title>
   
-  <!-- Tailwind CSS & Lucide Icons -->
+  <!-- Tailwind CSS & Google Fonts & Lucide Icons -->
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,800;1,400;1,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <script src="https://unpkg.com/lucide@latest"></script>
 
   <script>
     tailwind.config = {
-      darkMode: 'class',
       theme: {
         extend: {
           colors: {
-            brand: {
-              void: '#04060C',
-              dark: '#080C18',
-              card: 'rgba(15, 23, 42, 0.7)',
-              cyan: '#00F0FF',
-              magenta: '#FF0055',
-              violet: '#8B5CF6'
+            hub: {
+              void: '#090C15',
+              dark: '#0E1322',
+              card: '#141B2D',
+              border: 'rgba(255, 255, 255, 0.08)',
+              accent: '#E2B877',      // Теплое благородное золото / янтарь
+              accentLight: '#F5D8A8',
+              violet: '#7C3AED',
+              emerald: '#10B981',
+              rose: '#F43F5E'
             }
           },
           fontFamily: {
-            title: ['Space Grotesk', 'sans-serif'],
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            serif: ['"Playfair Display"', 'serif'],
             mono: ['"JetBrains Mono"', 'monospace'],
           }
         }
@@ -37,318 +40,426 @@
   </script>
 
   <style>
-    .neon-text-gradient {
-      background: linear-gradient(135deg, #00F0FF 0%, #8B5CF6 50%, #FF0055 100%);
+    .gold-gradient-text {
+      background: linear-gradient(135deg, #FFF0D4 0%, #E2B877 50%, #9E7432 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
-    .player-glass {
-      background: rgba(10, 16, 32, 0.85);
-      backdrop-filter: blur(20px);
-      border: 1px solid rgba(0, 240, 255, 0.25);
-      box-shadow: 0 0 35px rgba(0, 240, 255, 0.15);
+    .art-card {
+      background: linear-gradient(180deg, rgba(20, 27, 45, 0.8) 0%, rgba(14, 19, 34, 0.95) 100%);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      backdrop-filter: blur(16px);
+      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
     }
-    /* Анимированные полоски спектра */
-    .bar-anim {
-      animation: pulseBar 1.2s ease-in-out infinite alternate;
-    }
-    @keyframes pulseBar {
-      0% { height: 15%; }
-      100% { height: 95%; }
+    .art-card:hover {
+      border-color: rgba(226, 184, 119, 0.4);
+      transform: translateY(-4px);
+      box-shadow: 0 16px 40px -10px rgba(0, 0, 0, 0.6);
     }
   </style>
 </head>
-<body class="bg-brand-void text-slate-100 font-sans antialiased selection:bg-brand-cyan selection:text-black relative min-h-screen pb-32">
+<body class="bg-hub-void text-slate-200 font-sans antialiased selection:bg-hub-accent selection:text-black relative">
 
-  <!-- СВЕТОВЫЕ НЕОНОВЫЕ ПЯТНА -->
-  <div class="fixed top-1/4 -left-40 w-96 h-96 bg-brand-cyan/15 rounded-full blur-[140px] pointer-events-none"></div>
-  <div class="fixed bottom-1/4 -right-40 w-96 h-96 bg-brand-magenta/15 rounded-full blur-[140px] pointer-events-none"></div>
-
-  <!-- ШАПКА МАСТЕР-БРЕНДА -->
-  <header class="sticky top-0 z-40 bg-brand-void/90 backdrop-blur-xl border-b border-white/10 px-4 py-4">
-    <div class="max-w-7xl mx-auto flex justify-between items-center">
-      <div class="flex items-center gap-3">
-        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-brand-cyan via-brand-violet to-brand-magenta p-0.5">
-          <div class="w-full h-full bg-brand-void rounded-[10px] flex items-center justify-center">
-            <i data-lucide="disc" class="w-5 h-5 text-brand-cyan animate-spin" style="animation-duration: 8s;"></i>
-          </div>
+  <!-- ВЕРХНЯЯ НАВИГАЦИОННАЯ ПАНЕЛЬ -->
+  <header class="sticky top-0 z-50 bg-hub-void/90 backdrop-blur-xl border-b border-white/10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
+      
+      <!-- Бренд-логотип -->
+      <a href="index.html" class="flex items-center gap-3 group">
+        <div class="w-10 h-10 rounded-xl bg-hub-card border border-hub-accent/40 flex items-center justify-center group-hover:border-hub-accent transition">
+          <i data-lucide="palette" class="w-5 h-5 text-hub-accent"></i>
         </div>
         <div>
-          <span class="block font-title text-xl font-extrabold tracking-wider text-white">PAVLIKneMOROZOFF</span>
-          <span class="block text-[9px] font-mono tracking-widest text-brand-cyan uppercase">AI Music Lab &amp; Sound Design</span>
+          <span class="block font-serif text-lg sm:text-xl font-bold tracking-wide text-white">PAVLIKneMOROZOFF</span>
+          <span class="block text-[9px] font-mono tracking-widest text-slate-400 uppercase">Creative Media Hub & Studio</span>
         </div>
-      </div>
-
-      <a href="https://t.me/your_bot" target="_blank" class="hidden sm:inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-cyan-500/10 border border-brand-cyan/40 text-brand-cyan hover:bg-brand-cyan hover:text-black transition font-mono text-xs font-bold">
-        <i data-lucide="bot" class="w-4 h-4"></i>
-        <span>Telegram VIP Club</span>
       </a>
-    </div>
-  </header>
 
-  <!-- ГЛАВНАЯ СЕКЦИЯ -->
-  <main class="max-w-6xl mx-auto px-4 pt-12">
-    
-    <!-- Заголовок и оффер -->
-    <div class="text-center max-w-3xl mx-auto mb-12">
-      <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-brand-cyan/30 bg-brand-cyan/10 text-brand-cyan text-xs font-mono mb-4">
-        <span class="w-2 h-2 rounded-full bg-brand-cyan animate-ping"></span>
-        <span>Нейросетевая музыка нового поколения</span>
-      </div>
-      <h1 class="text-4xl sm:text-6xl font-extrabold font-title tracking-tight mb-4">
-        Слушай. Вдохновляйся. <br>
-        <span class="neon-text-gradient">Используй в Своих Проектах</span>
-      </h1>
-      <p class="text-slate-400 text-sm sm:text-base">
-        Эксклюзивные генеративные треки без копирайта YouTube и страйков. Стриминг — бесплатно, коммерческая лицензия и WAV-оригиналы — в Telegram-боте.
-      </p>
-    </div>
-
-    <!-- СПИСОК ТРЕКОВ И КАТАЛОГ -->
-    <div class="grid lg:grid-cols-12 gap-8 items-start">
-      
-      <!-- Плейлист (8 колонок) -->
-      <div class="lg:col-span-8 space-y-3" id="playlist-container">
-        <!-- Треки будут отрисованы скриптом -->
-      </div>
-
-      <!-- Боковая панель монетизации (4 колонки) -->
-      <div class="lg:col-span-4 space-y-5">
-        <!-- Блок Telegram бота -->
-        <div class="p-6 rounded-3xl player-glass border-brand-cyan/30">
-          <div class="flex items-center gap-3 mb-4">
-            <div class="p-2.5 rounded-xl bg-brand-cyan/10 text-brand-cyan border border-brand-cyan/30">
-              <i data-lucide="sparkles" class="w-5 h-5"></i>
-            </div>
-            <div>
-              <h3 class="font-title font-bold text-base text-white">VIP Доступ &amp; Лицензии</h3>
-              <p class="text-slate-400 text-xs">Через официального Telegram-бота</p>
-            </div>
-          </div>
-          <ul class="space-y-2.5 text-xs text-slate-300 mb-6 font-mono">
-            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-brand-cyan"></i> Скачивание без потери качества (WAV 24-bit)</li>
-            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-brand-cyan"></i> Коммерческие права для YouTube / Reels</li>
-            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-brand-cyan"></i> Доступ к закрытой библиотеке треков</li>
-          </ul>
-          <button class="w-full py-3.5 rounded-xl font-mono text-xs uppercase font-bold tracking-wider text-black bg-gradient-to-r from-brand-cyan to-brand-violet shadow-lg shadow-cyan-500/20 hover:scale-105 transition">
-            Подключить Telegram Бот
+      <!-- Меню разделов (Сразу все категории) -->
+      <nav class="hidden lg:flex items-center gap-8 text-xs font-semibold uppercase tracking-wider text-slate-300 font-mono">
+        <!-- 1. Слушать и смотреть -->
+        <div class="relative group">
+          <button class="flex items-center gap-1 hover:text-hub-accent transition py-2">
+            Смотреть &amp; Слушать <i data-lucide="chevron-down" class="w-3.5 h-3.5"></i>
           </button>
-        </div>
-
-        <!-- Мини-плашка студии -->
-        <div class="p-5 rounded-2xl bg-white/[0.02] border border-white/5 text-xs text-slate-400 font-mono">
-          <div class="flex items-center gap-2 text-white font-bold mb-1">
-            <i data-lucide="cpu" class="w-4 h-4 text-brand-violet"></i>
-            <span>Кастомный ИИ-саундтрек</span>
-          </div>
-          <p class="text-[11px] leading-relaxed">Нужен уникальный трек под бренд, игру или рекламу? Напишите автору напрямую.</p>
-        </div>
-      </div>
-
-    </div>
-  </main>
-
-  <!-- ПЛАВАЮЩИЙ НИЖНИЙ ПЛЕЕР (STICKY BOTTOM PLAYER) -->
-  <div class="fixed bottom-0 left-0 right-0 z-50 player-glass border-t border-cyan-500/30 p-4">
-    <div class="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
-      
-      <!-- Инфо о текущем треке -->
-      <div class="flex items-center gap-3.5 w-full sm:w-1/3">
-        <div class="relative w-12 h-12 rounded-xl bg-slate-900 border border-brand-cyan/40 overflow-hidden shrink-0 flex items-center justify-center">
-          <img id="current-cover" src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=150" class="w-full h-full object-cover">
-          <!-- Анимированный эквалайзер на обложке -->
-          <div id="cover-bars" class="absolute inset-0 bg-black/60 flex items-center justify-center gap-0.5 opacity-0 transition-opacity">
-            <div class="w-1 bg-brand-cyan rounded-full bar-anim h-3"></div>
-            <div class="w-1 bg-brand-violet rounded-full bar-anim h-5" style="animation-delay: 0.2s;"></div>
-            <div class="w-1 bg-brand-magenta rounded-full bar-anim h-4" style="animation-delay: 0.4s;"></div>
+          <div class="absolute top-full left-0 hidden group-hover:block w-48 py-2 bg-hub-card border border-white/10 rounded-xl shadow-2xl backdrop-blur-xl">
+            <a href="media/music.html" class="block px-4 py-2 hover:bg-white/5 hover:text-hub-accent transition">Музыка</a>
+            <a href="media/songs.html" class="block px-4 py-2 hover:bg-white/5 hover:text-hub-accent transition">Песни</a>
+            <a href="media/clips.html" class="block px-4 py-2 hover:bg-white/5 hover:text-hub-accent transition">Клипы</a>
           </div>
         </div>
-        <div class="overflow-hidden">
-          <h4 id="current-title" class="font-bold text-sm text-white truncate">Выберите трек для воспроизведения</h4>
-          <p id="current-genre" class="text-[11px] font-mono text-brand-cyan truncate">AI Neural Architecture</p>
-        </div>
-      </div>
 
-      <!-- Кнопки управления и таймлайн -->
-      <div class="flex flex-col items-center gap-1.5 w-full sm:w-1/3">
-        <div class="flex items-center gap-4">
-          <button onclick="prevTrack()" class="text-slate-400 hover:text-white transition"><i data-lucide="skip-back" class="w-4 h-4"></i></button>
-          <button id="play-btn" onclick="togglePlay()" class="w-10 h-10 rounded-full bg-brand-cyan text-black flex items-center justify-center hover:scale-105 transition shadow-lg shadow-cyan-500/30">
-            <i data-lucide="play" class="w-5 h-5 fill-current ml-0.5"></i>
+        <!-- 2. Заказы -->
+        <div class="relative group">
+          <button class="flex items-center gap-1 hover:text-hub-accent transition py-2">
+            Творчество на заказ <i data-lucide="chevron-down" class="w-3.5 h-3.5"></i>
           </button>
-          <button onclick="nextTrack()" class="text-slate-400 hover:text-white transition"><i data-lucide="skip-forward" class="w-4 h-4"></i></button>
+          <div class="absolute top-full left-0 hidden group-hover:block w-52 py-2 bg-hub-card border border-white/10 rounded-xl shadow-2xl backdrop-blur-xl">
+            <a href="orders/poems.html" class="block px-4 py-2 hover:bg-white/5 hover:text-hub-accent transition">Стихи &amp; Поэзия</a>
+            <a href="orders/lyrics.html" class="block px-4 py-2 hover:bg-white/5 hover:text-hub-accent transition">Тексты песен</a>
+            <a href="orders/songs.html" class="block px-4 py-2 hover:bg-white/5 hover:text-hub-accent transition">Песни под ключ</a>
+            <a href="orders/clips.html" class="block px-4 py-2 hover:bg-white/5 hover:text-hub-accent transition">Съемка &amp; Арт-клипы</a>
+          </div>
         </div>
-        <div class="w-full flex items-center gap-2 font-mono text-[10px] text-slate-400">
-          <span id="curr-time">0:00</span>
-          <input id="seek-bar" type="range" min="0" max="100" value="0" class="w-full accent-cyan-400 cursor-pointer h-1 bg-slate-800 rounded">
-          <span id="dur-time">0:00</span>
-        </div>
-      </div>
 
-      <!-- Громкость и скачивание -->
-      <div class="hidden sm:flex items-center justify-end gap-3 w-1/3 font-mono">
-        <i data-lucide="volume-2" class="w-4 h-4 text-slate-400"></i>
-        <input id="vol-slider" type="range" min="0" max="1" step="0.05" value="0.8" class="w-20 accent-cyan-400 cursor-pointer h-1 bg-slate-800 rounded">
-        <button onclick="requestDownload()" class="ml-2 px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 hover:border-brand-cyan text-xs text-brand-cyan transition flex items-center gap-1">
-          <i data-lucide="download" class="w-3.5 h-3.5"></i>
-          <span>WAV</span>
+        <!-- 3. Детское направление -->
+        <div class="relative group">
+          <button class="flex items-center gap-1 hover:text-hub-accent transition py-2 text-hub-accent">
+            Детское направление <i data-lucide="chevron-down" class="w-3.5 h-3.5"></i>
+          </button>
+          <div class="absolute top-full left-0 hidden group-hover:block w-64 py-2 bg-hub-card border border-white/10 rounded-xl shadow-2xl backdrop-blur-xl">
+            <a href="kids/stationery.html" class="block px-4 py-2 hover:bg-white/5 hover:text-hub-accent transition">Именная полиграфия</a>
+            <a href="kids/books.html" class="block px-4 py-2 hover:bg-white/5 hover:text-hub-accent transition">Персональные арт-книги</a>
+            <a href="kids/animation.html" class="block px-4 py-2 hover:bg-white/5 hover:text-hub-accent transition">Персональные мультфильмы</a>
+          </div>
+        </div>
+      </nav>
+
+      <!-- Быстрый заказ / Связь -->
+      <div class="flex items-center gap-3">
+        <a href="#contact" class="hidden sm:inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-hub-accent/10 border border-hub-accent/40 text-hub-accent hover:bg-hub-accent hover:text-black transition font-mono text-xs font-bold">
+          <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
+          <span>Заказать проект</span>
+        </a>
+        <button id="mobile-nav-toggle" class="lg:hidden p-2 text-slate-300 hover:text-white" aria-label="Меню">
+          <i data-lucide="menu" class="w-6 h-6"></i>
         </button>
       </div>
 
     </div>
-  </div>
 
-  <!-- СКРЫТЫЙ HTML5 АУДИОТЕГ -->
-  <audio id="audio-engine" preload="metadata"></audio>
+    <!-- Мобильное выпадающее меню -->
+    <div id="mobile-menu" class="hidden lg:hidden bg-hub-dark border-b border-white/10 px-6 py-5 space-y-4 font-mono text-xs uppercase">
+      <div>
+        <div class="text-hub-accent font-bold mb-2">1. Слушать и смотреть</div>
+        <div class="pl-3 space-y-2 text-slate-300">
+          <a href="media/music.html" class="block">Музыка</a>
+          <a href="media/songs.html" class="block">Песни</a>
+          <a href="media/clips.html" class="block">Клипы</a>
+        </div>
+      </div>
+      <div>
+        <div class="text-hub-accent font-bold mb-2">2. Творчество на заказ</div>
+        <div class="pl-3 space-y-2 text-slate-300">
+          <a href="orders/poems.html" class="block">Стихи</a>
+          <a href="orders/lyrics.html" class="block">Тексты песен</a>
+          <a href="orders/songs.html" class="block">Песни под ключ</a>
+          <a href="orders/clips.html" class="block">Клипы</a>
+        </div>
+      </div>
+      <div>
+        <div class="text-hub-accent font-bold mb-2">3. Детское направление</div>
+        <div class="pl-3 space-y-2 text-slate-300">
+          <a href="kids/stationery.html" class="block">Именная полиграфия</a>
+          <a href="kids/books.html" class="block">Персональные книги</a>
+          <a href="kids/animation.html" class="block">Персональные мультфильмы</a>
+        </div>
+      </div>
+      <a href="#contact" class="block text-center py-3 bg-hub-accent text-black font-bold rounded-xl mt-4">
+        Обсудить заказ
+      </a>
+    </div>
+  </header>
 
-  <!-- ПОДВАЛ БРЕНДА -->
-  <footer class="mt-20 border-t border-white/10 pt-8 pb-12 text-center text-xs text-slate-500 font-mono">
-    <p>© 2026 PAVLIKneMOROZOFF. All rights reserved.</p>
-    <p class="text-[10px] text-slate-600 mt-1">Разработано IT Life / a PAVLIKneMOROZOFF company</p>
+  <!-- 1. HERO SECTION: МУЛЬТИДИСЦИПЛИНАРНЫЙ АРТ-ХАБ -->
+  <section class="relative pt-16 sm:pt-24 pb-16 px-4 overflow-hidden">
+    <div class="max-w-5xl mx-auto text-center relative z-10">
+      
+      <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-hub-accent/30 bg-hub-accent/10 text-hub-accentLight text-xs font-mono mb-6">
+        <i data-lucide="orbit" class="w-3.5 h-3.5 text-hub-accent animate-spin" style="animation-duration: 12s;"></i>
+        <span>Зонтичный бренд &amp; Продюсерская лаборатория</span>
+      </div>
+
+      <h1 class="text-4xl sm:text-6xl md:text-7xl font-serif font-extrabold text-white leading-tight mb-6">
+        Где Звук, Слово и Визуал <br>
+        <span class="gold-gradient-text italic font-normal">Становятся Искусством</span>
+      </h1>
+
+      <p class="max-w-3xl mx-auto text-slate-400 text-sm sm:text-lg font-light leading-relaxed mb-10">
+        Единое творческое пространство бренда <strong class="text-white font-semibold">PAVLIKneMOROZOFF</strong>. Авторские релизы, саундтреки, поэзия, сонграйтинг, видеоклипы и оживающие детские сказочные миры.
+      </p>
+
+      <!-- Быстрый выбор вектора -->
+      <div class="flex flex-wrap items-center justify-center gap-3 text-xs font-mono">
+        <a href="#media-cluster" class="px-5 py-3 rounded-xl bg-hub-card border border-white/10 hover:border-hub-accent text-white flex items-center gap-2 transition">
+          <i data-lucide="headphones" class="w-4 h-4 text-hub-accent"></i> Слушать медиа
+        </a>
+        <a href="#orders-cluster" class="px-5 py-3 rounded-xl bg-hub-card border border-white/10 hover:border-hub-accent text-white flex items-center gap-2 transition">
+          <i data-lucide="pen-tool" class="w-4 h-4 text-hub-accent"></i> Заказ творчества
+        </a>
+        <a href="#kids-cluster" class="px-5 py-3 rounded-xl bg-hub-card border border-white/10 hover:border-hub-accent text-white flex items-center gap-2 transition">
+          <i data-lucide="sparkles" class="w-4 h-4 text-hub-accent"></i> Детская студия
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 2. КЛАСТЕР I: СЛУШАТЬ И СМОТРЕТЬ (МЕДИАТЕКА) -->
+  <section id="media-cluster" class="py-16 px-4 border-t border-white/5 bg-hub-dark/40">
+    <div class="max-w-7xl mx-auto">
+      
+      <div class="flex flex-col md:flex-row md:items-end justify-between mb-10">
+        <div>
+          <span class="text-hub-accent text-xs font-mono uppercase tracking-widest">Кластер 01</span>
+          <h2 class="text-3xl sm:text-4xl font-serif font-bold text-white mt-1">Слушать &amp; Смотреть</h2>
+          <p class="text-slate-400 text-xs sm:text-sm mt-1">Официальные релизы, звуковые ландшафты и видео-вижуалы</p>
+        </div>
+        <span class="text-xs font-mono text-slate-500 mt-2 md:mt-0">Стриминг открыт без ограничений</span>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-6">
+        
+        <!-- 1.1 Музыка -->
+        <a href="media/music.html" class="art-card rounded-3xl p-6 flex flex-col justify-between group">
+          <div>
+            <div class="w-12 h-12 rounded-2xl bg-hub-void border border-white/10 flex items-center justify-center text-hub-accent mb-6 group-hover:scale-110 transition">
+              <i data-lucide="disc" class="w-6 h-6"></i>
+            </div>
+            <span class="text-[10px] font-mono uppercase tracking-wider text-slate-400 block mb-1">Инструментал &amp; AI Sound</span>
+            <h3 class="text-2xl font-serif font-bold text-white mb-2 group-hover:text-hub-accent transition">Музыка</h3>
+            <p class="text-slate-400 text-xs leading-relaxed">
+              Кинематографичные саундтреки, эмбиент, электронные концепты и нейросетевые партитуры для проектов и вдохновения.
+            </p>
+          </div>
+          <div class="mt-8 pt-4 border-t border-white/5 flex items-center justify-between text-xs font-mono text-hub-accent">
+            <span>В плеер треков</span>
+            <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition"></i>
+          </div>
+        </a>
+
+        <!-- 1.2 Песни -->
+        <a href="media/songs.html" class="art-card rounded-3xl p-6 flex flex-col justify-between group">
+          <div>
+            <div class="w-12 h-12 rounded-2xl bg-hub-void border border-white/10 flex items-center justify-center text-hub-accent mb-6 group-hover:scale-110 transition">
+              <i data-lucide="mic" class="w-6 h-6"></i>
+            </div>
+            <span class="text-[10px] font-mono uppercase tracking-wider text-slate-400 block mb-1">Вокальные релизы</span>
+            <h3 class="text-2xl font-serif font-bold text-white mb-2 group-hover:text-hub-accent transition">Песни</h3>
+            <p class="text-slate-400 text-xs leading-relaxed">
+              Законченные вокальные синглы, треки со смыслом, стилистические эксперименты от поп-лирики до концептуального рока.
+            </p>
+          </div>
+          <div class="mt-8 pt-4 border-t border-white/5 flex items-center justify-between text-xs font-mono text-hub-accent">
+            <span>Слушать синглы</span>
+            <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition"></i>
+          </div>
+        </a>
+
+        <!-- 1.3 Клипы -->
+        <a href="media/clips.html" class="art-card rounded-3xl p-6 flex flex-col justify-between group">
+          <div>
+            <div class="w-12 h-12 rounded-2xl bg-hub-void border border-white/10 flex items-center justify-center text-hub-accent mb-6 group-hover:scale-110 transition">
+              <i data-lucide="film" class="w-6 h-6"></i>
+            </div>
+            <span class="text-[10px] font-mono uppercase tracking-wider text-slate-400 block mb-1">Видео-арт &amp; Режиссура</span>
+            <h3 class="text-2xl font-serif font-bold text-white mb-2 group-hover:text-hub-accent transition">Клипы</h3>
+            <p class="text-slate-400 text-xs leading-relaxed">
+              Атмосферные экранизации, музыкальные клипы, футуристические видеовижуалы и генеративный видео-арт.
+            </p>
+          </div>
+          <div class="mt-8 pt-4 border-t border-white/5 flex items-center justify-between text-xs font-mono text-hub-accent">
+            <span>Смотреть видео</span>
+            <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition"></i>
+          </div>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. КЛАСТЕР II: ТВОРЧЕСТВО НА ЗАКАЗ (ПРОДЮСИРОВАНИЕ) -->
+  <section id="orders-cluster" class="py-16 px-4 border-t border-white/5">
+    <div class="max-w-7xl mx-auto">
+      
+      <div class="flex flex-col md:flex-row md:items-end justify-between mb-10">
+        <div>
+          <span class="text-hub-accent text-xs font-mono uppercase tracking-widest">Кластер 02</span>
+          <h2 class="text-3xl sm:text-4xl font-serif font-bold text-white mt-1">Творчество на Заказ</h2>
+          <p class="text-slate-400 text-xs sm:text-sm mt-1">Индивидуальное создание контента для личных событий, брендов и исполнителей</p>
+        </div>
+        <a href="#contact" class="text-xs font-mono text-hub-accent hover:underline mt-2 md:mt-0 flex items-center gap-1">
+          Заполнить творческий бриф <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+        </a>
+      </div>
+
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        
+        <!-- 2.1 Стихи -->
+        <a href="orders/poems.html" class="art-card rounded-2xl p-5 flex flex-col justify-between group">
+          <div>
+            <div class="text-hub-accent mb-4"><i data-lucide="feather" class="w-6 h-6"></i></div>
+            <h4 class="font-serif font-bold text-lg text-white mb-2 group-hover:text-hub-accent transition">Стихи &amp; Поэмы</h4>
+            <p class="text-slate-400 text-xs leading-relaxed">
+              Поэзия к важным датам, признания, поздравления и глубокие авторские поэмы с точным попаданием в характер адресата.
+            </p>
+          </div>
+          <span class="text-[11px] font-mono text-hub-accent mt-6 block">Узнать детали →</span>
+        </a>
+
+        <!-- 2.2 Тексты песен -->
+        <a href="orders/lyrics.html" class="art-card rounded-2xl p-5 flex flex-col justify-between group">
+          <div>
+            <div class="text-hub-accent mb-4"><i data-lucide="file-text" class="w-6 h-6"></i></div>
+            <h4 class="font-serif font-bold text-lg text-white mb-2 group-hover:text-hub-accent transition">Тексты песен</h4>
+            <p class="text-slate-400 text-xs leading-relaxed">
+              Профессиональный сонграйтинг под заданный ритм, мелодию или жанр: хуки, припевы, рифмы, драматургия трека.
+            </p>
+          </div>
+          <span class="text-[11px] font-mono text-hub-accent mt-6 block">Узнать детали →</span>
+        </a>
+
+        <!-- 2.3 Песни под ключ -->
+        <a href="orders/songs.html" class="art-card rounded-2xl p-5 flex flex-col justify-between group border-hub-accent/30">
+          <div>
+            <div class="text-hub-accent mb-4"><i data-lucide="music-2" class="w-6 h-6"></i></div>
+            <h4 class="font-serif font-bold text-lg text-white mb-2 group-hover:text-hub-accent transition">Песни под ключ</h4>
+            <p class="text-slate-400 text-xs leading-relaxed">
+              Полный цикл: от написания стихов и аранжировки до вокальной записи, сведения и готового аудио-мастера.
+            </p>
+          </div>
+          <span class="text-[11px] font-mono text-hub-accent mt-6 block">Узнать детали →</span>
+        </a>
+
+        <!-- 2.4 Клипы -->
+        <a href="orders/clips.html" class="art-card rounded-2xl p-5 flex flex-col justify-between group">
+          <div>
+            <div class="text-hub-accent mb-4"><i data-lucide="video" class="w-6 h-6"></i></div>
+            <h4 class="font-serif font-bold text-lg text-white mb-2 group-hover:text-hub-accent transition">Создание клипов</h4>
+            <p class="text-slate-400 text-xs leading-relaxed">
+              Разработка сценария, генерация вижуалов, видеомонтаж и постпродакшн для вашего аудиорелиза или поздравления.
+            </p>
+          </div>
+          <span class="text-[11px] font-mono text-hub-accent mt-6 block">Узнать детали →</span>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. КЛАСТЕР III: ДЕТСКОЕ НАПРАВЛЕНИЕ (ПЕРСОНАЛЬНЫЕ МИРЫ) -->
+  <section id="kids-cluster" class="py-16 px-4 border-t border-white/5 bg-gradient-to-b from-hub-void via-hub-dark/50 to-hub-void">
+    <div class="max-w-7xl mx-auto">
+      
+      <div class="text-center max-w-3xl mx-auto mb-12">
+        <span class="text-hub-accent text-xs font-mono uppercase tracking-widest">Кластер 03</span>
+        <h2 class="text-3xl sm:text-5xl font-serif font-bold text-white mt-1 mb-3">Детская Студия</h2>
+        <p class="text-slate-400 text-xs sm:text-base">
+          Создаем персонализированные произведения, где главным героем становится ваш ребёнок. Подарок, который сохраняют на всю жизнь.
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-6">
+        
+        <!-- 3.1 Именная полиграфия -->
+        <div class="art-card rounded-3xl p-7 flex flex-col justify-between relative overflow-hidden group">
+          <div>
+            <div class="w-12 h-12 rounded-2xl bg-hub-void border border-white/10 flex items-center justify-center text-hub-accent mb-5">
+              <i data-lucide="book-marked" class="w-6 h-6"></i>
+            </div>
+            <span class="text-[10px] font-mono uppercase text-slate-400 block mb-1">Подарки &amp; Развитие</span>
+            <h3 class="text-2xl font-serif font-bold text-white mb-3">Именная полиграфия</h3>
+            <p class="text-slate-400 text-xs leading-relaxed mb-6">
+              Дизайнерские детские блокноты, развивающие планеры, календари с фотографиями ребёнка, мотивирующими подписями и персональным стилем.
+            </p>
+          </div>
+          <a href="kids/stationery.html" class="inline-flex items-center gap-2 text-xs font-mono font-bold text-hub-accent hover:text-white transition">
+            Подробнее о полиграфии <i data-lucide="arrow-right" class="w-4 h-4"></i>
+          </a>
+        </div>
+
+        <!-- 3.2 Персональные арт-книги -->
+        <div class="art-card rounded-3xl p-7 flex flex-col justify-between relative overflow-hidden group border-hub-accent/40 shadow-xl shadow-hub-accent/5">
+          <div class="absolute top-4 right-4 px-3 py-1 rounded-full bg-hub-accent text-black font-mono text-[9px] font-bold uppercase">
+            Топ-выбор
+          </div>
+          <div>
+            <div class="w-12 h-12 rounded-2xl bg-hub-void border border-white/10 flex items-center justify-center text-hub-accent mb-5">
+              <i data-lucide="book-open" class="w-6 h-6"></i>
+            </div>
+            <span class="text-[10px] font-mono uppercase text-slate-400 block mb-1">Авторские сказки</span>
+            <h3 class="text-2xl font-serif font-bold text-white mb-3">Именные арт-книги</h3>
+            <p class="text-slate-400 text-xs leading-relaxed mb-6">
+              Индивидуальная книга, написанная и проиллюстрированная специально для ребёнка. Он — главный персонаж захватывающей доброй сказки.
+            </p>
+          </div>
+          <a href="kids/books.html" class="inline-flex items-center gap-2 text-xs font-mono font-bold text-hub-accent hover:text-white transition">
+            Создать книгу с историей <i data-lucide="arrow-right" class="w-4 h-4"></i>
+          </a>
+        </div>
+
+        <!-- 3.3 Персональные мультфильмы -->
+        <div class="art-card rounded-3xl p-7 flex flex-col justify-between relative overflow-hidden group">
+          <div>
+            <div class="w-12 h-12 rounded-2xl bg-hub-void border border-white/10 flex items-center justify-center text-hub-accent mb-5">
+              <i data-lucide="clapperboard" class="w-6 h-6"></i>
+            </div>
+            <span class="text-[10px] font-mono uppercase text-slate-400 block mb-1">Анимация &amp; Магия</span>
+            <h3 class="text-2xl font-serif font-bold text-white mb-3">Персональный мультфильм</h3>
+            <p class="text-slate-400 text-xs leading-relaxed mb-6">
+              Создание короткометражного мультфильма с анимационным персонажем, повторяющим внешность и увлечения ребёнка, с дубляжем и саундтреком.
+            </p>
+          </div>
+          <a href="kids/animation.html" class="inline-flex items-center gap-2 text-xs font-mono font-bold text-hub-accent hover:text-white transition">
+            Заказать мультфильм <i data-lucide="arrow-right" class="w-4 h-4"></i>
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. КОНТАКТНЫЙ БЛОК И ЗАЯВКА -->
+  <section id="contact" class="py-16 px-4 border-t border-white/10 relative">
+    <div class="max-w-3xl mx-auto bg-hub-card border border-white/10 rounded-3xl p-6 sm:p-10 text-center">
+      <div class="w-14 h-14 mx-auto rounded-2xl bg-hub-accent/10 border border-hub-accent/30 flex items-center justify-center text-hub-accent mb-4">
+        <i data-lucide="send" class="w-6 h-6"></i>
+      </div>
+      <h2 class="text-2xl sm:text-3xl font-serif font-bold text-white mb-2">Обсудить ваш проект</h2>
+      <p class="text-slate-400 text-xs sm:text-sm max-w-lg mx-auto mb-8">
+        Расскажите о вашей задаче: песня под ключ, стихи, клип или сказка для ребёнка. Мы рассчитаем сроки и сценарий реализации.
+      </p>
+
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+        <a href="https://t.me/your_bot" target="_blank" class="w-full sm:w-auto px-6 py-3.5 rounded-xl font-mono text-xs uppercase font-bold tracking-wider bg-hub-accent text-black hover:bg-hub-accentLight transition flex items-center justify-center gap-2 shadow-lg shadow-hub-accent/20">
+          <i data-lucide="message-square" class="w-4 h-4"></i> Написать в Telegram
+        </a>
+        <a href="mailto:contact@pavliknemorozoff.art" class="w-full sm:w-auto px-6 py-3.5 rounded-xl font-mono text-xs uppercase font-semibold border border-white/10 hover:border-hub-accent text-white transition flex items-center justify-center gap-2">
+          <i data-lucide="mail" class="w-4 h-4"></i> Отправить email
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ПОДВАЛ (СВЯЗКА МАСТЕР-БРЕНДА И IT LIFE) -->
+  <footer class="border-t border-white/10 bg-black/80 py-10 px-4 text-xs font-mono text-slate-500">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-left">
+      <div>
+        <span class="font-serif text-base font-bold text-white block">PAVLIKneMOROZOFF</span>
+        <p class="text-[11px] text-slate-400 mt-0.5">Креативно-продюсерский медиа-хаб и студия авторского контента</p>
+        <p class="text-[10px] text-slate-600 mt-2">© 2026 PAVLIKneMOROZOFF. Все авторские права защищены.</p>
+      </div>
+
+      <div class="flex items-center gap-3 px-4 py-2 rounded-xl bg-white/[0.03] border border-white/10">
+        <div class="w-2 h-2 rounded-full bg-hub-accent animate-pulse"></div>
+        <div class="text-left leading-tight">
+          <div class="text-slate-400 text-[10px]">Разработано <span class="text-white font-bold">IT Life</span></div>
+          <div class="text-[9px] text-slate-500 uppercase">a <span class="text-hub-accent font-semibold">PAVLIKneMOROZOFF</span> company</div>
+        </div>
+      </div>
+    </div>
   </footer>
 
   <script>
     lucide.createIcons();
 
-    // БАЗА ТРЕКОВ (Здесь будут ваши треки с Google Drive или репозитория)
-    const tracks = [
-      {
-        id: 1,
-        title: "Cyber Awakening (2026 Intro)",
-        genre: "Cyberpunk / Darksynth",
-        duration: "2:45",
-        // Ссылка на аудио (пример потока, сюда можно вставлять прямую ссылку на MP3):
-        url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
-        cover: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=150"
-      },
-      {
-        id: 2,
-        title: "Neural Synapse Pulse",
-        genre: "Ambient Chill / AI Lo-Fi",
-        duration: "3:12",
-        url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3",
-        cover: "https://images.unsplash.com/photo-1518770660439-4636190af475?w=150"
-      },
-      {
-        id: 3,
-        title: "Almaty Skyline Night",
-        genre: "Synthwave / Electronic",
-        duration: "3:30",
-        url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3",
-        cover: "https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?w=150"
-      }
-    ];
-
-    let currentTrackIndex = 0;
-    const audio = document.getElementById('audio-engine');
-    const playBtn = document.getElementById('play-btn');
-    const seekBar = document.getElementById('seek-bar');
-    const volSlider = document.getElementById('vol-slider');
-    const currTimeText = document.getElementById('curr-time');
-    const durTimeText = document.getElementById('dur-time');
-    const coverBars = document.getElementById('cover-bars');
-
-    // Отрисовка списка треков
-    const playlistContainer = document.getElementById('playlist-container');
-    function renderPlaylist() {
-      playlistContainer.innerHTML = tracks.map((t, idx) => `
-        <div onclick="playTrack(${idx})" class="p-3.5 rounded-2xl glass-panel border border-white/5 hover:border-cyan-400/50 flex items-center justify-between cursor-pointer group transition">
-          <div class="flex items-center gap-3.5">
-            <span class="font-mono text-xs text-slate-500 w-4">${idx + 1}</span>
-            <img src="${t.cover}" class="w-10 h-10 rounded-xl object-cover border border-white/10">
-            <div>
-              <h4 class="font-bold text-sm text-white group-hover:text-cyan-400 transition">${t.title}</h4>
-              <span class="text-[11px] font-mono text-slate-400">${t.genre}</span>
-            </div>
-          </div>
-          <div class="flex items-center gap-3 font-mono text-xs text-slate-400">
-            <span>${t.duration}</span>
-            <div class="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-cyan-500 group-hover:text-black transition">
-              <i data-lucide="play" class="w-4 h-4 fill-current"></i>
-            </div>
-          </div>
-        </div>
-      `).join('');
-      lucide.createIcons();
-    }
-    renderPlaylist();
-
-    // Загрузка трека
-    function loadTrack(index) {
-      currentTrackIndex = index;
-      const t = tracks[index];
-      audio.src = t.url;
-      document.getElementById('current-title').textContent = t.title;
-      document.getElementById('current-genre').textContent = t.genre;
-      document.getElementById('current-cover').src = t.cover;
-    }
-
-    function playTrack(index) {
-      loadTrack(index);
-      audio.play();
-      updatePlayIcon(true);
-    }
-
-    function togglePlay() {
-      if (!audio.src) {
-        loadTrack(0);
-      }
-      if (audio.paused) {
-        audio.play();
-        updatePlayIcon(true);
-      } else {
-        audio.pause();
-        updatePlayIcon(false);
-      }
-    }
-
-    function updatePlayIcon(isPlaying) {
-      if (isPlaying) {
-        playBtn.innerHTML = '<i data-lucide="pause" class="w-5 h-5 fill-current"></i>';
-        coverBars.classList.remove('opacity-0');
-      } else {
-        playBtn.innerHTML = '<i data-lucide="play" class="w-5 h-5 fill-current ml-0.5"></i>';
-        coverBars.classList.add('opacity-0');
-      }
-      lucide.createIcons();
-    }
-
-    function prevTrack() {
-      currentTrackIndex = (currentTrackIndex - 1 + tracks.length) % tracks.length;
-      playTrack(currentTrackIndex);
-    }
-
-    function nextTrack() {
-      currentTrackIndex = (currentTrackIndex + 1) % tracks.length;
-      playTrack(currentTrackIndex);
-    }
-
-    // Синхронизация времени
-    audio.addEventListener('timeupdate', () => {
-      if (audio.duration) {
-        const progress = (audio.currentTime / audio.duration) * 100;
-        seekBar.value = progress;
-        currTimeText.textContent = formatTime(audio.currentTime);
-        durTimeText.textContent = formatTime(audio.duration);
-      }
-    });
-
-    seekBar.addEventListener('input', () => {
-      audio.currentTime = (seekBar.value / 100) * audio.duration;
-    });
-
-    volSlider.addEventListener('input', () => {
-      audio.volume = volSlider.value;
-    });
-
-    function formatTime(sec) {
-      const m = Math.floor(sec / 60);
-      const s = Math.floor(sec % 60);
-      return `${m}:${s < 10 ? '0' : ''}${s}`;
-    }
-
-    function requestDownload() {
-      alert('Для загрузки несжатого WAV-файла без потери качества и получения коммерческой лицензии перейдите в Telegram-бота!');
+    // Мобильная навигация
+    const toggleBtn = document.getElementById('mobile-nav-toggle');
+    const mobileMenu = document.getElementById('mobile-menu');
+    if (toggleBtn && mobileMenu) {
+      toggleBtn.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+      });
     }
   </script>
 </body>
