@@ -12,12 +12,13 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Syne:wght@700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
 
   <style>
     :root {
       --bg: #030509;
       --panel: #070B14;
-      --card: rgba(11, 16, 28, 0.75);
+      --card: rgba(11, 16, 28, 0.78);
       --ink: #F8FAFC;
       --muted: #94A3B8;
       --line: rgba(255, 255, 255, 0.08);
@@ -25,7 +26,7 @@
       --blue: #3B82F6;
       --violet: #8B5CF6;
       --magenta: #FF007A;
-      --gold: #FFB800;
+      --gold: #F59E0B;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -40,9 +41,8 @@
       position: relative;
     }
 
-    /* Фоновые неоновые туманности */
     .glow-cyan {
-      position: fixed; top: -160px; left: -160px; width: 600px; height: 600px;
+      position: fixed; top: -160px; left: -160px; width: 620px; height: 620px;
       background: radial-gradient(circle, rgba(0, 240, 255, 0.12) 0%, transparent 70%);
       pointer-events: none; z-index: 0;
     }
@@ -62,7 +62,7 @@
     /* Шапка */
     header {
       position: sticky; top: 0; z-index: 40;
-      background: rgba(3, 5, 9, 0.88);
+      background: rgba(3, 5, 9, 0.90);
       backdrop-filter: blur(20px);
       border-bottom: 1px solid var(--line);
     }
@@ -86,12 +86,13 @@
     nav a { color: var(--muted); transition: color 0.2s; }
     nav a:hover { color: var(--cyan); }
 
-    .tools { display: flex; gap: 10px; align-items: center; }
+    .tools { display: flex; gap: 12px; align-items: center; position: relative; }
     .langs { display: flex; border: 1px solid var(--line); border-radius: 99px; padding: 2px; }
     .langs button { border: 0; padding: 5px 10px; font-size: 11px; font-weight: 700; font-family: 'JetBrains Mono', monospace; }
     .langs [aria-pressed="true"] { background: var(--cyan); color: #000; border-radius: 99px; }
     
-    /* Кнопка динамика в шапке */
+    /* Контейнер динамика и умная подсказка */
+    .ambient-wrapper { position: relative; display: flex; align-items: center; }
     .ambient-btn {
       width: 38px; height: 38px; display: grid; place-items: center; padding: 0;
       border-radius: 50%; border: 1px solid var(--line); background: rgba(255, 255, 255, 0.04);
@@ -99,8 +100,29 @@
     }
     .ambient-btn.active {
       border-color: var(--cyan); color: var(--cyan);
-      box-shadow: 0 0 16px rgba(0, 240, 255, 0.35);
-      background: rgba(0, 240, 255, 0.08);
+      box-shadow: 0 0 16px rgba(0, 240, 255, 0.4);
+      background: rgba(0, 240, 255, 0.1);
+    }
+    .ambient-btn:hover { border-color: var(--cyan); color: var(--ink); }
+
+    /* Полупрозрачная всплывающая подсказка "Включить атмосферу" */
+    .smart-hint {
+      position: absolute; right: calc(100% + 12px); top: 50%; transform: translateY(-50%);
+      background: rgba(7, 11, 20, 0.85); backdrop-filter: blur(14px);
+      border: 1px solid rgba(0, 240, 255, 0.35); border-radius: 99px;
+      padding: 6px 14px; font-size: 11px; font-family: 'JetBrains Mono', monospace;
+      color: var(--cyan); white-space: nowrap; pointer-events: none;
+      box-shadow: 0 0 20px rgba(0, 240, 255, 0.15);
+      opacity: 0; transform: translateY(-50%) translateX(8px);
+      transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .smart-hint.show {
+      opacity: 1; transform: translateY(-50%) translateX(0);
+    }
+    .smart-hint::after {
+      content: ''; position: absolute; left: 100%; top: 50%; margin-top: -4px;
+      border-width: 4px; border-style: solid;
+      border-color: transparent transparent transparent rgba(0, 240, 255, 0.35);
     }
 
     .icon-btn { width: 38px; height: 38px; display: grid; place-items: center; padding: 0; }
@@ -172,7 +194,12 @@
     .track-name { font-family: 'Syne', sans-serif; font-size: 24px; font-weight: 700; margin: 4px 0; }
     .track-meta { font-size: 12px; font-family: 'JetBrains Mono', monospace; }
     
-    #waves { width: 100%; height: 105px; display: block; margin: 16px 0; border-radius: 14px; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.03); }
+    /* Цифровые волны (Canvas) */
+    #waves {
+      width: 100%; height: 110px; display: block; margin: 16px 0;
+      border-radius: 16px; background: rgba(3, 5, 10, 0.55);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
     .transport { display: flex; gap: 14px; align-items: center; }
     .play {
       width: 48px; height: 48px; border-radius: 50%;
@@ -260,7 +287,7 @@
     #back-to-top.show { opacity: 1; pointer-events: auto; transform: translateY(0); }
     #back-to-top:hover { background: var(--cyan); color: #000; transform: scale(1.1); }
 
-    /* Диалог настроек доступности */
+    /* Доступность */
     dialog {
       width: min(420px, calc(100% - 32px)); background: #070B14; color: var(--ink);
       border: 1px solid var(--line); border-radius: 24px; padding: 28px; margin: auto;
@@ -269,7 +296,6 @@
     dialog label { display: flex; align-items: center; gap: 12px; padding: 12px 0; font-size: 14px; cursor: pointer; }
     dialog .close-btn { float: right; width: 32px; height: 32px; display: grid; place-items: center; }
 
-    /* Адаптивность */
     @media (max-width: 992px) {
       .hero-grid { grid-template-columns: 1fr; }
       .sound { grid-template-columns: 1fr; }
@@ -282,6 +308,7 @@
       nav { display: none; position: absolute; top: 100%; left: 0; right: 0; background: var(--bg); padding: 20px; border-bottom: 1px solid var(--line); flex-direction: column; }
       nav.open { display: flex; }
       .menu-toggle { display: grid; }
+      .smart-hint { display: none; }
     }
   </style>
 </head>
@@ -316,14 +343,17 @@
           <button data-lang="en" aria-pressed="false">EN</button>
         </div>
 
-        <!-- КНОПКА КОЛОНКИ / ДИНАМИКА ДЛЯ ФОНОВОГО ТРЕКА -->
-        <button id="ambient-btn" class="ambient-btn" title="Фоновый саундтрек: Infinite Creative Universe" aria-label="Включить фоновый звук">
-          <svg id="ambient-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
-            <line x1="23" y1="9" x2="17" y2="15"></line>
-            <line x1="17" y1="9" x2="23" y2="15"></line>
-          </svg>
-        </button>
+        <!-- ДИНАМИК С УМНОЙ ПОДСКАЗКОЙ -->
+        <div class="ambient-wrapper">
+          <div id="smart-hint" class="smart-hint">✦ Включить атмосферу</div>
+          <button id="ambient-btn" class="ambient-btn" title="Фоновый саундтрек: Infinite Creative Universe" aria-label="Включить фоновый звук">
+            <svg id="ambient-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+              <line x1="23" y1="9" x2="17" y2="15"></line>
+              <line x1="17" y1="9" x2="23" y2="15"></line>
+            </svg>
+          </button>
+        </div>
 
         <button class="icon-btn" id="access" aria-label="Настройки доступности">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="4" r="2"/><path d="M3 8h18M12 7v7m0-3-5 10m5-10 5 10"/></svg>
@@ -371,7 +401,7 @@
             </div>
           </div>
 
-          <!-- Канвас индивидуальных звуковых волн -->
+          <!-- Канвас индивидуальных цифровых световых волн -->
           <canvas id="waves"></canvas>
 
           <div class="transport">
@@ -572,7 +602,7 @@
 
     let currentLang = 'ru';
 
-    // 4 ТРЕКА И ИХ ИНДИВИДУАЛЬНЫЙ СТИЛЬ ЗВУКОВОЙ ДОРОЖКИ
+    // 4 ТРЕКА И ИХ ИНДИВИДУАЛЬНЫЙ СТИЛЬ ЗВУКОВОЙ ДОРОЖКИ (ПО ВАШЕМУ РЕФЕРЕНСУ 4)
     const tracks = [
       { 
         title: 'Creative Pulse', 
@@ -619,13 +649,25 @@
     const ambientAudio = document.getElementById('ambient-audio');
     const ambientBtn = document.getElementById('ambient-btn');
     const ambientIcon = document.getElementById('ambient-icon');
+    const smartHint = document.getElementById('smart-hint');
     let isAmbientPlaying = false;
 
+    // Автоматический показ деликатной подсказки через 2.5 сек на 5 сек
+    setTimeout(() => {
+      if (!isAmbientPlaying && smartHint) {
+        smartHint.classList.add('show');
+        setTimeout(() => smartHint.classList.remove('show'), 5500);
+      }
+    }, 2500);
+
+    window.addEventListener('scroll', () => {
+      if (smartHint) smartHint.classList.remove('show');
+    }, { once: true });
+
     ambientBtn.addEventListener('click', () => {
+      if (smartHint) smartHint.classList.remove('show');
       if (ambientAudio.paused) {
-        // Если играет основной плеер — мягко его останавливаем
         if (!audio.paused) audio.pause();
-        
         ambientAudio.volume = 0.5;
         ambientAudio.play().then(() => {
           isAmbientPlaying = true;
@@ -635,7 +677,7 @@
             <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
           `;
         }).catch(err => {
-          console.warn('Autoplay prevented or file missing:', err);
+          console.warn('File missing or autoplay blocked:', err);
         });
       } else {
         ambientAudio.pause();
@@ -708,7 +750,8 @@
         const AudioContext = window.AudioContext || window.webkitAudioContext;
         audioCtx = new AudioContext();
         analyser = audioCtx.createAnalyser();
-        analyser.fftSize = 256;
+        analyser.fftSize = 512;
+        analyser.smoothingTimeConstant = 0.85;
         const source = audioCtx.createMediaElementSource(audio);
         source.connect(analyser);
         analyser.connect(audioCtx.destination);
@@ -729,7 +772,6 @@
       renderPlaylist();
 
       if (autoPlay) {
-        // Если играл фоновый трек в шапке — ставим его на паузу
         if (!ambientAudio.paused) {
           ambientAudio.pause();
           ambientBtn.classList.remove('active');
@@ -739,7 +781,6 @@
             <line x1="17" y1="9" x2="23" y2="15"></line>
           `;
         }
-
         initAudioGraph();
         if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
         audio.play().catch(() => {});
@@ -747,7 +788,6 @@
     }
 
     playBtn.addEventListener('click', () => {
-      // При включении основного плеера глушим фоновый эмбиент
       if (!ambientAudio.paused) {
         ambientAudio.pause();
         ambientBtn.classList.remove('active');
@@ -757,7 +797,6 @@
           <line x1="17" y1="9" x2="23" y2="15"></line>
         `;
       }
-
       initAudioGraph();
       if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
       if (audio.paused) {
@@ -797,7 +836,7 @@
       return `${m}:${sec < 10 ? '0' : ''}${sec}`;
     }
 
-    // ИНДИВИДУАЛЬНАЯ ОТРИСОВКА ЗВУКОВОЙ ДОРОЖКИ (ПО 4 ТИПАМ ВОЛН)
+    // НАСТОЯЩИЕ ЦИФРОВЫЕ СВЕТОВЫЕ ВОЛНЫ (DIGITAL RIBBON FLOW)
     const waveCanvas = document.getElementById('waves');
     const wctx = waveCanvas.getContext('2d');
 
@@ -811,91 +850,117 @@
       let energy = 0;
       if (analyser && !audio.paused) {
         analyser.getByteFrequencyData(dataArray);
-        energy = dataArray.reduce((acc, v) => acc + v, 0) / dataArray.length;
+        energy = dataArray.reduce((acc, v) => acc + v, 0) / dataArray.length / 255;
       }
 
-      // ТИП 1: CREATIVE PULSE
+      const time = Date.now() * 0.0025;
+
+      // 1. CREATIVE PULSE — Неоновые переплетающиеся ленты (Cyan / Magenta Glow)
       if (tr.style === 'pulse') {
         const grad = wctx.createLinearGradient(0, 0, w, 0);
         grad.addColorStop(0, '#00F0FF'); grad.addColorStop(0.5, '#8B5CF6'); grad.addColorStop(1, '#FF007A');
+        
+        wctx.shadowColor = '#00F0FF';
+        wctx.shadowBlur = 12;
+
         for (let j = 0; j < 5; j++) {
           wctx.beginPath();
-          for (let x = 0; x <= w; x += 3) {
+          const layerPhase = j * 0.65;
+          for (let x = 0; x <= w; x += 4) {
             const u = x / w;
-            const freq = dataArray ? (dataArray[Math.floor(u * 32)] || 0) / 255 : 0;
-            const amp = !audio.paused ? (12 + freq * 35) : 8;
-            const y = h * 0.5 + Math.sin(u * Math.PI * 4 + Date.now() * 0.003 + j * 0.7) * amp;
+            const envelope = Math.sin(u * Math.PI); // затухание по краям
+            const freqVal = dataArray && !audio.paused ? (dataArray[Math.floor(u * 40)] / 255) : 0.15;
+            const amp = (10 + freqVal * 38) * envelope;
+            const y = h * 0.5 + Math.sin(u * 14 + time + layerPhase) * amp;
             if (x === 0) wctx.moveTo(x, y); else wctx.lineTo(x, y);
           }
           wctx.strokeStyle = grad;
           wctx.globalAlpha = 0.35 + j * 0.15;
-          wctx.lineWidth = 2.0;
+          wctx.lineWidth = 2.2;
           wctx.stroke();
         }
+        wctx.shadowBlur = 0;
       }
-      // ТИП 2: NEURAL STEPPE
+
+      // 2. NEURAL STEPPE — Плавные лазурные и янтарные дюны-волны
       else if (tr.style === 'steppe') {
         for (let j = 0; j < 6; j++) {
           wctx.beginPath();
           const isAmber = j % 2 === 0;
           wctx.strokeStyle = isAmber ? '#F59E0B' : '#00F0FF';
           wctx.shadowColor = isAmber ? '#F59E0B' : '#00F0FF';
-          wctx.shadowBlur = 8;
-          for (let x = 0; x <= w; x += 3) {
+          wctx.shadowBlur = 10;
+          
+          for (let x = 0; x <= w; x += 4) {
             const u = x / w;
-            const freq = dataArray ? (dataArray[Math.floor(u * 28)] || 0) / 255 : 0;
-            const amp = !audio.paused ? (14 + freq * 38) : 9;
-            const y = h * 0.5 + Math.cos(u * Math.PI * 3.5 + Date.now() * 0.0025 + j * 0.9) * amp;
+            const envelope = Math.sin(u * Math.PI);
+            const freqVal = dataArray && !audio.paused ? (dataArray[Math.floor(u * 32)] / 255) : 0.18;
+            const amp = (12 + freqVal * 42) * envelope;
+            const y = h * 0.5 + Math.cos(u * 11 + time * 0.8 + j * 0.8) * amp;
             if (x === 0) wctx.moveTo(x, y); else wctx.lineTo(x, y);
           }
-          wctx.globalAlpha = 0.4 + (j / 10);
-          wctx.lineWidth = 1.8;
+          wctx.globalAlpha = 0.45 + (j / 12);
+          wctx.lineWidth = 2.0;
           wctx.stroke();
           wctx.shadowBlur = 0;
         }
       }
-      // ТИП 3: DIGITAL REBELLION
+
+      // 3. DIGITAL REBELLION — Неоновые высокочастотные интерференционные волны (Magenta / Violet)
       else if (tr.style === 'rebellion') {
-        const barCount = 64;
-        const barWidth = (w / barCount) - 2;
         wctx.shadowColor = '#FF007A';
-        wctx.shadowBlur = 10;
-        for (let i = 0; i < barCount; i++) {
-          const u = i / barCount;
-          const val = dataArray && !audio.paused ? (dataArray[i] / 255) : (Math.sin(u * Math.PI * 6 + Date.now() * 0.004) * 0.25 + 0.3);
-          const barHeight = Math.max(4, val * h * 0.82);
-          const x = i * (barWidth + 2);
-          const y = (h - barHeight) / 2;
-          const barGrad = wctx.createLinearGradient(0, y, 0, y + barHeight);
-          barGrad.addColorStop(0, '#FF007A'); barGrad.addColorStop(1, '#8B5CF6');
-          wctx.fillStyle = barGrad;
-          wctx.fillRect(x, y, barWidth, barHeight);
-        }
-        wctx.shadowBlur = 0;
-      }
-      // ТИП 4: BEYOND THE CODE
-      else if (tr.style === 'space') {
+        wctx.shadowBlur = 14;
+
         const grad = wctx.createLinearGradient(0, 0, w, 0);
-        grad.addColorStop(0, '#1D4ED8'); grad.addColorStop(0.5, '#00F0FF'); grad.addColorStop(1, '#3B82F6');
-        for (let j = 0; j < 3; j++) {
+        grad.addColorStop(0, '#8B5CF6'); grad.addColorStop(0.5, '#FF007A'); grad.addColorStop(1, '#C084FC');
+
+        for (let j = 0; j < 4; j++) {
           wctx.beginPath();
-          for (let x = 0; x <= w; x += 4) {
+          for (let x = 0; x <= w; x += 3) {
             const u = x / w;
-            const freq = dataArray ? (dataArray[Math.floor(u * 16)] || 0) / 255 : 0;
-            const amp = !audio.paused ? (8 + freq * 20) : 5;
-            const y = h * 0.5 + Math.sin(u * Math.PI * 2 + Date.now() * 0.0015 + j * 1.5) * amp * (Math.sin(u * Math.PI));
+            const envelope = Math.sin(u * Math.PI);
+            const freqVal = dataArray && !audio.paused ? (dataArray[Math.floor(u * 50)] / 255) : 0.22;
+            const fastNoise = Math.sin(u * 38 + time * 3 + j) * 4;
+            const amp = (14 + freqVal * 44) * envelope + fastNoise;
+            const y = h * 0.5 + Math.sin(u * 18 + time * 1.5 + j * 1.1) * amp;
             if (x === 0) wctx.moveTo(x, y); else wctx.lineTo(x, y);
           }
           wctx.strokeStyle = grad;
-          wctx.globalAlpha = 0.5 + j * 0.2;
-          wctx.lineWidth = 2.5;
+          wctx.globalAlpha = 0.4 + j * 0.2;
+          wctx.lineWidth = 2.2;
           wctx.stroke();
         }
+        wctx.shadowBlur = 0;
+      }
+
+      // 4. BEYOND THE CODE — Глубокие медленные космические дуги Electric Blue
+      else if (tr.style === 'space') {
+        const grad = wctx.createLinearGradient(0, 0, w, 0);
+        grad.addColorStop(0, '#1E40AF'); grad.addColorStop(0.5, '#00F0FF'); grad.addColorStop(1, '#3B82F6');
+        wctx.shadowColor = '#00F0FF';
+        wctx.shadowBlur = 16;
+
+        for (let j = 0; j < 4; j++) {
+          wctx.beginPath();
+          for (let x = 0; x <= w; x += 4) {
+            const u = x / w;
+            const envelope = Math.sin(u * Math.PI);
+            const freqVal = dataArray && !audio.paused ? (dataArray[Math.floor(u * 20)] / 255) : 0.12;
+            const amp = (10 + freqVal * 30) * envelope;
+            const y = h * 0.5 + Math.sin(u * 8 + time * 0.6 + j * 1.4) * amp;
+            if (x === 0) wctx.moveTo(x, y); else wctx.lineTo(x, y);
+          }
+          wctx.strokeStyle = grad;
+          wctx.globalAlpha = 0.45 + j * 0.18;
+          wctx.lineWidth = 2.6;
+          wctx.stroke();
+        }
+        wctx.shadowBlur = 0;
       }
     }
     drawCustomWave();
 
-    // 3D СЦЕНА THREE.JS
+    // 3D СЦЕНА THREE.JS С ПОДДЕРЖКОЙ GLB И РЕЗЕРВНЫМ ВЫСОКОТОЧНЫМ КРИСТАЛЛОМ
     const container = document.getElementById('scene-container');
     const sceneCanvas = document.getElementById('sculpture');
     const scene = new THREE.Scene();
@@ -905,18 +970,18 @@
     const renderer = new THREE.WebGLRenderer({ canvas: sceneCanvas, alpha: true, antialias: true });
     renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
 
-    const ambLight = new THREE.AmbientLight(0xffffff, 0.9);
+    const ambLight = new THREE.AmbientLight(0xffffff, 0.95);
     scene.add(ambLight);
 
-    const keyCyan = new THREE.PointLight(0x00F0FF, 4.5, 60);
+    const keyCyan = new THREE.PointLight(0x00F0FF, 5.0, 60);
     keyCyan.position.set(6, 6, 8);
     scene.add(keyCyan);
 
-    const keyMagenta = new THREE.PointLight(0xFF007A, 4.5, 60);
+    const keyMagenta = new THREE.PointLight(0xFF007A, 5.0, 60);
     keyMagenta.position.set(-6, -4, 8);
     scene.add(keyMagenta);
 
-    const backGold = new THREE.PointLight(0xFFB800, 3.0, 50);
+    const backGold = new THREE.PointLight(0xFFB800, 3.5, 50);
     backGold.position.set(0, 7, -6);
     scene.add(backGold);
 
@@ -925,35 +990,39 @@
 
     // Хромированный неоновый постамент
     const baseGroup = new THREE.Group();
-    const baseDiskGeo = new THREE.CylinderGeometry(2.3, 2.5, 0.25, 48);
-    const baseDiskMat = new THREE.MeshStandardMaterial({
-      color: 0x0B0F19,
-      metalness: 0.95,
-      roughness: 0.15
-    });
-    const baseDisk = new THREE.Mesh(baseDiskGeo, baseDiskMat);
+    const baseDisk = new THREE.Mesh(
+      new THREE.CylinderGeometry(2.3, 2.5, 0.25, 48),
+      new THREE.MeshStandardMaterial({ color: 0x0B0F19, metalness: 0.95, roughness: 0.15 })
+    );
     baseDisk.position.y = -2.1;
     baseGroup.add(baseDisk);
 
-    const baseRingGeo = new THREE.TorusGeometry(2.35, 0.04, 16, 64);
-    const baseRingMat = new THREE.MeshBasicMaterial({ color: 0x00F0FF });
-    const baseRing = new THREE.Mesh(baseRingGeo, baseRingMat);
+    const baseRing = new THREE.Mesh(
+      new THREE.TorusGeometry(2.35, 0.04, 16, 64),
+      new THREE.MeshBasicMaterial({ color: 0x00F0FF })
+    );
     baseRing.rotation.x = Math.PI / 2;
     baseRing.position.y = -2.0;
     baseGroup.add(baseRing);
-
     masterGroup.add(baseGroup);
 
     const artworkGroup = new THREE.Group();
     masterGroup.add(artworkGroup);
 
+    const gltfLoader = new THREE.GLTFLoader();
+    const glbFiles = ['liquid-chrome.glb', 'quantum-crystal.glb', 'prism-shift.glb'];
+    let currentArtMesh = null;
+    let orbitRing1 = null, orbitRing2 = null;
+    let floatingBubbles = [];
+
+    // Материалы
     const chromeCrystalMat = new THREE.MeshPhysicalMaterial({
       color: 0x00F0FF,
       emissive: 0x040814,
-      metalness: 0.9,
-      roughness: 0.08,
+      metalness: 0.92,
+      roughness: 0.06,
       clearcoat: 1.0,
-      clearcoatRoughness: 0.1,
+      clearcoatRoughness: 0.08,
       flatShading: true
     });
 
@@ -961,114 +1030,36 @@
       color: 0xFF007A,
       wireframe: true,
       transparent: true,
-      opacity: 0.6
+      opacity: 0.65
     });
 
     const orbitMatCyan = new THREE.MeshBasicMaterial({ color: 0x00F0FF, transparent: true, opacity: 0.85 });
     const orbitMatPink = new THREE.MeshBasicMaterial({ color: 0xFF007A, transparent: true, opacity: 0.85 });
     const bubbleMat = new THREE.MeshStandardMaterial({ color: 0xFFFFFF, metalness: 0.95, roughness: 0.05 });
 
-    let currentArtMesh = null;
-    let orbitRing1 = null, orbitRing2 = null;
-    let floatingBubbles = [];
-
-    function buildModel(type) {
+    function loadOrBuildModel(type) {
       while (artworkGroup.children.length > 0) {
         artworkGroup.remove(artworkGroup.children[0]);
       }
       floatingBubbles = [];
 
-      // 1. LIQUID CHROME
-      if (type === 0) {
-        const crystalGeo = new THREE.OctahedronGeometry(1.9, 0);
-        crystalGeo.scale(1, 1.45, 1);
-        currentArtMesh = new THREE.Mesh(crystalGeo, chromeCrystalMat);
-        artworkGroup.add(currentArtMesh);
+      const glbPath = `assets/models/${glbFiles[type]}`;
 
-        const coreGeo = new THREE.IcosahedronGeometry(0.85, 0);
-        const core = new THREE.Mesh(coreGeo, innerCoreMat);
-        currentArtMesh.add(core);
-
-        const ringGeo1 = new THREE.TorusGeometry(2.5, 0.035, 16, 80);
-        orbitRing1 = new THREE.Mesh(ringGeo1, orbitMatCyan);
-        orbitRing1.rotation.x = Math.PI / 2.7;
-        orbitRing1.rotation.y = Math.PI / 7;
-        artworkGroup.add(orbitRing1);
-
-        const ringGeo2 = new THREE.TorusGeometry(2.3, 0.03, 16, 80);
-        orbitRing2 = new THREE.Mesh(ringGeo2, orbitMatPink);
-        orbitRing2.rotation.x = -Math.PI / 2.5;
-        orbitRing2.rotation.z = Math.PI / 4;
-        artworkGroup.add(orbitRing2);
-
-        for (let i = 0; i < 6; i++) {
-          const sphereGeo = new THREE.SphereGeometry(0.16 + (i % 3) * 0.06, 16, 16);
-          const sphere = new THREE.Mesh(sphereGeo, bubbleMat);
-          const angle = (i / 6) * Math.PI * 2;
-          sphere.position.set(Math.cos(angle) * 2.3, (Math.random() - 0.5) * 2.2, Math.sin(angle) * 2.3);
-          artworkGroup.add(sphere);
-          floatingBubbles.push(sphere);
-        }
-      }
-      // 2. QUANTUM CRYSTAL
-      else if (type === 1) {
-        currentArtMesh = new THREE.Group();
-
-        const mainCone = new THREE.ConeGeometry(0.9, 3.2, 5);
-        const mMesh = new THREE.Mesh(mainCone, chromeCrystalMat);
-        mMesh.position.y = 0.2;
-        currentArtMesh.add(mMesh);
-
-        const side1 = new THREE.ConeGeometry(0.65, 2.4, 5);
-        const s1Mesh = new THREE.Mesh(side1, chromeCrystalMat);
-        s1Mesh.position.set(-0.7, -0.3, 0.4);
-        s1Mesh.rotation.z = 0.22;
-        currentArtMesh.add(s1Mesh);
-
-        const side2 = new THREE.ConeGeometry(0.55, 2.0, 5);
-        const s2Mesh = new THREE.Mesh(side2, chromeCrystalMat);
-        s2Mesh.position.set(0.65, -0.4, -0.3);
-        s2Mesh.rotation.z = -0.25;
-        currentArtMesh.add(s2Mesh);
-
-        artworkGroup.add(currentArtMesh);
-
-        const ringGeo = new THREE.TorusGeometry(2.2, 0.04, 16, 80);
-        orbitRing1 = new THREE.Mesh(ringGeo, orbitMatCyan);
-        orbitRing1.rotation.x = Math.PI / 2.2;
-        orbitRing1.rotation.y = Math.PI / 4;
-        artworkGroup.add(orbitRing1);
-
-        for (let i = 0; i < 5; i++) {
-          const sphereGeo = new THREE.SphereGeometry(0.18, 16, 16);
-          const sphere = new THREE.Mesh(sphereGeo, bubbleMat);
-          const angle = (i / 5) * Math.PI * 2;
-          sphere.position.set(Math.cos(angle) * 2.1, (i - 2.5) * 0.7, Math.sin(angle) * 2.1);
-          artworkGroup.add(sphere);
-          floatingBubbles.push(sphere);
-        }
-      }
-      // 3. PRISM SHIFT
-      else if (type === 2) {
-        const prismMat = new THREE.MeshPhysicalMaterial({
-          color: 0x8B5CF6,
-          metalness: 0.85,
-          roughness: 0.12,
-          clearcoat: 1.0,
-          flatShading: true
-        });
-        const starGeo = new THREE.IcosahedronGeometry(1.85, 0);
-        currentArtMesh = new THREE.Mesh(starGeo, prismMat);
-        artworkGroup.add(currentArtMesh);
-
-        const wire = new THREE.Mesh(new THREE.IcosahedronGeometry(2.35, 1), new THREE.MeshBasicMaterial({ color: 0x00F0FF, wireframe: true, opacity: 0.35, transparent: true }));
-        currentArtMesh.add(wire);
-
-        const ringGeo = new THREE.TorusGeometry(2.7, 0.04, 16, 80);
-        orbitRing1 = new THREE.Mesh(ringGeo, orbitMatPink);
-        orbitRing1.rotation.x = Math.PI / 2.8;
-        artworkGroup.add(orbitRing1);
-      }
+      // Попытка загрузить реальный файл GLB с GitHub
+      gltfLoader.load(glbPath, (gltf) => {
+        const root = gltf.scene;
+        const box = new THREE.Box3().setFromObject(root);
+        const center = box.getCenter(new THREE.Vector3());
+        const size = box.getSize(new THREE.Vector3());
+        const maxDim = Math.max(size.x, size.y, size.z);
+        root.position.sub(center);
+        root.scale.setScalar(3.2 / maxDim);
+        artworkGroup.add(root);
+        currentArtMesh = root;
+      }, undefined, () => {
+        // Если файла GLB нет — строим кристалл Three.js (по референсам)
+        buildProceduralModel(type);
+      });
 
       document.querySelectorAll('[data-model]').forEach(btn => {
         btn.setAttribute('aria-pressed', Number(btn.dataset.model) === type);
@@ -1077,7 +1068,72 @@
       document.getElementById('model-caption').textContent = `SCULPTURE // ${names[type]}`;
     }
 
-    buildModel(0);
+    function buildProceduralModel(type) {
+      if (type === 0) {
+        const crystalGeo = new THREE.OctahedronGeometry(1.9, 0);
+        crystalGeo.scale(1, 1.45, 1);
+        currentArtMesh = new THREE.Mesh(crystalGeo, chromeCrystalMat);
+        artworkGroup.add(currentArtMesh);
+
+        const core = new THREE.Mesh(new THREE.IcosahedronGeometry(0.85, 0), innerCoreMat);
+        currentArtMesh.add(core);
+
+        orbitRing1 = new THREE.Mesh(new THREE.TorusGeometry(2.5, 0.035, 16, 80), orbitMatCyan);
+        orbitRing1.rotation.x = Math.PI / 2.7;
+        orbitRing1.rotation.y = Math.PI / 7;
+        artworkGroup.add(orbitRing1);
+
+        orbitRing2 = new THREE.Mesh(new THREE.TorusGeometry(2.3, 0.03, 16, 80), orbitMatPink);
+        orbitRing2.rotation.x = -Math.PI / 2.5;
+        orbitRing2.rotation.z = Math.PI / 4;
+        artworkGroup.add(orbitRing2);
+
+        for (let i = 0; i < 6; i++) {
+          const sphere = new THREE.Mesh(new THREE.SphereGeometry(0.16 + (i % 3) * 0.06, 16, 16), bubbleMat);
+          const angle = (i / 6) * Math.PI * 2;
+          sphere.position.set(Math.cos(angle) * 2.3, (Math.random() - 0.5) * 2.2, Math.sin(angle) * 2.3);
+          artworkGroup.add(sphere);
+          floatingBubbles.push(sphere);
+        }
+      } else if (type === 1) {
+        currentArtMesh = new THREE.Group();
+        const mainCone = new THREE.Mesh(new THREE.ConeGeometry(0.9, 3.2, 5), chromeCrystalMat);
+        mainCone.position.y = 0.2;
+        currentArtMesh.add(mainCone);
+
+        const s1 = new THREE.Mesh(new THREE.ConeGeometry(0.65, 2.4, 5), chromeCrystalMat);
+        s1.position.set(-0.7, -0.3, 0.4); s1.rotation.z = 0.22; currentArtMesh.add(s1);
+
+        const s2 = new THREE.Mesh(new THREE.ConeGeometry(0.55, 2.0, 5), chromeCrystalMat);
+        s2.position.set(0.65, -0.4, -0.3); s2.rotation.z = -0.25; currentArtMesh.add(s2);
+        artworkGroup.add(currentArtMesh);
+
+        orbitRing1 = new THREE.Mesh(new THREE.TorusGeometry(2.2, 0.04, 16, 80), orbitMatCyan);
+        orbitRing1.rotation.x = Math.PI / 2.2; orbitRing1.rotation.y = Math.PI / 4;
+        artworkGroup.add(orbitRing1);
+
+        for (let i = 0; i < 5; i++) {
+          const sphere = new THREE.Mesh(new THREE.SphereGeometry(0.18, 16, 16), bubbleMat);
+          const angle = (i / 5) * Math.PI * 2;
+          sphere.position.set(Math.cos(angle) * 2.1, (i - 2.5) * 0.7, Math.sin(angle) * 2.1);
+          artworkGroup.add(sphere);
+          floatingBubbles.push(sphere);
+        }
+      } else {
+        const starGeo = new THREE.IcosahedronGeometry(1.85, 0);
+        currentArtMesh = new THREE.Mesh(starGeo, new THREE.MeshPhysicalMaterial({ color: 0x8B5CF6, metalness: 0.85, roughness: 0.12, clearcoat: 1.0, flatShading: true }));
+        artworkGroup.add(currentArtMesh);
+
+        const wire = new THREE.Mesh(new THREE.IcosahedronGeometry(2.35, 1), new THREE.MeshBasicMaterial({ color: 0x00F0FF, wireframe: true, opacity: 0.35, transparent: true }));
+        currentArtMesh.add(wire);
+
+        orbitRing1 = new THREE.Mesh(new THREE.TorusGeometry(2.7, 0.04, 16, 80), orbitMatPink);
+        orbitRing1.rotation.x = Math.PI / 2.8;
+        artworkGroup.add(orbitRing1);
+      }
+    }
+
+    loadOrBuildModel(0);
 
     function resize3D() {
       const r = container.getBoundingClientRect();
@@ -1105,7 +1161,7 @@
     document.querySelectorAll('[data-model]').forEach(b => {
       b.addEventListener('click', () => {
         const id = Number(b.dataset.model);
-        buildModel(id);
+        loadOrBuildModel(id);
       });
     });
 
