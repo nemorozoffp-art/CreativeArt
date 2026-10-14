@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PAVLIKneMOROZOFF | Creative Production House & Future Art Lab</title>
+  <title>CreativeArt | PAVLIKneMOROZOFF</title>
 
   <!-- Tailwind CSS, Google Fonts, Lucide Icons, Three.js -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -176,9 +176,12 @@
       transition: color 0.3s ease;
     }
   </style>
+<link rel="stylesheet" href="assets/site.css">
 </head>
 <body class="bg-void text-slate-100 font-sans antialiased selection:bg-lime selection:text-black overflow-x-hidden relative min-h-screen">
 
+  <a class="skip" href="#clusters">К содержимому</a>
+  <div class="preferences"><label>Язык <select id="language"><option value="ru">Русский</option><option value="kk">Қазақша</option><option value="en">English</option></select></label><button id="access" aria-pressed="false">Для слабовидящих</button></div>
   <!-- СВЕТОВОЙ КУРСОР -->
   <div id="cursor-dot" class="fixed top-0 left-0 w-2.5 h-2.5 bg-lime rounded-full z-50 mix-blend-difference hidden md:block"></div>
   <div id="cursor-ring" class="fixed top-0 left-0 w-8 h-8 rounded-full border border-cyanGlow/70 z-50 mix-blend-difference hidden md:block pointer-events-none -translate-x-1/2 -translate-y-1/2"></div>
@@ -221,13 +224,13 @@
             <i data-lucide="chevron-down" class="w-3.5 h-3.5 group-hover:rotate-180 transition"></i>
           </button>
           <div class="absolute top-full left-0 hidden group-hover:block w-52 py-2 bg-obsidian/95 border border-cyanGlow/30 rounded-2xl shadow-2xl backdrop-blur-2xl">
-            <a href="media/music.html" class="flex items-center gap-2.5 px-4 py-2.5 hover:bg-white/5 hover:text-cyanGlow transition">
+            <a href="#music-player" class="flex items-center gap-2.5 px-4 py-2.5 hover:bg-white/5 hover:text-cyanGlow transition">
               <i data-lucide="disc" class="w-4 h-4 text-cyanGlow"></i> Музыка &amp; AI Sound
             </a>
-            <a href="media/songs.html" class="flex items-center gap-2.5 px-4 py-2.5 hover:bg-white/5 hover:text-cyanGlow transition">
+            <a href="#music-player" class="flex items-center gap-2.5 px-4 py-2.5 hover:bg-white/5 hover:text-cyanGlow transition">
               <i data-lucide="mic-2" class="w-4 h-4 text-cyanGlow"></i> Песни &amp; Синглы
             </a>
-            <a href="media/clips.html" class="flex items-center gap-2.5 px-4 py-2.5 hover:bg-white/5 hover:text-cyanGlow transition">
+            <a href="#music-player" class="flex items-center gap-2.5 px-4 py-2.5 hover:bg-white/5 hover:text-cyanGlow transition">
               <i data-lucide="film" class="w-4 h-4 text-cyanGlow"></i> Клипы &amp; Вижуалы
             </a>
           </div>
@@ -241,16 +244,16 @@
             <i data-lucide="chevron-down" class="w-3.5 h-3.5 group-hover:rotate-180 transition"></i>
           </button>
           <div class="absolute top-full left-0 hidden group-hover:block w-56 py-2 bg-obsidian/95 border border-lime/30 rounded-2xl shadow-2xl backdrop-blur-2xl">
-            <a href="orders/poems.html" class="flex items-center gap-2.5 px-4 py-2.5 hover:bg-white/5 hover:text-lime transition">
+            <a href="#brief-modal" class="flex items-center gap-2.5 px-4 py-2.5 hover:bg-white/5 hover:text-lime transition">
               <i data-lucide="feather" class="w-4 h-4 text-lime"></i> Стихи &amp; Поэмы
             </a>
-            <a href="orders/lyrics.html" class="flex items-center gap-2.5 px-4 py-2.5 hover:bg-white/5 hover:text-lime transition">
+            <a href="#brief-modal" class="flex items-center gap-2.5 px-4 py-2.5 hover:bg-white/5 hover:text-lime transition">
               <i data-lucide="file-text" class="w-4 h-4 text-lime"></i> Тексты песен
             </a>
-            <a href="orders/songs.html" class="flex items-center gap-2.5 px-4 py-2.5 hover:bg-white/5 hover:text-lime transition">
+            <a href="#brief-modal" class="flex items-center gap-2.5 px-4 py-2.5 hover:bg-white/5 hover:text-lime transition">
               <i data-lucide="music-2" class="w-4 h-4 text-lime"></i> Песни под ключ
             </a>
-            <a href="orders/clips.html" class="flex items-center gap-2.5 px-4 py-2.5 hover:bg-white/5 hover:text-lime transition">
+            <a href="#brief-modal" class="flex items-center gap-2.5 px-4 py-2.5 hover:bg-white/5 hover:text-lime transition">
               <i data-lucide="clapperboard" class="w-4 h-4 text-lime"></i> Съемка &amp; Клипы
             </a>
           </div>
@@ -264,20 +267,20 @@
             <i data-lucide="chevron-down" class="w-3.5 h-3.5 group-hover:rotate-180 transition"></i>
           </button>
           <div class="absolute top-full left-0 hidden group-hover:block w-64 py-2 bg-obsidian/95 border border-pinkGlow/30 rounded-2xl shadow-2xl backdrop-blur-2xl">
-            <a href="kids/stationery.html" class="flex items-center gap-2.5 px-4 py-2.5 hover:bg-white/5 hover:text-pinkGlow transition">
+            <a href="#clusters" class="flex items-center gap-2.5 px-4 py-2.5 hover:bg-white/5 hover:text-pinkGlow transition">
               <i data-lucide="sparkles" class="w-4 h-4 text-pinkGlow"></i> Именная полиграфия
             </a>
-            <a href="kids/books.html" class="flex items-center gap-2.5 px-4 py-2.5 hover:bg-white/5 hover:text-pinkGlow transition">
+            <a href="#clusters" class="flex items-center gap-2.5 px-4 py-2.5 hover:bg-white/5 hover:text-pinkGlow transition">
               <i data-lucide="book-open" class="w-4 h-4 text-pinkGlow"></i> Персональные арт-книги
             </a>
-            <a href="kids/animation.html" class="flex items-center gap-2.5 px-4 py-2.5 hover:bg-white/5 hover:text-pinkGlow transition">
+            <a href="#clusters" class="flex items-center gap-2.5 px-4 py-2.5 hover:bg-white/5 hover:text-pinkGlow transition">
               <i data-lucide="video" class="w-4 h-4 text-pinkGlow"></i> Персональные мультфильмы
             </a>
           </div>
         </div>
 
         <!-- 4. 3D Лаборатория -->
-        <a href="studio3d/print.html" class="flex items-center gap-1.5 hover:text-amberGold text-amberGold transition py-2">
+        <a href="#clusters" class="flex items-center gap-1.5 hover:text-amberGold text-amberGold transition py-2">
           <span class="w-1.5 h-1.5 rounded-full bg-amberGold animate-ping"></span>
           3D Арт &amp; Печать
         </a>
@@ -285,7 +288,7 @@
 
       <!-- Правая панель -->
       <div class="flex items-center gap-3">
-        <button id="sound-ambient-btn" onclick="toggleAmbientSound()" class="p-2.5 rounded-xl bg-white/5 border border-white/10 hover:border-lime text-slate-300 hover:text-lime transition" title="Включить космический эмбиент">
+        <button id="sound-ambient-btn" onclick="toggleAmbientSound()" aria-pressed="false" class="p-2.5 rounded-xl bg-white/5 border border-white/10 hover:border-lime text-slate-300 hover:text-lime transition" title="Beyond the Code">
           <i id="sound-icon" data-lucide="volume-x" class="w-4 h-4"></i>
         </button>
 
@@ -306,32 +309,32 @@
       <div>
         <div class="text-cyanGlow font-black uppercase tracking-wider mb-2">1. Смотреть &amp; Слушать</div>
         <div class="pl-3 space-y-2 text-slate-300">
-          <a href="media/music.html" class="block hover:text-white">Музыка &amp; AI Sound</a>
-          <a href="media/songs.html" class="block hover:text-white">Песни &amp; Синглы</a>
-          <a href="media/clips.html" class="block hover:text-white">Клипы &amp; Вижуалы</a>
+          <a href="#music-player" class="block hover:text-white">Музыка &amp; AI Sound</a>
+          <a href="#music-player" class="block hover:text-white">Песни &amp; Синглы</a>
+          <a href="#music-player" class="block hover:text-white">Клипы &amp; Вижуалы</a>
         </div>
       </div>
       <div>
         <div class="text-lime font-black uppercase tracking-wider mb-2">2. Творчество на заказ</div>
         <div class="pl-3 space-y-2 text-slate-300">
-          <a href="orders/poems.html" class="block hover:text-white">Стихи &amp; Поэмы</a>
-          <a href="orders/lyrics.html" class="block hover:text-white">Тексты песен / Сонграйтинг</a>
-          <a href="orders/songs.html" class="block hover:text-white">Песни под ключ</a>
-          <a href="orders/clips.html" class="block hover:text-white">Съемка &amp; Клипы</a>
+          <a href="#brief-modal" class="block hover:text-white">Стихи &amp; Поэмы</a>
+          <a href="#brief-modal" class="block hover:text-white">Тексты песен / Сонграйтинг</a>
+          <a href="#brief-modal" class="block hover:text-white">Песни под ключ</a>
+          <a href="#brief-modal" class="block hover:text-white">Съемка &amp; Клипы</a>
         </div>
       </div>
       <div>
         <div class="text-pinkGlow font-black uppercase tracking-wider mb-2">3. Детская студия</div>
         <div class="pl-3 space-y-2 text-slate-300">
-          <a href="kids/stationery.html" class="block hover:text-white">Именная полиграфия</a>
-          <a href="kids/books.html" class="block hover:text-white">Персональные арт-книги</a>
-          <a href="kids/animation.html" class="block hover:text-white">Персональные мультфильмы</a>
+          <a href="#clusters" class="block hover:text-white">Именная полиграфия</a>
+          <a href="#clusters" class="block hover:text-white">Персональные арт-книги</a>
+          <a href="#clusters" class="block hover:text-white">Персональные мультфильмы</a>
         </div>
       </div>
       <div>
         <div class="text-amberGold font-black uppercase tracking-wider mb-2">4. 3D Лаборатория</div>
         <div class="pl-3 space-y-2 text-slate-300">
-          <a href="studio3d/print.html" class="block hover:text-white">3D Моделирование &amp; Арт-печать</a>
+          <a href="#clusters" class="block hover:text-white">3D Моделирование &amp; Арт-печать</a>
         </div>
       </div>
     </div>
@@ -388,7 +391,7 @@
           <span class="w-2 h-2 rounded-full bg-lime"></span> Live Pulse:
         </span>
         <div class="flex items-end gap-1 h-6 w-36 px-1" id="hero-bars"></div>
-        <span class="text-[10px] font-mono text-cyanGlow ml-2 tracking-widest">96 kHz // 24-BIT</span>
+        <span class="text-[10px] font-mono text-cyanGlow ml-2 tracking-widest">MP3 // WEB AUDIO</span>
       </div>
 
     </div>
@@ -422,9 +425,9 @@
       <div class="flex items-center gap-3 w-full md:w-auto justify-end">
         <button id="teaser-play-btn" onclick="toggleTeaserAudio()" class="px-6 py-3.5 rounded-xl bg-cyanGlow text-black font-mono font-black text-xs uppercase tracking-wider flex items-center gap-2 hover:bg-lime transition shadow-lg shadow-cyanGlow/25">
           <i id="teaser-play-icon" data-lucide="play" class="w-4 h-4 fill-current"></i>
-          <span id="teaser-btn-label">Слушать сэмпл</span>
+          <span id="teaser-btn-label">Открыть плеер</span>
         </button>
-        <a href="media/music.html" class="px-4 py-3.5 rounded-xl bg-white/5 border border-white/10 hover:border-lime text-slate-300 hover:text-white transition font-mono text-xs flex items-center gap-1.5">
+        <a href="#music-player" class="px-4 py-3.5 rounded-xl bg-white/5 border border-white/10 hover:border-lime text-slate-300 hover:text-white transition font-mono text-xs flex items-center gap-1.5">
           <span>Медиатека</span> <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
         </a>
       </div>
@@ -432,6 +435,7 @@
     </div>
   </section>
 
+<section id="music-player" class="player-shell"><div><p class="eyebrow">CREATIVEART / SOUND LAB</p><h2>Смотреть &amp; Слушать</h2><p>Демонстрационная витрина — добавляйте новые релизы в плейлист.</p></div><div class="player-grid"><div><img id="cover" src="assets/covers/creative-pulse.svg" alt="Обложка выбранного трека" width="480" height="480"><h3 id="track-title">Creative Pulse</h3><audio id="audio" controls preload="none"></audio><p id="audio-status" role="status" aria-live="polite"></p><canvas id="waves" height="180" aria-hidden="true"></canvas></div><div><div id="playlist"></div><button id="ambient-control" onclick="toggleAmbientSound()" aria-pressed="false">Beyond the Code</button><p>Фоновая композиция включается только по нажатию.</p><p>Три демонстрационных трека ждут исходных MP3. Neon Revolt сохранён под оригинальным названием.</p></div></div></section>
   <!-- ГЛАВНЫЙ БЛОК: 4 КЛАСТЕРА ТВОРЧЕСКОЙ ВСЕЛЕННОЙ -->
   <section id="clusters" class="py-16 px-4 max-w-7xl mx-auto relative z-10">
     
@@ -461,14 +465,14 @@
             <span class="text-xs font-mono text-cyanGlow">Авторская музыка, песни и кинематографичные клипы</span>
           </div>
         </div>
-        <a href="media/music.html" class="hidden sm:flex items-center gap-1 text-xs font-mono text-cyanGlow hover:underline">
+        <a href="#music-player" class="hidden sm:flex items-center gap-1 text-xs font-mono text-cyanGlow hover:underline">
           Открыть стриминг-витрину →
         </a>
       </div>
 
       <div class="grid md:grid-cols-3 gap-6">
         
-        <a href="media/music.html" class="holo-card rounded-3xl p-7 flex flex-col justify-between group">
+        <a href="#music-player" class="holo-card rounded-3xl p-7 flex flex-col justify-between group">
           <div>
             <div class="flex items-center justify-between mb-6">
               <div class="w-12 h-12 rounded-2xl bg-void border border-cyanGlow/30 flex items-center justify-center text-cyanGlow group-hover:scale-110 transition">
@@ -488,7 +492,7 @@
           </div>
         </a>
 
-        <a href="media/songs.html" class="holo-card rounded-3xl p-7 flex flex-col justify-between group">
+        <a href="#music-player" class="holo-card rounded-3xl p-7 flex flex-col justify-between group">
           <div>
             <div class="flex items-center justify-between mb-6">
               <div class="w-12 h-12 rounded-2xl bg-void border border-cyanGlow/30 flex items-center justify-center text-cyanGlow group-hover:scale-110 transition">
@@ -508,7 +512,7 @@
           </div>
         </a>
 
-        <a href="media/clips.html" class="holo-card rounded-3xl p-7 flex flex-col justify-between group">
+        <a href="#music-player" class="holo-card rounded-3xl p-7 flex flex-col justify-between group">
           <div>
             <div class="flex items-center justify-between mb-6">
               <div class="w-12 h-12 rounded-2xl bg-void border border-cyanGlow/30 flex items-center justify-center text-cyanGlow group-hover:scale-110 transition">
@@ -550,7 +554,7 @@
 
       <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
         
-        <a href="orders/poems.html" class="holo-card rounded-2xl p-6 flex flex-col justify-between group">
+        <a href="#brief-modal" class="holo-card rounded-2xl p-6 flex flex-col justify-between group">
           <div>
             <div class="w-10 h-10 rounded-xl bg-void border border-lime/30 flex items-center justify-center text-lime mb-5">
               <i data-lucide="feather" class="w-5 h-5"></i>
@@ -565,7 +569,7 @@
           </div>
         </a>
 
-        <a href="orders/lyrics.html" class="holo-card rounded-2xl p-6 flex flex-col justify-between group">
+        <a href="#brief-modal" class="holo-card rounded-2xl p-6 flex flex-col justify-between group">
           <div>
             <div class="w-10 h-10 rounded-xl bg-void border border-lime/30 flex items-center justify-center text-lime mb-5">
               <i data-lucide="file-text" class="w-5 h-5"></i>
@@ -580,7 +584,7 @@
           </div>
         </a>
 
-        <a href="orders/songs.html" class="holo-card rounded-2xl p-6 flex flex-col justify-between group border-lime/40">
+        <a href="#brief-modal" class="holo-card rounded-2xl p-6 flex flex-col justify-between group border-lime/40">
           <div>
             <div class="w-10 h-10 rounded-xl bg-void border border-lime/40 flex items-center justify-center text-lime mb-5">
               <i data-lucide="sparkle" class="w-5 h-5 animate-spin-slow"></i>
@@ -595,7 +599,7 @@
           </div>
         </a>
 
-        <a href="orders/clips.html" class="holo-card rounded-2xl p-6 flex flex-col justify-between group">
+        <a href="#brief-modal" class="holo-card rounded-2xl p-6 flex flex-col justify-between group">
           <div>
             <div class="w-10 h-10 rounded-xl bg-void border border-lime/30 flex items-center justify-center text-lime mb-5">
               <i data-lucide="video" class="w-5 h-5"></i>
@@ -641,7 +645,7 @@
               Развивающие блокноты, планеры с привычками, фотокалендари с именем ребёнка и вдохновляющими авторскими иллюстрациями.
             </p>
           </div>
-          <a href="kids/stationery.html" class="mt-8 pt-4 border-t border-white/10 flex items-center justify-between text-xs font-mono font-bold text-pinkGlow">
+          <a href="#clusters" class="mt-8 pt-4 border-t border-white/10 flex items-center justify-between text-xs font-mono font-bold text-pinkGlow">
             <span>Выбрать полиграфию</span> <i data-lucide="arrow-right" class="w-4 h-4"></i>
           </a>
         </div>
@@ -660,7 +664,7 @@
               Настоящая твердая книга сказок, где главный герой — именно ваш малыш. Индивидуальный сюжет под его характер, хобби и внешность.
             </p>
           </div>
-          <a href="kids/books.html" class="mt-8 pt-4 border-t border-white/10 flex items-center justify-between text-xs font-mono font-bold text-pinkGlow">
+          <a href="#clusters" class="mt-8 pt-4 border-t border-white/10 flex items-center justify-between text-xs font-mono font-bold text-pinkGlow">
             <span>Создать книгу ребенка</span> <i data-lucide="arrow-right" class="w-4 h-4"></i>
           </a>
         </div>
@@ -676,7 +680,7 @@
               Короткометражный мультик, где оживает персонаж вашего ребёнка. Профессиональный дубляж, именная песня и яркий добрый сюжет.
             </p>
           </div>
-          <a href="kids/animation.html" class="mt-8 pt-4 border-t border-white/10 flex items-center justify-between text-xs font-mono font-bold text-pinkGlow">
+          <a href="#clusters" class="mt-8 pt-4 border-t border-white/10 flex items-center justify-between text-xs font-mono font-bold text-pinkGlow">
             <span>Заказать мультфильм</span> <i data-lucide="arrow-right" class="w-4 h-4"></i>
           </a>
         </div>
@@ -699,7 +703,7 @@
             <span class="text-xs font-mono text-amberGold">От цифровой 3D-модели до осязаемой скульптуры в ваших руках</span>
           </div>
         </div>
-        <a href="studio3d/print.html" class="hidden sm:flex items-center gap-1 text-xs font-mono text-amberGold hover:underline">
+        <a href="#clusters" class="hidden sm:flex items-center gap-1 text-xs font-mono text-amberGold hover:underline">
           Подробнее о 3D лаборатории →
         </a>
       </div>
@@ -728,7 +732,7 @@
             </div>
 
             <div class="flex flex-wrap gap-4">
-              <a href="studio3d/print.html" class="px-6 py-3.5 rounded-xl bg-amberGold text-black font-mono font-black text-xs uppercase tracking-wider hover:bg-white transition shadow-lg shadow-amberGold/20">
+              <a href="#clusters" class="px-6 py-3.5 rounded-xl bg-amberGold text-black font-mono font-black text-xs uppercase tracking-wider hover:bg-white transition shadow-lg shadow-amberGold/20">
                 Перейти в 3D Мастерскую
               </a>
               <button onclick="openBrief('3D печать и фигурки')" class="px-6 py-3.5 rounded-xl bg-white/5 border border-white/10 hover:border-amberGold text-white font-mono text-xs uppercase font-bold transition">
@@ -786,7 +790,7 @@
           Запустить Ваш Проект в Работу
         </h2>
         <p class="text-slate-400 text-xs sm:text-sm font-mono mt-2 max-w-xl mx-auto">
-          Выберите нужное направление и заполните краткую заявку. Мы свяжемся с вами в течение 15 минут с готовой сметой и таймлайном.
+          Выберите нужное направление и заполните краткую заявку. Заявка сохраняется на вашем устройстве. Передайте её команде самостоятельно.
         </p>
       </div>
 
@@ -840,17 +844,17 @@
           </div>
 
           <div class="flex flex-col sm:flex-row items-center justify-between gap-4 pt-2">
-            <span class="text-[11px] font-mono text-slate-400">⚡ Ответ и расчет в Telegram в течение 15 минут</span>
+            <span class="text-[11px] font-mono text-slate-400">Данные не отправляются на сервер</span>
             <button type="submit" class="w-full sm:w-auto px-8 py-4 rounded-xl bg-lime hover:bg-white text-black font-mono font-black text-xs uppercase tracking-wider transition shadow-lg shadow-lime/20 flex items-center justify-center gap-2">
               <i data-lucide="send" class="w-4 h-4"></i>
-              <span>Отправить бриф команде</span>
+              <span>Скачать бриф</span>
             </button>
           </div>
 
         </form>
 
         <div id="brief-success" class="hidden mt-6 p-4 rounded-xl bg-lime/10 border border-lime text-lime font-mono text-xs text-center">
-          ✓ Бриф успешно отправлен! Мы уже открываем чат с вами.
+          Бриф сохранён в файл. Данные не отправлены.
         </div>
       </div>
 
@@ -887,7 +891,7 @@
 
   <!-- СКРИПТЫ -->
   <script>
-    lucide.createIcons();
+    if(window.lucide) lucide.createIcons();
 
     // 1. ОБЪЕМНАЯ 3D СЦЕНА THREE.JS (ЗОЛОТОЙ ДИСК + КРИСТАЛЛ + ЧАСТИЦЫ КАК НА ФОТО 9)
     let scene, camera, renderer, crystalMesh, wireMesh, torusMesh, particlesMesh;
@@ -1012,62 +1016,19 @@
 
     function animateThree() {
       requestAnimationFrame(animateThree);
-
-      targetX += (mouseX - targetX) * 0.05;
-      targetY += (mouseY - targetY) * 0.05;
-
-      if (crystalMesh) {
-        crystalMesh.rotation.y += 0.005;
-        crystalMesh.rotation.x += 0.003;
-        crystalMesh.position.x = targetX * 14;
-        crystalMesh.position.y = -targetY * 14;
+      if(document.hidden) return;
+      const calm=window.matchMedia('(prefers-reduced-motion: reduce)').matches || document.body.classList.contains('accessible');
+      targetX += (mouseX-targetX)*0.035; targetY += (mouseY-targetY)*0.035;
+      const pulse=window.audioEnergy||0;
+      if(crystalMesh) {
+        if(!calm) {crystalMesh.rotation.y+=0.003; crystalMesh.rotation.x+=0.001;
+        crystalMesh.position.set(targetX*3,-targetY*3,0);}
+        crystalMesh.scale.setScalar(calm?1:1+pulse*0.12);
+        wireMesh.material.opacity=0.25+pulse*0.45;
       }
-
-      if (torusMesh) {
-        torusMesh.rotation.z -= 0.007;
-        torusMesh.rotation.y += 0.004;
-        torusMesh.position.x = -targetX * 9;
-        torusMesh.position.y = targetY * 9;
-      }
-
-      if (particlesMesh) {
-        particlesMesh.rotation.y += 0.0009;
-      }
-
-      renderer.render(scene, camera);
-    }
-
-    // 2. ЖИВЫЕ СПЕКТРАЛЬНЫЕ ПОЛОСКИ
-    function createEqualizerBars() {
-      const heroContainer = document.getElementById('hero-bars');
-      const teaserContainer = document.getElementById('teaser-spectrum');
-      
-      if (heroContainer) {
-        heroContainer.innerHTML = '';
-        for (let i = 0; i < 20; i++) {
-          const bar = document.createElement('div');
-          bar.className = 'w-1 bg-gradient-to-t from-cyanGlow to-lime rounded-full eq-bar';
-          bar.style.height = `${Math.floor(Math.random() * 80 + 20)}%`;
-          heroContainer.appendChild(bar);
-        }
-      }
-
-      if (teaserContainer) {
-        teaserContainer.innerHTML = '';
-        for (let i = 0; i < 28; i++) {
-          const bar = document.createElement('div');
-          bar.className = 'w-1 bg-gradient-to-t from-pinkGlow via-cyanGlow to-lime rounded-full eq-bar';
-          bar.style.height = `${Math.floor(Math.random() * 85 + 15)}%`;
-          teaserContainer.appendChild(bar);
-        }
-      }
-
-      setInterval(() => {
-        document.querySelectorAll('.eq-bar').forEach(bar => {
-          const h = Math.floor(Math.random() * 85 + 15);
-          bar.style.height = `${h}%`;
-        });
-      }, 140);
+      if(torusMesh&&!calm) {torusMesh.rotation.z-=0.003; torusMesh.position.set(-targetX*2,targetY*2,0);}
+      if(particlesMesh&&!calm) particlesMesh.rotation.y+=0.0004;
+      renderer.render(scene,camera);
     }
 
     // 3. КУРСОР ДЛЯ ДЕСКТОПА
@@ -1103,131 +1064,6 @@
       });
     }
 
-    // 5. КОСМИЧЕСКИЙ ЭМБИЕНТ (WEB AUDIO API)
-    let audioCtx = null;
-    let isAmbientPlaying = false;
-    let osc1 = null, osc2 = null, osc3 = null, gainNode = null;
-
-    function initAudioContext() {
-      if (!audioCtx) {
-        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-      }
-    }
-
-    function toggleAmbientSound() {
-      initAudioContext();
-      const icon = document.getElementById('sound-icon');
-      
-      if (!isAmbientPlaying) {
-        osc1 = audioCtx.createOscillator();
-        osc2 = audioCtx.createOscillator();
-        osc3 = audioCtx.createOscillator();
-        gainNode = audioCtx.createGain();
-
-        osc1.type = 'sine';
-        osc1.frequency.setValueAtTime(55, audioCtx.currentTime); // A1 Глубокий бас
-
-        osc2.type = 'triangle';
-        osc2.frequency.setValueAtTime(110, audioCtx.currentTime); // A2
-
-        osc3.type = 'sine';
-        osc3.frequency.setValueAtTime(164.81, audioCtx.currentTime); // E3
-
-        gainNode.gain.setValueAtTime(0.01, audioCtx.currentTime);
-        gainNode.gain.exponentialRampToValueAtTime(0.08, audioCtx.currentTime + 2.5);
-
-        osc1.connect(gainNode);
-        osc2.connect(gainNode);
-        osc3.connect(gainNode);
-        gainNode.connect(audioCtx.destination);
-
-        osc1.start();
-        osc2.start();
-        osc3.start();
-
-        isAmbientPlaying = true;
-        icon.setAttribute('data-lucide', 'volume-2');
-      } else {
-        if (gainNode) {
-          gainNode.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.6);
-          setTimeout(() => {
-            if (osc1) osc1.stop();
-            if (osc2) osc2.stop();
-            if (osc3) osc3.stop();
-          }, 600);
-        }
-        isAmbientPlaying = false;
-        icon.setAttribute('data-lucide', 'volume-x');
-      }
-      lucide.createIcons();
-    }
-
-    // 6. ТИЗЕР-ПЛЕЕР
-    let isTeaserPlaying = false;
-    function toggleTeaserAudio() {
-      initAudioContext();
-      const label = document.getElementById('teaser-btn-label');
-      const icon = document.getElementById('teaser-play-icon');
-      
-      if (!isTeaserPlaying) {
-        playSynthMelody();
-        label.textContent = "Пауза";
-        icon.setAttribute('data-lucide', 'pause');
-        isTeaserPlaying = true;
-      } else {
-        label.textContent = "Слушать сэмпл";
-        icon.setAttribute('data-lucide', 'play');
-        isTeaserPlaying = false;
-      }
-      lucide.createIcons();
-    }
-
-    function playSynthMelody() {
-      if (!audioCtx) return;
-      const notes = [220, 261.63, 329.63, 392, 440, 523.25];
-      let delay = 0;
-      notes.forEach((freq) => {
-        setTimeout(() => {
-          if (!isTeaserPlaying) return;
-          const osc = audioCtx.createOscillator();
-          const g = audioCtx.createGain();
-          osc.type = 'sawtooth';
-          osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
-          g.gain.setValueAtTime(0.06, audioCtx.currentTime);
-          g.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.4);
-          osc.connect(g);
-          g.connect(audioCtx.destination);
-          osc.start();
-          osc.stop(audioCtx.currentTime + 0.42);
-        }, delay);
-        delay += 240;
-      });
-      setTimeout(() => {
-        if (isTeaserPlaying) playSynthMelody();
-      }, 1500);
-    }
-
-    // 7. ОБРАБОТКА БРИФА
-    function openBrief(categoryName) {
-      const radios = document.getElementsByName('project_category');
-      for (const r of radios) {
-        if (r.value.includes(categoryName)) {
-          r.checked = true;
-        }
-      }
-      document.getElementById('brief-modal').scrollIntoView({ behavior: 'smooth' });
-    }
-
-    function handleBriefSubmit(e) {
-      e.preventDefault();
-      const successBox = document.getElementById('brief-success');
-      successBox.classList.remove('hidden');
-      setTimeout(() => {
-        successBox.classList.add('hidden');
-        document.getElementById('project-brief-form').reset();
-      }, 5000);
-    }
-
     // 8. ПРИПОДНЯТАЯ КНОПКА «НАВЕРХ» С ЗАЩИТОЙ
     const backToTopBtn = document.getElementById('back-to-top');
     const footerSection = document.getElementById('footer-section');
@@ -1253,13 +1089,13 @@
     });
 
     backToTopBtn.addEventListener('click', () => {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      window.scrollTo({ top: 0, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches || document.body.classList.contains('accessible') ? 'auto' : 'smooth' });
     });
 
     window.onload = function() {
-      initThreeHero();
-      createEqualizerBars();
+      try { if(window.THREE) initThreeHero(); } catch(e) { console.warn('WebGL unavailable',e); }
     };
   </script>
-</body>
+<script src="assets/translations.js"></script><script src="assets/app.js"></script></body>
 </html>
+
