@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>IT Life | Инновационная веб-разработка, Cloud & CRM архитектура</title>
+  <title>PAVLIKneMOROZOFF | AI Sound Lab &amp; Neural Audio Hub</title>
   
   <!-- Tailwind CSS & Lucide Icons -->
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
   <script src="https://unpkg.com/lucide@latest"></script>
 
   <script>
@@ -18,20 +18,18 @@
       theme: {
         extend: {
           colors: {
-            it: {
-              dark: '#070A11',
-              card: '#0D1322',
-              surface: '#121A2D',
-              cyan: '#06B6D4',
-              cyanGlow: '#22D3EE',
-              accent: '#3B82F6',
-              lime: '#10B981'
+            brand: {
+              void: '#04060C',
+              dark: '#080C18',
+              card: 'rgba(15, 23, 42, 0.7)',
+              cyan: '#00F0FF',
+              magenta: '#FF0055',
+              violet: '#8B5CF6'
             }
           },
           fontFamily: {
             title: ['Space Grotesk', 'sans-serif'],
-            sans: ['Inter', 'sans-serif'],
-            mono: ['JetBrains Mono', 'monospace'],
+            mono: ['"JetBrains Mono"', 'monospace'],
           }
         }
       }
@@ -39,414 +37,318 @@
   </script>
 
   <style>
-    .cyan-text-gradient {
-      background: linear-gradient(135deg, #FFFFFF 0%, #22D3EE 50%, #3B82F6 100%);
+    .neon-text-gradient {
+      background: linear-gradient(135deg, #00F0FF 0%, #8B5CF6 50%, #FF0055 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
-    .neon-card {
-      border: 1px solid rgba(6, 182, 212, 0.2);
-      box-shadow: 0 0 25px rgba(6, 182, 212, 0.08);
-      transition: all 0.3s ease;
+    .player-glass {
+      background: rgba(10, 16, 32, 0.85);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(0, 240, 255, 0.25);
+      box-shadow: 0 0 35px rgba(0, 240, 255, 0.15);
     }
-    .neon-card:hover {
-      border: 1px solid rgba(34, 211, 238, 0.6);
-      box-shadow: 0 0 35px rgba(6, 182, 212, 0.22);
+    /* Анимированные полоски спектра */
+    .bar-anim {
+      animation: pulseBar 1.2s ease-in-out infinite alternate;
     }
-    .cyber-grid {
-      background-size: 40px 40px;
-      background-image: 
-        linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-    }
-    .logo-glow {
-      filter: drop-shadow(0 0 8px rgba(34, 211, 238, 0.45));
+    @keyframes pulseBar {
+      0% { height: 15%; }
+      100% { height: 95%; }
     }
   </style>
 </head>
-<body class="bg-it-dark text-slate-100 font-sans antialiased selection:bg-it-cyan selection:text-black cyber-grid relative">
+<body class="bg-brand-void text-slate-100 font-sans antialiased selection:bg-brand-cyan selection:text-black relative min-h-screen pb-32">
 
-  <!-- ВЕРХНИЙ БАР МОНИТОРИНГА СИСТЕМ -->
-  <div class="bg-black/60 border-b border-white/5 py-2 px-4 backdrop-blur-md text-xs font-mono">
-    <div class="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-3">
+  <!-- СВЕТОВЫЕ НЕОНОВЫЕ ПЯТНА -->
+  <div class="fixed top-1/4 -left-40 w-96 h-96 bg-brand-cyan/15 rounded-full blur-[140px] pointer-events-none"></div>
+  <div class="fixed bottom-1/4 -right-40 w-96 h-96 bg-brand-magenta/15 rounded-full blur-[140px] pointer-events-none"></div>
+
+  <!-- ШАПКА МАСТЕР-БРЕНДА -->
+  <header class="sticky top-0 z-40 bg-brand-void/90 backdrop-blur-xl border-b border-white/10 px-4 py-4">
+    <div class="max-w-7xl mx-auto flex justify-between items-center">
       <div class="flex items-center gap-3">
-        <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-[11px]">
-          <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> SYSTEM HEALTH: 99.98%
-        </span>
-        <span class="hidden md:inline text-slate-400 text-[11px]">Server Nodes: <strong class="text-white">Active</strong> | Latency: <strong class="text-it-cyan">14ms</strong></span>
-      </div>
-      <div class="flex items-center gap-4 text-slate-400 text-[11px]">
-        <span class="text-slate-300">Сертифицированный стек разработки</span>
-        <span class="text-slate-600">|</span>
-        <span class="text-it-cyan font-bold">IT Life Cloud Labs</span>
-      </div>
-    </div>
-  </div>
-
-  <!-- ШАПКА САЙТА С НАВИГАЦИЕЙ -->
-  <header class="sticky top-0 z-40 bg-it-dark/95 backdrop-blur-xl border-b border-white/10">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3.5 flex items-center justify-between">
-      
-      <!-- Логотип IT Life -->
-      <a href="index.html" class="flex items-center gap-3.5 group">
-        <img src="logo.png" alt="IT Life" class="h-10 sm:h-11 w-auto object-contain logo-glow group-hover:scale-105 transition-transform" onerror="this.src='Logo_безфона.png'">
-        <div class="leading-tight">
-          <span class="block font-title text-xl font-bold tracking-wider text-white">IT <span class="text-it-cyan">Life</span></span>
-          <span class="block text-[9px] font-mono tracking-widest text-slate-400 uppercase">a PAVLIKneMOROZOFF company</span>
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-brand-cyan via-brand-violet to-brand-magenta p-0.5">
+          <div class="w-full h-full bg-brand-void rounded-[10px] flex items-center justify-center">
+            <i data-lucide="disc" class="w-5 h-5 text-brand-cyan animate-spin" style="animation-duration: 8s;"></i>
+          </div>
         </div>
-      </a>
-
-      <!-- Меню страниц -->
-      <nav class="hidden md:flex items-center gap-7 text-sm font-medium text-slate-300">
-        <a href="index.html" class="text-it-cyan transition flex items-center gap-1 font-semibold">
-          <i data-lucide="layers" class="w-4 h-4"></i> Главная
-        </a>
-        <a href="#services" class="hover:text-it-cyan transition flex items-center gap-1">
-          <i data-lucide="cpu" class="w-4 h-4"></i> Услуги
-        </a>
-        <a href="#competencies" class="hover:text-it-cyan transition flex items-center gap-1">
-          <i data-lucide="award" class="w-4 h-4"></i> Сертификация
-        </a>
-        <a href="#stack" class="hover:text-it-cyan transition flex items-center gap-1">
-          <i data-lucide="terminal" class="w-4 h-4"></i> Стек &amp; Архитектура
-        </a>
-        <a href="#contacts" class="hover:text-it-cyan transition flex items-center gap-1">
-          <i data-lucide="send" class="w-4 h-4"></i> Контакты
-        </a>
-      </nav>
-
-      <!-- CTA -->
-      <div class="flex items-center gap-3">
-        <a href="#contacts" class="px-5 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider bg-gradient-to-r from-it-cyan to-it-accent text-black hover:opacity-95 shadow-lg shadow-it-cyan/20 hover:scale-105 transition-all">
-          Обсудить проект
-        </a>
+        <div>
+          <span class="block font-title text-xl font-extrabold tracking-wider text-white">PAVLIKneMOROZOFF</span>
+          <span class="block text-[9px] font-mono tracking-widest text-brand-cyan uppercase">AI Music Lab &amp; Sound Design</span>
+        </div>
       </div>
+
+      <a href="https://t.me/your_bot" target="_blank" class="hidden sm:inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-cyan-500/10 border border-brand-cyan/40 text-brand-cyan hover:bg-brand-cyan hover:text-black transition font-mono text-xs font-bold">
+        <i data-lucide="bot" class="w-4 h-4"></i>
+        <span>Telegram VIP Club</span>
+      </a>
     </div>
   </header>
 
-  <!-- 1. HERO SECTION -->
-  <section class="relative min-h-[85vh] flex items-center justify-center px-4 py-20 overflow-hidden">
-    <!-- Свечения -->
-    <div class="absolute top-1/4 left-1/2 -translate-x-1/2 w-[650px] h-[350px] bg-it-cyan/15 rounded-full blur-[140px] pointer-events-none"></div>
-
-    <div class="relative z-10 max-w-5xl mx-auto text-center">
-      <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-it-cyan/30 bg-it-cyan/10 text-it-cyanGlow text-xs font-semibold mb-8 font-mono">
-        <i data-lucide="shield-check" class="w-4 h-4 text-it-cyan"></i>
-        <span>Промышленная разработка без зависимости от шаблонных CMS</span>
+  <!-- ГЛАВНАЯ СЕКЦИЯ -->
+  <main class="max-w-6xl mx-auto px-4 pt-12">
+    
+    <!-- Заголовок и оффер -->
+    <div class="text-center max-w-3xl mx-auto mb-12">
+      <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-brand-cyan/30 bg-brand-cyan/10 text-brand-cyan text-xs font-mono mb-4">
+        <span class="w-2 h-2 rounded-full bg-brand-cyan animate-ping"></span>
+        <span>Нейросетевая музыка нового поколения</span>
       </div>
-
-      <h1 class="text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight leading-[1.1] mb-6 font-title">
-        <span class="block text-white">Инженерия Сайтов,</span>
-        <span class="cyan-text-gradient">Cloud-Решений &amp; Собственных CRM</span>
+      <h1 class="text-4xl sm:text-6xl font-extrabold font-title tracking-tight mb-4">
+        Слушай. Вдохновляйся. <br>
+        <span class="neon-text-gradient">Используй в Своих Проектах</span>
       </h1>
-
-      <p class="max-w-2xl mx-auto text-base sm:text-xl text-slate-300 font-light mb-10 leading-relaxed">
-        Проектируем высоконагруженные цифровые платформы, индивидуальные CRM-системы и облачные сервисы. Полная автономность вашего бизнеса без ежемесячной аренды чужих платформ.
+      <p class="text-slate-400 text-sm sm:text-base">
+        Эксклюзивные генеративные треки без копирайта YouTube и страйков. Стриминг — бесплатно, коммерческая лицензия и WAV-оригиналы — в Telegram-боте.
       </p>
-
-      <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-        <a href="#services" class="w-full sm:w-auto px-8 py-4 rounded-xl font-bold bg-gradient-to-r from-it-cyan to-it-accent text-black shadow-xl shadow-it-cyan/25 hover:scale-105 transition-all text-sm uppercase tracking-wider">
-          Посмотреть архитектуру услуг
-        </a>
-        <a href="#competencies" class="w-full sm:w-auto px-8 py-4 rounded-xl font-semibold border border-white/20 bg-white/5 hover:bg-white/10 hover:border-it-cyan/50 transition-all flex items-center justify-center gap-2 text-sm">
-          <i data-lucide="file-check-2" class="w-4 h-4 text-it-cyan"></i> Подтвержденные сертификаты
-        </a>
-      </div>
-
-      <!-- Live Server Metrics -->
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-16 pt-10 border-t border-white/10 text-left font-mono">
-        <div class="p-4 rounded-2xl bg-it-card border border-white/5">
-          <div class="text-3xl font-extrabold text-it-cyan">0.4s</div>
-          <div class="text-xs text-slate-400 mt-1 font-sans">Скорость отклика интерфейсов</div>
-        </div>
-        <div class="p-4 rounded-2xl bg-it-card border border-white/5">
-          <div class="text-3xl font-extrabold text-white">100%</div>
-          <div class="text-xs text-slate-400 mt-1 font-sans">Собственный код и базы данных</div>
-        </div>
-        <div class="p-4 rounded-2xl bg-it-card border border-white/5">
-          <div class="text-3xl font-extrabold text-it-cyan">REST</div>
-          <div class="text-xs text-slate-400 mt-1 font-sans">Прямые Webhooks для вашей CRM</div>
-        </div>
-        <div class="p-4 rounded-2xl bg-it-card border border-white/5">
-          <div class="text-3xl font-extrabold text-white">PRO</div>
-          <div class="text-xs text-slate-400 mt-1 font-sans">Сертифицированные инженеры</div>
-        </div>
-      </div>
     </div>
-  </section>
 
-  <!-- 2. СЕКЦИЯ: НАПРАВЛЕНИЯ И УСЛУГИ -->
-  <section id="services" class="py-20 px-4 bg-it-surface/40 border-y border-white/5">
-    <div class="max-w-7xl mx-auto">
-      <div class="text-center max-w-3xl mx-auto mb-16">
-        <span class="text-it-cyan text-xs font-mono uppercase tracking-widest font-semibold">Направления инженерии</span>
-        <h2 class="text-3xl sm:text-5xl font-extrabold text-white font-title mt-2">Решения для бизнеса любого масштаба</h2>
-        <p class="text-slate-400 text-sm sm:text-base mt-3">От ультрабыстрых корпоративных сайтов до отказоустойчивых бэкенд-систем управления.</p>
-      </div>
-
-      <div class="grid md:grid-cols-3 gap-8">
-        <!-- Услуга 1 -->
-        <div class="p-8 rounded-3xl bg-it-card border border-white/10 neon-card flex flex-col justify-between">
-          <div>
-            <div class="w-12 h-12 rounded-2xl bg-it-cyan/10 border border-it-cyan/30 flex items-center justify-center text-it-cyan mb-6">
-              <i data-lucide="layout" class="w-6 h-6"></i>
-            </div>
-            <h3 class="text-2xl font-bold text-white mb-3 font-title">Веб-разработка &amp; Порталы</h3>
-            <p class="text-slate-400 text-sm leading-relaxed mb-6">
-              Многостраничные адаптивные сайты, корпоративные порталы и визитки с высшим баллом производительности (Google PageSpeed 95+).
-            </p>
-            <ul class="space-y-2.5 text-xs text-slate-300 font-mono mb-8">
-              <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-it-cyan"></i> Архитектура MPA &amp; SPA</li>
-              <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-it-cyan"></i> Интерактивные графики &amp; калькуляторы</li>
-              <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-it-cyan"></i> SEO-структура под поисковики</li>
-            </ul>
-          </div>
-          <a href="#contacts" class="text-xs font-bold text-it-cyan hover:text-white transition flex items-center gap-1 font-mono uppercase">
-            Заказать разработку <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
-          </a>
-        </div>
-
-        <!-- Услуга 2: Кастомная CRM -->
-        <div class="p-8 rounded-3xl bg-it-card border border-it-cyan/40 neon-card flex flex-col justify-between relative">
-          <div class="absolute -top-3 right-6 px-3 py-1 rounded-full bg-it-cyan text-black font-mono font-bold text-[10px] uppercase tracking-wider">
-            Флагманский стек
-          </div>
-          <div>
-            <div class="w-12 h-12 rounded-2xl bg-it-cyan/20 border border-it-cyan/50 flex items-center justify-center text-it-cyan mb-6">
-              <i data-lucide="database" class="w-6 h-6"></i>
-            </div>
-            <h3 class="text-2xl font-bold text-white mb-3 font-title">Кастомные CRM-системы</h3>
-            <p class="text-slate-400 text-sm leading-relaxed mb-6">
-              Собственная архитектура управления клиентами и сделками. Без абонентской платы Битрикса, с нужными именно вашей компании функциями.
-            </p>
-            <ul class="space-y-2.5 text-xs text-slate-300 font-mono mb-8">
-              <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-it-cyan"></i> Автосбор заявок через Webhook API</li>
-              <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-it-cyan"></i> Уведомления в Telegram и WhatsApp</li>
-              <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-it-cyan"></i> Полный доступ к своей базе данных</li>
-            </ul>
-          </div>
-          <a href="#contacts" class="text-xs font-bold text-it-cyan hover:text-white transition flex items-center gap-1 font-mono uppercase">
-            Обсудить архитектуру CRM <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
-          </a>
-        </div>
-
-        <!-- Услуга 3 -->
-        <div class="p-8 rounded-3xl bg-it-card border border-white/10 neon-card flex flex-col justify-between">
-          <div>
-            <div class="w-12 h-12 rounded-2xl bg-it-cyan/10 border border-it-cyan/30 flex items-center justify-center text-it-cyan mb-6">
-              <i data-lucide="server" class="w-6 h-6"></i>
-            </div>
-            <h3 class="text-2xl font-bold text-white mb-3 font-title">Серверы &amp; Cloud DevOps</h3>
-            <p class="text-slate-400 text-sm leading-relaxed mb-6">
-              Настройка отказоустойчивых Linux-серверов, SSL-сертификатов, доменов .KZ, баз данных PostgreSQL / MySQL и регулярных бэкапов.
-            </p>
-            <ul class="space-y-2.5 text-xs text-slate-300 font-mono mb-8">
-              <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-it-cyan"></i> Защита от сбоев и DDOS</li>
-              <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-it-cyan"></i> CI/CD деплой на GitHub / серверах</li>
-              <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-it-cyan"></i> Миграция со старых движков</li>
-            </ul>
-          </div>
-          <a href="#contacts" class="text-xs font-bold text-it-cyan hover:text-white transition flex items-center gap-1 font-mono uppercase">
-            Заказать аудит <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
-          </a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 3. СЕКЦИЯ: ОФИЦИАЛЬНЫЕ КОМПЕТЕНЦИИ И СЕРТИФИКАТЫ -->
-  <section id="competencies" class="py-20 px-4">
-    <div class="max-w-6xl mx-auto">
-      <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
-        <div>
-          <span class="text-it-cyan text-xs font-mono uppercase tracking-widest font-semibold">Подтвержденная квалификация</span>
-          <h2 class="text-3xl sm:text-4xl font-extrabold text-white font-title mt-1">Сертифицированные стандарты качества</h2>
-          <p class="text-slate-400 text-xs sm:text-sm mt-1">Опыт работы со сложными корпоративными системами и архитектурой 1С-Битрикс</p>
-        </div>
-        <div class="flex items-center gap-2 text-xs font-mono text-slate-400">
-          <i data-lucide="shield" class="w-4 h-4 text-it-cyan"></i> Верифицированные сертификаты разработчика
-        </div>
-      </div>
-
-      <div class="grid sm:grid-cols-2 md:grid-cols-4 gap-5">
-        <div class="p-6 rounded-2xl bg-it-card border border-white/5 neon-card flex flex-col justify-between">
-          <div>
-            <div class="text-it-cyan mb-3 font-mono text-xs font-bold">1C-BITRIX #01</div>
-            <h4 class="font-bold text-white text-base mb-2">Администратор. Базовый</h4>
-            <p class="text-slate-400 text-xs">Управление безопасностью, пользователями, структурой данных и базовыми модулями.</p>
-          </div>
-          <div class="mt-4 pt-3 border-t border-white/10 flex items-center gap-1.5 text-[11px] text-emerald-400 font-mono">
-            <i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i> Сертификат подтвержден
-          </div>
-        </div>
-
-        <div class="p-6 rounded-2xl bg-it-card border border-white/5 neon-card flex flex-col justify-between">
-          <div>
-            <div class="text-it-cyan mb-3 font-mono text-xs font-bold">1C-BITRIX #02</div>
-            <h4 class="font-bold text-white text-base mb-2">Администратор. Модули</h4>
-            <p class="text-slate-400 text-xs">Глубокая конфигурация интернет-решений, каталогов, торговых процедур и интеграций.</p>
-          </div>
-          <div class="mt-4 pt-3 border-t border-white/10 flex items-center gap-1.5 text-[11px] text-emerald-400 font-mono">
-            <i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i> Сертификат подтвержден
-          </div>
-        </div>
-
-        <div class="p-6 rounded-2xl bg-it-card border border-white/5 neon-card flex flex-col justify-between">
-          <div>
-            <div class="text-it-cyan mb-3 font-mono text-xs font-bold">1C-BITRIX #03</div>
-            <h4 class="font-bold text-white text-base mb-2">Контент-менеджер</h4>
-            <p class="text-slate-400 text-xs">SEO-структурирование страниц, визуальный редактор, оптимизация медиаконтента.</p>
-          </div>
-          <div class="mt-4 pt-3 border-t border-white/10 flex items-center gap-1.5 text-[11px] text-emerald-400 font-mono">
-            <i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i> Сертификат подтвержден
-          </div>
-        </div>
-
-        <div class="p-6 rounded-2xl bg-it-card border border-white/5 neon-card flex flex-col justify-between">
-          <div>
-            <div class="text-it-cyan mb-3 font-mono text-xs font-bold">PARTNER #04</div>
-            <h4 class="font-bold text-white text-base mb-2">Партнерская сеть</h4>
-            <p class="text-slate-400 text-xs">Официальный статус партнерства и внедрения корпоративных платформ.</p>
-          </div>
-          <div class="mt-4 pt-3 border-t border-white/10 flex items-center gap-1.5 text-[11px] text-emerald-400 font-mono">
-            <i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i> Партнерский статус
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 4. СЕКЦИЯ: ИНТЕРАКТИВНЫЙ БРИФ / ФОРМА СВЯЗИ -->
-  <section id="contacts" class="py-20 px-4 bg-it-surface/30 border-t border-white/5 relative">
-    <div class="max-w-4xl mx-auto bg-gradient-to-b from-it-card to-it-dark border border-it-cyan/40 rounded-3xl p-8 sm:p-12 shadow-2xl">
-      <div class="text-center mb-10">
-        <span class="text-it-cyan text-xs font-mono uppercase tracking-widest font-semibold">Прямой канал связи</span>
-        <h2 class="text-3xl sm:text-4xl font-extrabold text-white font-title cyan-text-gradient mt-2">Запустить разработку</h2>
-        <p class="text-slate-400 text-sm mt-2">Оставьте запрос — мы свяжемся и составим подробный план архитектуры вашего проекта.</p>
-      </div>
-
-      <form onsubmit="handleContactSubmit(event)" class="space-y-4">
-        <div class="grid sm:grid-cols-2 gap-4">
-          <div>
-            <label class="block text-xs font-mono text-slate-300 mb-1">Ваше имя / Компания</label>
-            <input type="text" required placeholder="Павел" class="w-full px-4 py-3 rounded-xl bg-black/50 border border-white/10 text-white focus:outline-none focus:border-it-cyan transition text-sm">
-          </div>
-          <div>
-            <label class="block text-xs font-mono text-slate-300 mb-1">Телефон / WhatsApp</label>
-            <input type="tel" required placeholder="+7 (___) ___-__-__" class="w-full px-4 py-3 rounded-xl bg-black/50 border border-white/10 text-white focus:outline-none focus:border-it-cyan transition text-sm">
-          </div>
-        </div>
-
-        <div class="grid sm:grid-cols-2 gap-4">
-          <div>
-            <label class="block text-xs font-mono text-slate-300 mb-1">Тип задачи</label>
-            <select class="w-full px-4 py-3 rounded-xl bg-black/50 border border-white/10 text-white focus:outline-none focus:border-it-cyan transition text-sm">
-              <option value="site">Многостраничный корпоративный сайт</option>
-              <option value="crm">Разработка собственной CRM-системы</option>
-              <option value="redesign">Перенос сайта с Битрикса на чистый стек</option>
-              <option value="cloud">Cloud / Настройка серверов и баз данных</option>
-            </select>
-          </div>
-          <div>
-            <label class="block text-xs font-mono text-slate-300 mb-1">Срочность проекта</label>
-            <select class="w-full px-4 py-3 rounded-xl bg-black/50 border border-white/10 text-white focus:outline-none focus:border-it-cyan transition text-sm">
-              <option value="now">Готовы стартовать на этой неделе</option>
-              <option value="month">В течение месяца</option>
-              <option value="consult">Нужна предварительная консультация</option>
-            </select>
-          </div>
-        </div>
-
-        <div>
-          <label class="block text-xs font-mono text-slate-300 mb-1">Кратко о задаче (необязательно)</label>
-          <textarea rows="3" placeholder="Опишите ваши требования или ссылку на текущий сайт..." class="w-full px-4 py-3 rounded-xl bg-black/50 border border-white/10 text-white focus:outline-none focus:border-it-cyan transition text-sm"></textarea>
-        </div>
-
-        <button type="submit" class="w-full py-4 mt-2 rounded-xl font-bold bg-gradient-to-r from-it-cyan via-it-cyanGlow to-it-accent text-black transition-all text-sm uppercase tracking-wider font-mono shadow-xl shadow-it-cyan/25 hover:scale-[1.02]">
-          Отправить заявку инженеру
-        </button>
-      </form>
-    </div>
-  </section>
-
-  <!-- ПОДВАЛ IT LIFE -->
-  <footer id="footer-section" class="border-t border-white/10 bg-black pt-12 pb-36 px-4 text-xs text-slate-500">
-    <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6 text-center md:text-left">
+    <!-- СПИСОК ТРЕКОВ И КАТАЛОГ -->
+    <div class="grid lg:grid-cols-12 gap-8 items-start">
       
-      <!-- Бренд инфо -->
-      <div class="flex items-center gap-3.5">
-        <img src="logo.png" alt="IT Life" class="h-9 w-auto object-contain" onerror="this.src='Logo_безфона.png'">
-        <div class="text-left">
-          <span class="font-title font-bold text-white text-base">IT Life</span>
-          <p class="text-slate-400 text-[11px]">Технологическая лаборатория веб-инженерии и облачных систем</p>
+      <!-- Плейлист (8 колонок) -->
+      <div class="lg:col-span-8 space-y-3" id="playlist-container">
+        <!-- Треки будут отрисованы скриптом -->
+      </div>
+
+      <!-- Боковая панель монетизации (4 колонки) -->
+      <div class="lg:col-span-4 space-y-5">
+        <!-- Блок Telegram бота -->
+        <div class="p-6 rounded-3xl player-glass border-brand-cyan/30">
+          <div class="flex items-center gap-3 mb-4">
+            <div class="p-2.5 rounded-xl bg-brand-cyan/10 text-brand-cyan border border-brand-cyan/30">
+              <i data-lucide="sparkles" class="w-5 h-5"></i>
+            </div>
+            <div>
+              <h3 class="font-title font-bold text-base text-white">VIP Доступ &amp; Лицензии</h3>
+              <p class="text-slate-400 text-xs">Через официального Telegram-бота</p>
+            </div>
+          </div>
+          <ul class="space-y-2.5 text-xs text-slate-300 mb-6 font-mono">
+            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-brand-cyan"></i> Скачивание без потери качества (WAV 24-bit)</li>
+            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-brand-cyan"></i> Коммерческие права для YouTube / Reels</li>
+            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-brand-cyan"></i> Доступ к закрытой библиотеке треков</li>
+          </ul>
+          <button class="w-full py-3.5 rounded-xl font-mono text-xs uppercase font-bold tracking-wider text-black bg-gradient-to-r from-brand-cyan to-brand-violet shadow-lg shadow-cyan-500/20 hover:scale-105 transition">
+            Подключить Telegram Бот
+          </button>
         </div>
-      </div>
 
-      <!-- Копирайт -->
-      <div>
-        © 2026 IT Life. Все права защищены.
-      </div>
-
-      <!-- Зонтичный бренд -->
-      <div class="flex items-center gap-3.5 px-4 py-2.5 rounded-2xl bg-white/[0.03] border border-it-cyan/30 hover:border-it-cyan/60 transition group">
-        <div class="w-2 h-2 rounded-full bg-it-cyan animate-pulse"></div>
-        <div class="text-left leading-snug">
-          <div class="text-slate-400 text-[11px] font-medium tracking-wide">
-            Разработано <span class="text-white font-bold tracking-wider">IT Life</span>
+        <!-- Мини-плашка студии -->
+        <div class="p-5 rounded-2xl bg-white/[0.02] border border-white/5 text-xs text-slate-400 font-mono">
+          <div class="flex items-center gap-2 text-white font-bold mb-1">
+            <i data-lucide="cpu" class="w-4 h-4 text-brand-violet"></i>
+            <span>Кастомный ИИ-саундтрек</span>
           </div>
-          <div class="text-[10px] font-mono tracking-widest text-slate-500 uppercase">
-            a <span class="text-it-cyan font-semibold">PAVLIKneMOROZOFF</span> company
-          </div>
+          <p class="text-[11px] leading-relaxed">Нужен уникальный трек под бренд, игру или рекламу? Напишите автору напрямую.</p>
         </div>
       </div>
 
     </div>
+  </main>
+
+  <!-- ПЛАВАЮЩИЙ НИЖНИЙ ПЛЕЕР (STICKY BOTTOM PLAYER) -->
+  <div class="fixed bottom-0 left-0 right-0 z-50 player-glass border-t border-cyan-500/30 p-4">
+    <div class="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+      
+      <!-- Инфо о текущем треке -->
+      <div class="flex items-center gap-3.5 w-full sm:w-1/3">
+        <div class="relative w-12 h-12 rounded-xl bg-slate-900 border border-brand-cyan/40 overflow-hidden shrink-0 flex items-center justify-center">
+          <img id="current-cover" src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=150" class="w-full h-full object-cover">
+          <!-- Анимированный эквалайзер на обложке -->
+          <div id="cover-bars" class="absolute inset-0 bg-black/60 flex items-center justify-center gap-0.5 opacity-0 transition-opacity">
+            <div class="w-1 bg-brand-cyan rounded-full bar-anim h-3"></div>
+            <div class="w-1 bg-brand-violet rounded-full bar-anim h-5" style="animation-delay: 0.2s;"></div>
+            <div class="w-1 bg-brand-magenta rounded-full bar-anim h-4" style="animation-delay: 0.4s;"></div>
+          </div>
+        </div>
+        <div class="overflow-hidden">
+          <h4 id="current-title" class="font-bold text-sm text-white truncate">Выберите трек для воспроизведения</h4>
+          <p id="current-genre" class="text-[11px] font-mono text-brand-cyan truncate">AI Neural Architecture</p>
+        </div>
+      </div>
+
+      <!-- Кнопки управления и таймлайн -->
+      <div class="flex flex-col items-center gap-1.5 w-full sm:w-1/3">
+        <div class="flex items-center gap-4">
+          <button onclick="prevTrack()" class="text-slate-400 hover:text-white transition"><i data-lucide="skip-back" class="w-4 h-4"></i></button>
+          <button id="play-btn" onclick="togglePlay()" class="w-10 h-10 rounded-full bg-brand-cyan text-black flex items-center justify-center hover:scale-105 transition shadow-lg shadow-cyan-500/30">
+            <i data-lucide="play" class="w-5 h-5 fill-current ml-0.5"></i>
+          </button>
+          <button onclick="nextTrack()" class="text-slate-400 hover:text-white transition"><i data-lucide="skip-forward" class="w-4 h-4"></i></button>
+        </div>
+        <div class="w-full flex items-center gap-2 font-mono text-[10px] text-slate-400">
+          <span id="curr-time">0:00</span>
+          <input id="seek-bar" type="range" min="0" max="100" value="0" class="w-full accent-cyan-400 cursor-pointer h-1 bg-slate-800 rounded">
+          <span id="dur-time">0:00</span>
+        </div>
+      </div>
+
+      <!-- Громкость и скачивание -->
+      <div class="hidden sm:flex items-center justify-end gap-3 w-1/3 font-mono">
+        <i data-lucide="volume-2" class="w-4 h-4 text-slate-400"></i>
+        <input id="vol-slider" type="range" min="0" max="1" step="0.05" value="0.8" class="w-20 accent-cyan-400 cursor-pointer h-1 bg-slate-800 rounded">
+        <button onclick="requestDownload()" class="ml-2 px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 hover:border-brand-cyan text-xs text-brand-cyan transition flex items-center gap-1">
+          <i data-lucide="download" class="w-3.5 h-3.5"></i>
+          <span>WAV</span>
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- СКРЫТЫЙ HTML5 АУДИОТЕГ -->
+  <audio id="audio-engine" preload="metadata"></audio>
+
+  <!-- ПОДВАЛ БРЕНДА -->
+  <footer class="mt-20 border-t border-white/10 pt-8 pb-12 text-center text-xs text-slate-500 font-mono">
+    <p>© 2026 PAVLIKneMOROZOFF. All rights reserved.</p>
+    <p class="text-[10px] text-slate-600 mt-1">Разработано IT Life / a PAVLIKneMOROZOFF company</p>
   </footer>
 
-  <!-- СУПЕР-ПРИПОДНЯТАЯ КНОПКА «НАВЕРХ» (С АВТО-ОТСТУПОМ) -->
-  <button id="back-to-top" aria-label="Подняться вверх" class="fixed bottom-36 sm:bottom-44 right-5 sm:right-6 z-50 p-3 sm:p-3.5 rounded-full bg-it-card/95 text-it-cyan border border-it-cyan/50 shadow-2xl shadow-black hover:bg-it-cyan hover:text-black transition-all duration-300 transform opacity-0 translate-y-10 pointer-events-none group hover:scale-110">
-    <i data-lucide="chevron-up" class="w-5 h-5 sm:w-6 sm:h-6 stroke-[2.5]"></i>
-  </button>
-
-  <!-- СКРИПТЫ -->
   <script>
     lucide.createIcons();
 
-    // 1. Кнопка «Наверх» с защитой от наложения на подвал
-    const backToTopBtn = document.getElementById('back-to-top');
-    const footerSection = document.getElementById('footer-section');
+    // БАЗА ТРЕКОВ (Здесь будут ваши треки с Google Drive или репозитория)
+    const tracks = [
+      {
+        id: 1,
+        title: "Cyber Awakening (2026 Intro)",
+        genre: "Cyberpunk / Darksynth",
+        duration: "2:45",
+        // Ссылка на аудио (пример потока, сюда можно вставлять прямую ссылку на MP3):
+        url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
+        cover: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=150"
+      },
+      {
+        id: 2,
+        title: "Neural Synapse Pulse",
+        genre: "Ambient Chill / AI Lo-Fi",
+        duration: "3:12",
+        url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3",
+        cover: "https://images.unsplash.com/photo-1518770660439-4636190af475?w=150"
+      },
+      {
+        id: 3,
+        title: "Almaty Skyline Night",
+        genre: "Synthwave / Electronic",
+        duration: "3:30",
+        url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3",
+        cover: "https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?w=150"
+      }
+    ];
 
-    window.addEventListener('scroll', () => {
-      if (window.scrollY > 300) {
-        backToTopBtn.classList.remove('opacity-0', 'translate-y-10', 'pointer-events-none');
-        backToTopBtn.classList.add('opacity-100', 'translate-y-0', 'pointer-events-auto');
+    let currentTrackIndex = 0;
+    const audio = document.getElementById('audio-engine');
+    const playBtn = document.getElementById('play-btn');
+    const seekBar = document.getElementById('seek-bar');
+    const volSlider = document.getElementById('vol-slider');
+    const currTimeText = document.getElementById('curr-time');
+    const durTimeText = document.getElementById('dur-time');
+    const coverBars = document.getElementById('cover-bars');
+
+    // Отрисовка списка треков
+    const playlistContainer = document.getElementById('playlist-container');
+    function renderPlaylist() {
+      playlistContainer.innerHTML = tracks.map((t, idx) => `
+        <div onclick="playTrack(${idx})" class="p-3.5 rounded-2xl glass-panel border border-white/5 hover:border-cyan-400/50 flex items-center justify-between cursor-pointer group transition">
+          <div class="flex items-center gap-3.5">
+            <span class="font-mono text-xs text-slate-500 w-4">${idx + 1}</span>
+            <img src="${t.cover}" class="w-10 h-10 rounded-xl object-cover border border-white/10">
+            <div>
+              <h4 class="font-bold text-sm text-white group-hover:text-cyan-400 transition">${t.title}</h4>
+              <span class="text-[11px] font-mono text-slate-400">${t.genre}</span>
+            </div>
+          </div>
+          <div class="flex items-center gap-3 font-mono text-xs text-slate-400">
+            <span>${t.duration}</span>
+            <div class="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-cyan-500 group-hover:text-black transition">
+              <i data-lucide="play" class="w-4 h-4 fill-current"></i>
+            </div>
+          </div>
+        </div>
+      `).join('');
+      lucide.createIcons();
+    }
+    renderPlaylist();
+
+    // Загрузка трека
+    function loadTrack(index) {
+      currentTrackIndex = index;
+      const t = tracks[index];
+      audio.src = t.url;
+      document.getElementById('current-title').textContent = t.title;
+      document.getElementById('current-genre').textContent = t.genre;
+      document.getElementById('current-cover').src = t.cover;
+    }
+
+    function playTrack(index) {
+      loadTrack(index);
+      audio.play();
+      updatePlayIcon(true);
+    }
+
+    function togglePlay() {
+      if (!audio.src) {
+        loadTrack(0);
+      }
+      if (audio.paused) {
+        audio.play();
+        updatePlayIcon(true);
       } else {
-        backToTopBtn.classList.add('opacity-0', 'translate-y-10', 'pointer-events-none');
-        backToTopBtn.classList.remove('opacity-100', 'translate-y-0', 'pointer-events-auto');
+        audio.pause();
+        updatePlayIcon(false);
       }
+    }
 
-      if (footerSection) {
-        const footerRect = footerSection.getBoundingClientRect();
-        const windowHeight = window.innerHeight;
-        if (footerRect.top < windowHeight) {
-          backToTopBtn.style.bottom = `${(windowHeight - footerRect.top) + 20}px`;
-        } else {
-          backToTopBtn.style.bottom = '';
-        }
+    function updatePlayIcon(isPlaying) {
+      if (isPlaying) {
+        playBtn.innerHTML = '<i data-lucide="pause" class="w-5 h-5 fill-current"></i>';
+        coverBars.classList.remove('opacity-0');
+      } else {
+        playBtn.innerHTML = '<i data-lucide="play" class="w-5 h-5 fill-current ml-0.5"></i>';
+        coverBars.classList.add('opacity-0');
+      }
+      lucide.createIcons();
+    }
+
+    function prevTrack() {
+      currentTrackIndex = (currentTrackIndex - 1 + tracks.length) % tracks.length;
+      playTrack(currentTrackIndex);
+    }
+
+    function nextTrack() {
+      currentTrackIndex = (currentTrackIndex + 1) % tracks.length;
+      playTrack(currentTrackIndex);
+    }
+
+    // Синхронизация времени
+    audio.addEventListener('timeupdate', () => {
+      if (audio.duration) {
+        const progress = (audio.currentTime / audio.duration) * 100;
+        seekBar.value = progress;
+        currTimeText.textContent = formatTime(audio.currentTime);
+        durTimeText.textContent = formatTime(audio.duration);
       }
     });
 
-    backToTopBtn.addEventListener('click', () => {
-      window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-      });
+    seekBar.addEventListener('input', () => {
+      audio.currentTime = (seekBar.value / 100) * audio.duration;
     });
 
-    // 2. Обработка формы
-    function handleContactSubmit(e) {
-      e.preventDefault();
-      alert('Заявка принята! Инженер IT Life свяжется с вами в течение 15 минут.');
+    volSlider.addEventListener('input', () => {
+      audio.volume = volSlider.value;
+    });
+
+    function formatTime(sec) {
+      const m = Math.floor(sec / 60);
+      const s = Math.floor(sec % 60);
+      return `${m}:${s < 10 ? '0' : ''}${s}`;
+    }
+
+    function requestDownload() {
+      alert('Для загрузки несжатого WAV-файла без потери качества и получения коммерческой лицензии перейдите в Telegram-бота!');
     }
   </script>
 </body>
