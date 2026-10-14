@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>PAVLIKneMOROZOFF | Creative &amp; Art Production House</title>
   
-  <!-- Favicon -->
   <link rel="icon" type="image/svg+xml" href="logo.svg">
 
   <!-- Tailwind CSS, Three.js, Lucide Icons, Google Fonts -->
@@ -26,7 +25,7 @@
               void: '#030509',
               dark: '#080C16',
               surface: '#0F1626',
-              lime: '#CCFF00',        // Ударный электрический лайм
+              lime: '#CCFF00',
               limeGlow: '#E5FF4D',
               cyan: '#00F0FF',
               magenta: '#FF0055',
@@ -44,36 +43,70 @@
   </script>
 
   <style>
-    /* Живой сетчатый пол с перспективой */
-    .cyber-floor {
-      background-image: 
-        linear-gradient(to right, rgba(204, 255, 0, 0.05) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(204, 255, 0, 0.05) 1px, transparent 1px);
-      background-size: 50px 50px;
+    /* Кастомный курсор: точка в кружочке */
+    @media (pointer: fine) {
+      body {
+        cursor: none;
+      }
+      a, button, input, select, textarea {
+        cursor: none;
+      }
+    }
+    #cursor-dot {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 6px;
+      height: 6px;
+      background: #CCFF00;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: transform 0.05s ease-out;
+    }
+    #cursor-ring {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 32px;
+      height: 32px;
+      border: 1.5px solid rgba(204, 255, 0, 0.6);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9998;
+      transform: translate(-50%, -50%);
+      transition: width 0.2s, height 0.2s, border-color 0.2s, transform 0.12s ease-out;
+      box-shadow: 0 0 12px rgba(204, 255, 0, 0.2);
     }
 
-    /* Кислотно-неоновый градиент текста */
+    /* Фоновая сетка */
+    .cyber-floor {
+      background-image: 
+        linear-gradient(to right, rgba(204, 255, 0, 0.035) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(204, 255, 0, 0.035) 1px, transparent 1px);
+      background-size: 45px 45px;
+    }
+
     .brand-gradient {
-      background: linear-gradient(135deg, #FFFFFF 0%, #CCFF00 40%, #00F0FF 80%, #FF0055 100%);
+      background: linear-gradient(135deg, #FFFFFF 0%, #CCFF00 45%, #00F0FF 80%, #FF0055 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
 
-    /* 3D-Tilt карточки с глянцевым стеклом */
     .glass-tilt {
-      background: rgba(15, 22, 38, 0.7);
+      background: rgba(12, 18, 32, 0.75);
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
       border: 1px solid rgba(255, 255, 255, 0.08);
-      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
     }
     .glass-tilt:hover {
-      border-color: rgba(204, 255, 0, 0.6);
-      box-shadow: 0 20px 45px -10px rgba(204, 255, 0, 0.2);
-      transform: translateY(-6px);
+      border-color: rgba(204, 255, 0, 0.5);
+      box-shadow: 0 16px 40px -10px rgba(204, 255, 0, 0.15);
+      transform: translateY(-4px);
     }
 
-    /* Анимированная бегущая строка */
     @keyframes marquee {
       0% { transform: translateX(0%); }
       100% { transform: translateX(-50%); }
@@ -81,50 +114,53 @@
     .animate-marquee {
       display: flex;
       width: 200%;
-      animation: marquee 22s linear infinite;
+      animation: marquee 24s linear infinite;
     }
     .animate-marquee:hover {
       animation-play-state: paused;
     }
 
     /* Живые полоски спектра */
-    .eq-bar {
-      animation: bounceBar 1.2s ease-in-out infinite alternate;
+    .spec-bar {
+      display: inline-block;
+      width: 3px;
+      border-radius: 9999px;
+      background: linear-gradient(180deg, #CCFF00 0%, #00F0FF 50%, #FF0055 100%);
+      animation: barJump 1s ease-in-out infinite alternate;
     }
-    @keyframes bounceBar {
-      0% { height: 15%; }
-      50% { height: 95%; }
-      100% { height: 35%; }
+    @keyframes barJump {
+      0% { height: 15%; opacity: 0.4; }
+      100% { height: 95%; opacity: 1; }
     }
   </style>
 </head>
 <body class="bg-brand-void text-slate-100 font-sans antialiased selection:bg-brand-lime selection:text-black relative cyber-floor overflow-x-hidden">
 
-  <!-- АУДИОПОТОКИ (ФОНОВЫЙ КОСМИЧЕСКИЙ ЭМБИЕНТ И ПЛЕЕР) -->
-  <audio id="cosmic-ambient" loop preload="none" src="https://cdn.pixabay.com/download/audio/2022/05/16/audio_c97e1b5b50.mp3?filename=deep-space-meditation-111157.mp3"></audio>
-  <audio id="demo-player" preload="none" src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_c8bbf73e67.mp3?filename=cyberpunk-2099-10701.mp3"></audio>
+  <!-- КАСТОМНЫЙ КУРСОР (ТОЧЕЧКА В КРУЖОЧКЕ) -->
+  <div id="cursor-dot"></div>
+  <div id="cursor-ring"></div>
 
-  <!-- 3D ХОЛСТ THREE.JS (ИНТЕРАКТИВНЫЙ ФОН) -->
-  <div id="three-canvas-container" class="fixed inset-0 pointer-events-none z-0 opacity-70"></div>
+  <!-- 3D ХОЛСТ THREE.JS -->
+  <div id="three-canvas-container" class="fixed inset-0 pointer-events-none z-0"></div>
 
   <!-- ШАПКА PRODUCTION HOUSE -->
-  <header class="sticky top-0 z-50 bg-brand-void/85 backdrop-blur-2xl border-b border-white/10 px-4 py-4">
+  <header class="sticky top-0 z-50 bg-brand-void/85 backdrop-blur-2xl border-b border-white/10 px-4 py-3.5">
     <div class="max-w-7xl mx-auto flex justify-between items-center">
       
       <!-- Логотип -->
       <a href="index.html" class="flex items-center gap-3.5 group">
-        <div class="relative w-11 h-11 rounded-2xl bg-brand-lime p-0.5 shadow-lg shadow-brand-lime/30 group-hover:rotate-6 transition-all duration-300">
+        <div class="relative w-10 h-10 rounded-2xl bg-brand-lime p-0.5 shadow-lg shadow-brand-lime/25 group-hover:rotate-6 transition-all duration-300">
           <div class="w-full h-full bg-brand-void rounded-[14px] flex items-center justify-center">
-            <i data-lucide="flame" class="w-6 h-6 text-brand-lime"></i>
+            <i data-lucide="flame" class="w-5 h-5 text-brand-lime"></i>
           </div>
         </div>
         <div>
-          <span class="block font-display text-xl sm:text-2xl font-black tracking-tight text-white">PAVLIKneMOROZOFF</span>
+          <span class="block font-display text-lg sm:text-xl font-black tracking-tight text-white leading-tight">PAVLIKneMOROZOFF</span>
           <span class="block text-[9px] font-mono tracking-widest text-brand-lime uppercase font-bold">Creative &amp; Art Production House</span>
         </div>
       </a>
 
-      <!-- Навигация по 4 кластерам -->
+      <!-- Меню кластеров -->
       <nav class="hidden xl:flex items-center gap-7 text-xs font-mono font-bold uppercase tracking-wider text-slate-300">
         <a href="#media-cluster" class="hover:text-brand-lime transition flex items-center gap-1.5">
           <i data-lucide="play-circle" class="w-4 h-4 text-brand-cyan"></i> Медиатека
@@ -140,10 +176,9 @@
         </a>
       </nav>
 
-      <!-- Правая панель: Звук + Кнопка старта -->
+      <!-- Правая панель: Космический звук + CTA -->
       <div class="flex items-center gap-3">
-        <!-- КНОПКА ДИНАМИКА (КОСМИЧЕСКИЙ ЭМБИЕНТ) -->
-        <button id="cosmic-sound-toggle" title="Включить космический эмбиент" class="w-10 h-10 rounded-xl bg-white/5 border border-white/10 hover:border-brand-lime text-slate-300 hover:text-brand-lime flex items-center justify-center transition">
+        <button id="cosmic-sound-toggle" title="Включить космическую музыку" class="w-10 h-10 rounded-xl bg-white/5 border border-white/10 hover:border-brand-lime text-slate-300 hover:text-brand-lime flex items-center justify-center transition">
           <i id="cosmic-sound-icon" data-lucide="volume-x" class="w-5 h-5"></i>
         </button>
 
@@ -156,20 +191,20 @@
     </div>
   </header>
 
-  <!-- БЕГУЩАЯ КИНЕТИЧЕСКАЯ СТРОКА -->
-  <div class="bg-brand-lime text-black py-2 overflow-hidden border-y border-black font-mono font-black text-xs uppercase tracking-widest relative z-20">
+  <!-- БЕГУЩАЯ СТРОКА -->
+  <div class="bg-brand-lime text-black py-1.5 overflow-hidden border-y border-black font-mono font-black text-[11px] uppercase tracking-widest relative z-20">
     <div class="animate-marquee whitespace-nowrap">
       <span>★ NEURAL AUDIO HUB ★ CINEMATIC LYRICS ★ BESPOKE FAIRY TALES ★ 3D ART PRINTING ★ PAVLIKneMOROZOFF PRODUCTION ★ CUSTOM BEATS &amp; TRACKS ★ ANIMATION WORLDS ★ IT LIFE BACKED ★</span>
       <span>★ NEURAL AUDIO HUB ★ CINEMATIC LYRICS ★ BESPOKE FAIRY TALES ★ 3D ART PRINTING ★ PAVLIKneMOROZOFF PRODUCTION ★ CUSTOM BEATS &amp; TRACKS ★ ANIMATION WORLDS ★ IT LIFE BACKED ★</span>
     </div>
   </div>
 
-  <!-- 1. HERO BLOCK С 3D ПЕРСПЕКТИВОЙ -->
-  <section class="relative z-10 pt-20 pb-20 px-4 min-h-[82vh] flex items-center justify-center">
+  <!-- 1. HERO BLOCK -->
+  <section class="relative z-10 pt-16 pb-16 px-4 min-h-[80vh] flex items-center justify-center">
     <div class="max-w-6xl mx-auto text-center">
       
-      <div class="inline-flex items-center gap-3 px-5 py-2 rounded-full border border-brand-lime/50 bg-brand-lime/10 text-brand-lime text-xs font-mono font-bold mb-8 shadow-lg shadow-brand-lime/10">
-        <span class="w-2.5 h-2.5 rounded-full bg-brand-lime animate-ping"></span>
+      <div class="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full border border-brand-lime/40 bg-brand-lime/10 text-brand-lime text-xs font-mono font-bold mb-6">
+        <span class="w-2 h-2 rounded-full bg-brand-lime animate-ping"></span>
         <span>CREATIVE &amp; ART PRODUCTION HOUSE • 2026</span>
       </div>
 
@@ -178,45 +213,53 @@
         <span class="brand-gradient">Без Границ</span> &amp; Шаблонов
       </h1>
 
-      <p class="max-w-3xl mx-auto text-base sm:text-xl text-slate-300 font-light leading-relaxed mb-10">
+      <p class="max-w-3xl mx-auto text-base sm:text-lg text-slate-300 font-light leading-relaxed mb-8">
         Создаем и продюсируем мультимодальный авторский контент: от нейросетевых треков и сонграйтинга до персональных детских сказок и высокоточной 3D-печати арт-объектов.
       </p>
 
-      <!-- ИНТЕРАКТИВНЫЙ МИНИ-ПЛЕЕР НА ПЕРВОМ ЭКРАНЕ -->
-      <div class="max-w-2xl mx-auto p-4 rounded-3xl glass-tilt border-brand-cyan/40 mb-12 shadow-2xl relative overflow-hidden">
-        <div class="flex items-center justify-between gap-4">
-          <div class="flex items-center gap-3.5">
-            <div class="w-12 h-12 rounded-2xl bg-brand-cyan/20 border border-brand-cyan/50 flex items-center justify-center text-brand-cyan shrink-0">
-              <i data-lucide="disc-3" class="w-6 h-6 animate-spin" style="animation-duration: 6s;"></i>
+      <!-- ПРЕМИАЛЬНЫЙ ШИРОКИЙ ПЛЕЕР (КАК В ПЕРВОЙ ВЕРСИИ) -->
+      <div class="max-w-3xl mx-auto p-4 sm:p-5 rounded-3xl glass-tilt border-cyan-500/40 shadow-2xl relative mb-10 text-left">
+        <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+          
+          <div class="flex items-center gap-4 w-full sm:w-auto">
+            <div class="w-12 h-12 rounded-2xl bg-brand-cyan/15 border border-brand-cyan/40 flex items-center justify-center text-brand-cyan shrink-0">
+              <i data-lucide="disc-3" class="w-6 h-6 animate-spin" style="animation-duration: 7s;"></i>
             </div>
-            <div class="text-left overflow-hidden">
-              <div class="text-[10px] font-mono text-brand-lime uppercase tracking-widest font-bold">Демо-витрина студии</div>
-              <h4 id="demo-track-title" class="text-sm font-bold text-white truncate">Cyber Pulse: Origin (Official Preview)</h4>
-              <p class="text-[11px] font-mono text-slate-400 truncate">Cinematic Cyberpunk / Hybrid Production</p>
+            <div class="overflow-hidden">
+              <span class="text-[10px] font-mono text-brand-lime uppercase tracking-widest font-bold block mb-0.5">Демо-витрина студии</span>
+              <h4 class="text-sm font-bold text-white truncate">Cyber Pulse: Origin 2026 (Demo Master)</h4>
+              <p class="text-[11px] font-mono text-slate-400 truncate">Hybrid Cinematic / Synthwave</p>
             </div>
           </div>
 
-          <!-- Эквалайзер -->
-          <div id="demo-eq-bars" class="hidden sm:flex items-center gap-1 h-6 shrink-0 opacity-40 transition-opacity">
-            <div class="w-1 bg-brand-lime rounded-full eq-bar h-2"></div>
-            <div class="w-1 bg-brand-cyan rounded-full eq-bar h-5" style="animation-delay: 0.2s;"></div>
-            <div class="w-1 bg-brand-magenta rounded-full eq-bar h-3" style="animation-delay: 0.4s;"></div>
-            <div class="w-1 bg-brand-violet rounded-full eq-bar h-6" style="animation-delay: 0.1s;"></div>
+          <!-- Полноразмерный живой спектр -->
+          <div id="spectrum-bars" class="flex items-center gap-1 h-7 px-3 py-1 bg-black/40 rounded-xl border border-white/5 opacity-50 transition-opacity">
+            <span class="spec-bar" style="animation-delay: 0.1s; height: 35%;"></span>
+            <span class="spec-bar" style="animation-delay: 0.3s; height: 75%;"></span>
+            <span class="spec-bar" style="animation-delay: 0.05s; height: 45%;"></span>
+            <span class="spec-bar" style="animation-delay: 0.4s; height: 90%;"></span>
+            <span class="spec-bar" style="animation-delay: 0.2s; height: 60%;"></span>
+            <span class="spec-bar" style="animation-delay: 0.5s; height: 85%;"></span>
+            <span class="spec-bar" style="animation-delay: 0.15s; height: 40%;"></span>
+            <span class="spec-bar" style="animation-delay: 0.35s; height: 95%;"></span>
+            <span class="spec-bar" style="animation-delay: 0.25s; height: 65%;"></span>
+            <span class="spec-bar" style="animation-delay: 0.45s; height: 50%;"></span>
           </div>
 
-          <div class="flex items-center gap-2">
+          <div class="flex items-center gap-2 w-full sm:w-auto justify-end">
             <button id="demo-play-btn" onclick="toggleDemoTrack()" class="px-5 py-2.5 rounded-xl bg-brand-cyan text-black font-mono text-xs font-bold uppercase tracking-wider hover:bg-white transition flex items-center gap-2 shadow-lg shadow-cyan-500/20">
               <i id="demo-play-icon" data-lucide="play" class="w-4 h-4 fill-current"></i>
-              <span id="demo-play-text">Слушать</span>
+              <span id="demo-play-text">Слушать сэмпл</span>
             </button>
             <a href="media/music.html" class="p-2.5 rounded-xl bg-white/5 border border-white/10 hover:border-brand-cyan text-slate-300 hover:text-white transition" title="Вся медиатека">
               <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
             </a>
           </div>
+
         </div>
       </div>
 
-      <!-- Быстрый выбор вектора -->
+      <!-- Кнопки быстрых переходов -->
       <div class="flex flex-wrap items-center justify-center gap-3 text-xs font-mono font-bold">
         <a href="#media-cluster" class="px-5 py-3 rounded-2xl bg-white/5 border border-white/10 hover:border-brand-cyan text-white transition flex items-center gap-2">
           <i data-lucide="music" class="w-4 h-4 text-brand-cyan"></i> Смотреть медиа
@@ -236,69 +279,60 @@
   </section>
 
   <!-- 2. КЛАСТЕР 01: СЛУШАТЬ И СМОТРЕТЬ -->
-  <section id="media-cluster" class="py-24 px-4 border-t border-white/10 relative z-10 bg-brand-dark/40">
+  <section id="media-cluster" class="py-20 px-4 border-t border-white/10 relative z-10 bg-brand-dark/40">
     <div class="max-w-7xl mx-auto">
       
-      <div class="flex flex-col md:flex-row md:items-end justify-between mb-12">
+      <div class="flex flex-col md:flex-row md:items-end justify-between mb-10">
         <div>
           <span class="text-brand-cyan text-xs font-mono uppercase tracking-widest font-bold">Кластер 01 // Медиатека</span>
-          <h2 class="text-3xl sm:text-5xl font-display font-black text-white mt-2 uppercase">Слушать &amp; Смотреть</h2>
+          <h2 class="text-3xl sm:text-5xl font-display font-black text-white mt-1 uppercase">Слушать &amp; Смотреть</h2>
         </div>
-        <p class="text-slate-400 text-xs sm:text-sm font-mono mt-2 md:mt-0 max-w-md">Бесплатный открытый стриминг авторских релизов и саундтреков</p>
+        <p class="text-slate-400 text-xs sm:text-sm font-mono mt-2 md:mt-0">Стриминг авторских релизов и саундтреков</p>
       </div>
 
       <div class="grid md:grid-cols-3 gap-6">
         
-        <!-- Музыка -->
         <a href="media/music.html" class="glass-tilt rounded-3xl p-7 flex flex-col justify-between group">
           <div>
-            <div class="w-14 h-14 rounded-2xl bg-brand-cyan/10 border border-brand-cyan/40 flex items-center justify-center text-brand-cyan mb-6 group-hover:scale-110 transition">
-              <i data-lucide="disc" class="w-7 h-7"></i>
+            <div class="w-12 h-12 rounded-2xl bg-brand-cyan/10 border border-brand-cyan/40 flex items-center justify-center text-brand-cyan mb-5 group-hover:scale-110 transition">
+              <i data-lucide="disc" class="w-6 h-6"></i>
             </div>
             <span class="text-[10px] font-mono uppercase tracking-widest text-brand-cyan font-bold block mb-1">AI Sound Lab</span>
-            <h3 class="text-2xl font-display font-black text-white mb-3 group-hover:text-brand-cyan transition uppercase">Музыка &amp; Треки</h3>
-            <p class="text-slate-400 text-xs leading-relaxed">
-              Инструментальные кинематографичные релизы, эмбиент, саунд-дизайн для игр, видео и стримов.
-            </p>
+            <h3 class="text-2xl font-display font-black text-white mb-2 group-hover:text-brand-cyan transition uppercase">Музыка &amp; Треки</h3>
+            <p class="text-slate-400 text-xs leading-relaxed">Инструментальные кинематографичные релизы, эмбиент, саунд-дизайн для игр, кино и стримов.</p>
           </div>
-          <div class="mt-8 pt-4 border-t border-white/10 flex items-center justify-between text-xs font-mono font-bold text-brand-cyan">
-            <span>Открыть неоновый плеер</span>
+          <div class="mt-6 pt-4 border-t border-white/10 flex items-center justify-between text-xs font-mono font-bold text-brand-cyan">
+            <span>В аудиоплеер</span>
             <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition"></i>
           </div>
         </a>
 
-        <!-- Песни -->
         <a href="media/songs.html" class="glass-tilt rounded-3xl p-7 flex flex-col justify-between group">
           <div>
-            <div class="w-14 h-14 rounded-2xl bg-brand-magenta/10 border border-brand-magenta/40 flex items-center justify-center text-brand-magenta mb-6 group-hover:scale-110 transition">
-              <i data-lucide="mic" class="w-7 h-7"></i>
+            <div class="w-12 h-12 rounded-2xl bg-brand-magenta/10 border border-brand-magenta/40 flex items-center justify-center text-brand-magenta mb-5 group-hover:scale-110 transition">
+              <i data-lucide="mic" class="w-6 h-6"></i>
             </div>
             <span class="text-[10px] font-mono uppercase tracking-widest text-brand-magenta font-bold block mb-1">Vocal Releases</span>
-            <h3 class="text-2xl font-display font-black text-white mb-3 group-hover:text-brand-magenta transition uppercase">Песни &amp; Синглы</h3>
-            <p class="text-slate-400 text-xs leading-relaxed">
-              Законченные вокальные композиции со смыслом, стилистические эксперименты от лирики до мощных битов.
-            </p>
+            <h3 class="text-2xl font-display font-black text-white mb-2 group-hover:text-brand-magenta transition uppercase">Песни &amp; Синглы</h3>
+            <p class="text-slate-400 text-xs leading-relaxed">Вокальные релизы, глубокая смысловая лирика и смелые стилевые эксперименты.</p>
           </div>
-          <div class="mt-8 pt-4 border-t border-white/10 flex items-center justify-between text-xs font-mono font-bold text-brand-magenta">
+          <div class="mt-6 pt-4 border-t border-white/10 flex items-center justify-between text-xs font-mono font-bold text-brand-magenta">
             <span>Слушать синглы</span>
             <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition"></i>
           </div>
         </a>
 
-        <!-- Клипы -->
         <a href="media/clips.html" class="glass-tilt rounded-3xl p-7 flex flex-col justify-between group">
           <div>
-            <div class="w-14 h-14 rounded-2xl bg-brand-lime/10 border border-brand-lime/40 flex items-center justify-center text-brand-lime mb-6 group-hover:scale-110 transition">
-              <i data-lucide="film" class="w-7 h-7"></i>
+            <div class="w-12 h-12 rounded-2xl bg-brand-lime/10 border border-brand-lime/40 flex items-center justify-center text-brand-lime mb-5 group-hover:scale-110 transition">
+              <i data-lucide="film" class="w-6 h-6"></i>
             </div>
             <span class="text-[10px] font-mono uppercase tracking-widest text-brand-lime font-bold block mb-1">Visual Art</span>
-            <h3 class="text-2xl font-display font-black text-white mb-3 group-hover:text-brand-lime transition uppercase">Видео &amp; Клипы</h3>
-            <p class="text-slate-400 text-xs leading-relaxed">
-              Экранизации песен, футуристические музыкальные видео, вижуалы и генеративный видео-арт.
-            </p>
+            <h3 class="text-2xl font-display font-black text-white mb-2 group-hover:text-brand-lime transition uppercase">Видео &amp; Клипы</h3>
+            <p class="text-slate-400 text-xs leading-relaxed">Экранизации песен, музыкальные вижуалы, концепт-видео и генеративный арт.</p>
           </div>
-          <div class="mt-8 pt-4 border-t border-white/10 flex items-center justify-between text-xs font-mono font-bold text-brand-lime">
-            <span>Смотреть клипы</span>
+          <div class="mt-6 pt-4 border-t border-white/10 flex items-center justify-between text-xs font-mono font-bold text-brand-lime">
+            <span>Смотреть видео</span>
             <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition"></i>
           </div>
         </a>
@@ -308,13 +342,13 @@
   </section>
 
   <!-- 3. КЛАСТЕР 02: ТВОРЧЕСТВО НА ЗАКАЗ -->
-  <section id="orders-cluster" class="py-24 px-4 border-t border-white/10 relative z-10">
+  <section id="orders-cluster" class="py-20 px-4 border-t border-white/10 relative z-10">
     <div class="max-w-7xl mx-auto">
       
-      <div class="flex flex-col md:flex-row md:items-end justify-between mb-12">
+      <div class="flex flex-col md:flex-row md:items-end justify-between mb-10">
         <div>
           <span class="text-brand-magenta text-xs font-mono uppercase tracking-widest font-bold">Кластер 02 // Продюсирование</span>
-          <h2 class="text-3xl sm:text-5xl font-display font-black text-white mt-2 uppercase">Творчество на Заказ</h2>
+          <h2 class="text-3xl sm:text-5xl font-display font-black text-white mt-1 uppercase">Творчество на Заказ</h2>
         </div>
         <a href="#contact" class="text-xs font-mono text-brand-lime hover:underline mt-2 md:mt-0 flex items-center gap-1 font-bold">
           Заполнить творческий бриф <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
@@ -323,40 +357,40 @@
 
       <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
         
-        <a href="orders/poems.html" class="glass-tilt rounded-2xl p-6 flex flex-col justify-between group">
+        <a href="orders/poems.html" class="glass-tilt rounded-2xl p-5 flex flex-col justify-between group">
           <div>
-            <div class="text-brand-magenta mb-4"><i data-lucide="feather" class="w-6 h-6"></i></div>
+            <div class="text-brand-magenta mb-3"><i data-lucide="feather" class="w-6 h-6"></i></div>
             <h4 class="font-display font-bold text-lg text-white mb-2 group-hover:text-brand-magenta transition uppercase">Стихи &amp; Поэмы</h4>
             <p class="text-slate-400 text-xs leading-relaxed">Поэзия к важным датам, признания, поздравления и глубокие авторские поэмы с точным попаданием в характер.</p>
           </div>
-          <span class="text-[11px] font-mono text-brand-magenta font-bold mt-6 block">Подробнее →</span>
+          <span class="text-[11px] font-mono text-brand-magenta font-bold mt-5 block">Подробнее →</span>
         </a>
 
-        <a href="orders/lyrics.html" class="glass-tilt rounded-2xl p-6 flex flex-col justify-between group">
+        <a href="orders/lyrics.html" class="glass-tilt rounded-2xl p-5 flex flex-col justify-between group">
           <div>
-            <div class="text-brand-cyan mb-4"><i data-lucide="file-text" class="w-6 h-6"></i></div>
+            <div class="text-brand-cyan mb-3"><i data-lucide="file-text" class="w-6 h-6"></i></div>
             <h4 class="font-display font-bold text-lg text-white mb-2 group-hover:text-brand-cyan transition uppercase">Тексты песен</h4>
-            <p class="text-slate-400 text-xs leading-relaxed">Профессиональный сонграйтинг под заданный ритм, мелодию или жанр: цепляющие хуки, припевы и рифмы.</p>
+            <p class="text-slate-400 text-xs leading-relaxed">Сонграйтинг под заданный ритм или жанр: цепляющие хуки, припевы и продуманная рифма.</p>
           </div>
-          <span class="text-[11px] font-mono text-brand-cyan font-bold mt-6 block">Подробнее →</span>
+          <span class="text-[11px] font-mono text-brand-cyan font-bold mt-5 block">Подробнее →</span>
         </a>
 
-        <a href="orders/songs.html" class="glass-tilt rounded-2xl p-6 flex flex-col justify-between group border-brand-lime/40">
+        <a href="orders/songs.html" class="glass-tilt rounded-2xl p-5 flex flex-col justify-between group border-brand-lime/40">
           <div>
-            <div class="text-brand-lime mb-4"><i data-lucide="music-2" class="w-6 h-6"></i></div>
+            <div class="text-brand-lime mb-3"><i data-lucide="music-2" class="w-6 h-6"></i></div>
             <h4 class="font-display font-bold text-lg text-white mb-2 group-hover:text-brand-lime transition uppercase">Песни под ключ</h4>
-            <p class="text-slate-400 text-xs leading-relaxed">Полный производственный цикл: написание стихов, аранжировка, вокальная запись, сведение и мастеринг.</p>
+            <p class="text-slate-400 text-xs leading-relaxed">Полный производственный цикл: написание стихов, аранжировка, вокал, сведение и мастеринг.</p>
           </div>
-          <span class="text-[11px] font-mono text-brand-lime font-bold mt-6 block">Подробнее →</span>
+          <span class="text-[11px] font-mono text-brand-lime font-bold mt-5 block">Подробнее →</span>
         </a>
 
-        <a href="orders/clips.html" class="glass-tilt rounded-2xl p-6 flex flex-col justify-between group">
+        <a href="orders/clips.html" class="glass-tilt rounded-2xl p-5 flex flex-col justify-between group">
           <div>
-            <div class="text-brand-violet mb-4"><i data-lucide="video" class="w-6 h-6"></i></div>
+            <div class="text-brand-violet mb-3"><i data-lucide="video" class="w-6 h-6"></i></div>
             <h4 class="font-display font-bold text-lg text-white mb-2 group-hover:text-brand-violet transition uppercase">Клипы &amp; Монтаж</h4>
-            <p class="text-slate-400 text-xs leading-relaxed">Разработка сценария, генерация вижуалов, видеомонтаж и эффекты для вашего сингла или презентации.</p>
+            <p class="text-slate-400 text-xs leading-relaxed">Разработка сценария, генерация вижуалов, видеомонтаж и эффекты для вашего сингла.</p>
           </div>
-          <span class="text-[11px] font-mono text-brand-violet font-bold mt-6 block">Подробнее →</span>
+          <span class="text-[11px] font-mono text-brand-violet font-bold mt-5 block">Подробнее →</span>
         </a>
 
       </div>
@@ -364,12 +398,12 @@
   </section>
 
   <!-- 4. КЛАСТЕР 03: ДЕТСКОЕ НАПРАВЛЕНИЕ -->
-  <section id="kids-cluster" class="py-24 px-4 border-t border-white/10 relative z-10 bg-brand-dark/50">
+  <section id="kids-cluster" class="py-20 px-4 border-t border-white/10 relative z-10 bg-brand-dark/50">
     <div class="max-w-7xl mx-auto">
       
-      <div class="text-center max-w-3xl mx-auto mb-16">
+      <div class="text-center max-w-3xl mx-auto mb-12">
         <span class="text-brand-violet text-xs font-mono uppercase tracking-widest font-bold">Кластер 03 // Персональные вселенные</span>
-        <h2 class="text-3xl sm:text-5xl font-display font-black text-white mt-2 uppercase">Детская Студия</h2>
+        <h2 class="text-3xl sm:text-5xl font-display font-black text-white mt-1 uppercase">Детская Студия</h2>
         <p class="text-slate-400 text-xs sm:text-base mt-2">
           Создаем персонализированные произведения, где главным героем становится ваш ребёнок.
         </p>
@@ -377,15 +411,15 @@
 
       <div class="grid md:grid-cols-3 gap-6">
         
-        <div class="glass-tilt rounded-3xl p-8 flex flex-col justify-between group">
+        <div class="glass-tilt rounded-3xl p-7 flex flex-col justify-between group">
           <div>
-            <div class="w-14 h-14 rounded-2xl bg-brand-violet/10 border border-brand-violet/40 flex items-center justify-center text-brand-violet mb-6">
-              <i data-lucide="book-marked" class="w-7 h-7"></i>
+            <div class="w-12 h-12 rounded-2xl bg-brand-violet/10 border border-brand-violet/40 flex items-center justify-center text-brand-violet mb-5">
+              <i data-lucide="book-marked" class="w-6 h-6"></i>
             </div>
             <span class="text-[10px] font-mono uppercase tracking-widest text-brand-violet font-bold block mb-1">Подарки &amp; Планеры</span>
-            <h3 class="text-2xl font-display font-black text-white mb-3 uppercase">Именная полиграфия</h3>
+            <h3 class="text-2xl font-display font-black text-white mb-2 uppercase">Именная полиграфия</h3>
             <p class="text-slate-400 text-xs leading-relaxed mb-6">
-              Дизайнерские блокноты, планеры развития и настенные календари с фотографиями ребёнка и персонализированным оформлением.
+              Дизайнерские блокноты, развивающие планеры и календари с фотографиями ребёнка и персональным оформлением.
             </p>
           </div>
           <a href="kids/stationery.html" class="inline-flex items-center gap-2 text-xs font-mono font-bold text-brand-violet hover:text-white transition">
@@ -393,18 +427,18 @@
           </a>
         </div>
 
-        <div class="glass-tilt rounded-3xl p-8 flex flex-col justify-between group border-brand-lime/50 shadow-2xl shadow-brand-lime/5 relative">
+        <div class="glass-tilt rounded-3xl p-7 flex flex-col justify-between group border-brand-lime/50 relative">
           <div class="absolute top-4 right-4 px-3 py-1 rounded-full bg-brand-lime text-black font-mono text-[9px] font-black uppercase">
             Хит заказов
           </div>
           <div>
-            <div class="w-14 h-14 rounded-2xl bg-brand-lime/10 border border-brand-lime/40 flex items-center justify-center text-brand-lime mb-6">
-              <i data-lucide="book-open" class="w-7 h-7"></i>
+            <div class="w-12 h-12 rounded-2xl bg-brand-lime/10 border border-brand-lime/40 flex items-center justify-center text-brand-lime mb-5">
+              <i data-lucide="book-open" class="w-6 h-6"></i>
             </div>
             <span class="text-[10px] font-mono uppercase tracking-widest text-brand-lime font-bold block mb-1">Авторские сказки</span>
-            <h3 class="text-2xl font-display font-black text-white mb-3 uppercase">Именные арт-книги</h3>
+            <h3 class="text-2xl font-display font-black text-white mb-2 uppercase">Именные арт-книги</h3>
             <p class="text-slate-400 text-xs leading-relaxed mb-6">
-              Индивидуальная иллюстрированная книга со сказкой, написанной специально для ребёнка. Он — главный персонаж захватывающей доброй истории.
+              Иллюстрированная книга со сказкой, написанной специально для ребёнка. Он — главный персонаж захватывающей доброй истории.
             </p>
           </div>
           <a href="kids/books.html" class="inline-flex items-center gap-2 text-xs font-mono font-bold text-brand-lime hover:text-white transition">
@@ -412,13 +446,13 @@
           </a>
         </div>
 
-        <div class="glass-tilt rounded-3xl p-8 flex flex-col justify-between group">
+        <div class="glass-tilt rounded-3xl p-7 flex flex-col justify-between group">
           <div>
-            <div class="w-14 h-14 rounded-2xl bg-brand-cyan/10 border border-brand-cyan/40 flex items-center justify-center text-brand-cyan mb-6">
-              <i data-lucide="clapperboard" class="w-7 h-7"></i>
+            <div class="w-12 h-12 rounded-2xl bg-brand-cyan/10 border border-brand-cyan/40 flex items-center justify-center text-brand-cyan mb-5">
+              <i data-lucide="clapperboard" class="w-6 h-6"></i>
             </div>
             <span class="text-[10px] font-mono uppercase tracking-widest text-brand-cyan font-bold block mb-1">Анимация &amp; Озвучка</span>
-            <h3 class="text-2xl font-display font-black text-white mb-3 uppercase">Именной мультфильм</h3>
+            <h3 class="text-2xl font-display font-black text-white mb-2 uppercase">Именной мультфильм</h3>
             <p class="text-slate-400 text-xs leading-relaxed mb-6">
               Анимационный ролик с персонажем, воссоздающим внешность ребёнка, с профессиональным дубляжем и индивидуальным саундтреком.
             </p>
@@ -433,50 +467,50 @@
   </section>
 
   <!-- 5. КЛАСТЕР 04: 3D ЛАБОРАТОРИЯ & АРТ-ПЕЧАТЬ -->
-  <section id="studio3d-cluster" class="py-24 px-4 border-t border-white/10 relative z-10">
+  <section id="studio3d-cluster" class="py-20 px-4 border-t border-white/10 relative z-10">
     <div class="max-w-7xl mx-auto">
       
-      <div class="flex flex-col md:flex-row md:items-end justify-between mb-12">
+      <div class="flex flex-col md:flex-row md:items-end justify-between mb-10">
         <div>
           <span class="text-brand-lime text-xs font-mono uppercase tracking-widest font-bold">Кластер 04 // Материализация идей</span>
-          <h2 class="text-3xl sm:text-5xl font-display font-black text-white mt-2 uppercase">3D Арт &amp; Печать</h2>
+          <h2 class="text-3xl sm:text-5xl font-display font-black text-white mt-1 uppercase">3D Арт &amp; Печать</h2>
         </div>
         <p class="text-slate-400 text-xs sm:text-sm font-mono mt-2 md:mt-0">Высокоточная полимерная (8K) и послойная печать арт-фигур</p>
       </div>
 
       <div class="grid md:grid-cols-3 gap-6">
         
-        <div class="glass-tilt rounded-3xl p-7 flex flex-col justify-between">
+        <div class="glass-tilt rounded-3xl p-6 flex flex-col justify-between">
           <div>
-            <div class="text-brand-lime mb-4"><i data-lucide="box" class="w-8 h-8"></i></div>
+            <div class="text-brand-lime mb-3"><i data-lucide="box" class="w-7 h-7"></i></div>
             <h4 class="font-display font-bold text-xl text-white mb-2 uppercase">Фигурки персонажей</h4>
             <p class="text-slate-400 text-xs leading-relaxed">
-              Материализация героев детских книг и сказок в виде коллекционных фигурок. Ребёнок получает своего любимого героя в руки.
+              Материализация героев детских книг и сказок в виде коллекционных фигурок.
             </p>
           </div>
-          <span class="text-xs font-mono text-brand-lime font-bold mt-6">Детализация до 28 микрон</span>
+          <span class="text-xs font-mono text-brand-lime font-bold mt-5">Детализация до 28 микрон</span>
         </div>
 
-        <div class="glass-tilt rounded-3xl p-7 flex flex-col justify-between border-brand-lime/30">
+        <div class="glass-tilt rounded-3xl p-6 flex flex-col justify-between border-brand-lime/30">
           <div>
-            <div class="text-brand-lime mb-4"><i data-lucide="layers" class="w-8 h-8"></i></div>
+            <div class="text-brand-lime mb-3"><i data-lucide="layers" class="w-7 h-7"></i></div>
             <h4 class="font-display font-bold text-xl text-white mb-2 uppercase">Арт-объекты &amp; Мерч</h4>
             <p class="text-slate-400 text-xs leading-relaxed">
-              Эксклюзивные настольные скульптуры, элементы брендинга, неоновые подставки и дизайнерский мерч студии.
+              Эксклюзивные настольные скульптуры, элементы брендинга и дизайнерский мерч студии.
             </p>
           </div>
-          <span class="text-xs font-mono text-brand-lime font-bold mt-6">Индивидуальная постобработка</span>
+          <span class="text-xs font-mono text-brand-lime font-bold mt-5">Индивидуальная постобработка</span>
         </div>
 
-        <div class="glass-tilt rounded-3xl p-7 flex flex-col justify-between">
+        <div class="glass-tilt rounded-3xl p-6 flex flex-col justify-between">
           <div>
-            <div class="text-brand-lime mb-4"><i data-lucide="cpu" class="w-8 h-8"></i></div>
+            <div class="text-brand-lime mb-3"><i data-lucide="cpu" class="w-7 h-7"></i></div>
             <h4 class="font-display font-bold text-xl text-white mb-2 uppercase">3D Моделирование</h4>
             <p class="text-slate-400 text-xs leading-relaxed">
-              Создание 3D-моделей по эскизам, фотографиям или концепт-артам с подготовкой к серийной или штучной печати.
+              Создание 3D-моделей по эскизам и фото с подготовкой к серийной или штучной печати.
             </p>
           </div>
-          <span class="text-xs font-mono text-brand-lime font-bold mt-6">SLA / FDM технологии</span>
+          <span class="text-xs font-mono text-brand-lime font-bold mt-5">SLA / FDM технологии</span>
         </div>
 
       </div>
@@ -491,24 +525,24 @@
     </div>
   </section>
 
-  <!-- 6. ФОРМА СВЯЗИ И СТАРТА ПРОЕКТА -->
-  <section id="contact" class="py-24 px-4 border-t border-white/10 relative z-10">
-    <div class="max-w-4xl mx-auto glass-tilt rounded-3xl p-8 sm:p-14 border border-brand-lime/40 text-center relative overflow-hidden">
+  <!-- 6. ФОРМА СВЯЗИ -->
+  <section id="contact" class="py-20 px-4 border-t border-white/10 relative z-10">
+    <div class="max-w-4xl mx-auto glass-tilt rounded-3xl p-8 sm:p-12 border border-brand-lime/40 text-center relative overflow-hidden">
       
-      <div class="w-16 h-16 mx-auto rounded-3xl bg-brand-lime/10 border border-brand-lime/40 flex items-center justify-center text-brand-lime mb-6">
-        <i data-lucide="send" class="w-8 h-8"></i>
+      <div class="w-14 h-14 mx-auto rounded-2xl bg-brand-lime/10 border border-brand-lime/40 flex items-center justify-center text-brand-lime mb-4">
+        <i data-lucide="send" class="w-7 h-7"></i>
       </div>
 
-      <h2 class="text-3xl sm:text-5xl font-display font-black text-white uppercase mb-3">Запустить Проект</h2>
-      <p class="text-slate-400 text-xs sm:text-base max-w-xl mx-auto mb-10 font-mono">
-        Напишите нам в Telegram или оставьте бриф: мы рассчитаем сроки, сценарий и предложим концепт реализации.
+      <h2 class="text-3xl sm:text-5xl font-display font-black text-white uppercase mb-2">Запустить Проект</h2>
+      <p class="text-slate-400 text-xs sm:text-base max-w-xl mx-auto mb-8 font-mono">
+        Напишите нам в Telegram: мы рассчитаем сроки, смету и предложим сценарий реализации.
       </p>
 
       <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-        <a href="https://t.me/your_bot" target="_blank" class="w-full sm:w-auto px-8 py-4 rounded-xl font-mono text-xs uppercase font-black tracking-wider bg-brand-lime text-black hover:bg-brand-limeGlow transition flex items-center justify-center gap-2 shadow-xl shadow-brand-lime/30">
+        <a href="https://t.me/your_bot" target="_blank" class="w-full sm:w-auto px-8 py-3.5 rounded-xl font-mono text-xs uppercase font-black tracking-wider bg-brand-lime text-black hover:bg-brand-limeGlow transition flex items-center justify-center gap-2 shadow-xl shadow-brand-lime/25">
           <i data-lucide="message-square" class="w-4 h-4"></i> Написать в Telegram
         </a>
-        <a href="mailto:contact@pavliknemorozoff.art" class="w-full sm:w-auto px-8 py-4 rounded-xl font-mono text-xs uppercase font-bold border border-white/20 hover:border-brand-lime text-white transition flex items-center justify-center gap-2">
+        <a href="mailto:contact@pavliknemorozoff.art" class="w-full sm:w-auto px-8 py-3.5 rounded-xl font-mono text-xs uppercase font-bold border border-white/20 hover:border-brand-lime text-white transition flex items-center justify-center gap-2">
           <i data-lucide="mail" class="w-4 h-4"></i> Отправить email
         </a>
       </div>
@@ -516,24 +550,24 @@
     </div>
   </section>
 
-  <!-- ПОДВАЛ (ХОЛДИНГ PAVLIKneMOROZOFF + IT LIFE)[cite: 1] -->
-  <footer id="footer-section" class="border-t border-white/10 bg-black/95 pt-12 pb-36 px-4 text-xs font-mono text-slate-500 relative z-10">
-    <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6 text-center md:text-left">
+  <!-- КОМПАКТНЫЙ СТРОГИЙ ПОДВАЛ (ИТОГ ФОТО 2) -->
+  <footer id="footer-section" class="border-t border-white/10 bg-black/95 py-6 px-4 text-xs font-mono text-slate-500 relative z-10">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4 text-center md:text-left">
       
       <div>
-        <span class="font-display text-lg font-black text-white block uppercase">PAVLIKneMOROZOFF</span>
-        <p class="text-[11px] text-slate-400 mt-0.5">Creative &amp; Art Production House</p>
-        <p class="text-[10px] text-slate-600 mt-2">© 2026 PAVLIKneMOROZOFF. Все авторские права защищены.</p>
+        <span class="font-display text-base font-black text-white block uppercase tracking-wide">PAVLIKneMOROZOFF</span>
+        <p class="text-[11px] text-slate-400">Creative &amp; Art Production House</p>
+        <p class="text-[10px] text-slate-600 mt-1">© 2026 PAVLIKneMOROZOFF. Все авторские права защищены.</p>
       </div>
 
-      <!-- Фирменная зонтичная плашка IT Life[cite: 1] -->
-      <div class="flex items-center gap-3.5 px-4 py-2.5 rounded-2xl bg-white/[0.03] border border-brand-lime/40 group">
-        <div class="w-2.5 h-2.5 rounded-full bg-brand-lime animate-pulse"></div>
+      <!-- Зонтичная плашка IT Life -->
+      <div class="flex items-center gap-3 px-3.5 py-2 rounded-2xl bg-white/[0.03] border border-brand-lime/40">
+        <div class="w-2 h-2 rounded-full bg-brand-lime animate-pulse"></div>
         <div class="text-left leading-snug font-mono">
           <div class="text-slate-400 text-[11px] font-medium tracking-wide font-sans">
             Инженерная разработка: <span class="text-white font-bold tracking-wider">IT Life</span>
           </div>
-          <div class="text-[10px] tracking-widest text-slate-500 uppercase">
+          <div class="text-[9px] tracking-widest text-slate-500 uppercase">
             A <span class="text-brand-lime font-bold">PAVLIKneMOROZOFF</span> COMPANY
           </div>
         </div>
@@ -542,182 +576,303 @@
     </div>
   </footer>
 
-  <!-- ЛЮБИМАЯ КНОПКА «НАВЕРХ» (С АВТО-ОТСТУПОМ НАД ФУТЕРОМ)[cite: 4] -->
-  <button id="back-to-top" aria-label="Подняться вверх" class="fixed bottom-36 sm:bottom-44 right-5 sm:right-6 z-50 p-3.5 rounded-full bg-brand-surface text-brand-lime border border-brand-lime/50 shadow-2xl shadow-brand-lime/20 hover:bg-brand-lime hover:text-black transition-all duration-300 transform opacity-0 translate-y-10 pointer-events-none group hover:scale-110">
+  <!-- КНОПКА «НАВЕРХ»[cite: 6] -->
+  <button id="back-to-top" aria-label="Подняться вверх" class="fixed bottom-6 right-6 z-50 p-3 rounded-full bg-brand-surface text-brand-lime border border-brand-lime/50 shadow-2xl shadow-black hover:bg-brand-lime hover:text-black transition-all duration-300 transform opacity-0 translate-y-10 pointer-events-none group hover:scale-110">
     <i data-lucide="chevron-up" class="w-5 h-5 stroke-[2.5]"></i>
   </button>
 
-  <!-- СКРИПТЫ: 3D СЦЕНА + АУДИОДВИЖКИ + СКРОЛЛ НАВЕРХ -->
+  <!-- СКРИПТЫ -->
   <script>
     lucide.createIcons();
 
-    // 1. КОСМИЧЕСКИЙ ЭМБИЕНТ НА ИКОНКЕ ДИНАМИКА
-    const cosmicAudio = document.getElementById('cosmic-ambient');
-    const cosmicBtn = document.getElementById('cosmic-sound-toggle');
-    const cosmicIcon = document.getElementById('cosmic-sound-icon');
-    let isCosmicPlaying = false;
+    // 1. КАСТОМНЫЙ КУРСОР (ТОЧКА В КРУЖКЕ)
+    const cursorDot = document.getElementById('cursor-dot');
+    const cursorRing = document.getElementById('cursor-ring');
+    let mouseX = window.innerWidth / 2;
+    let mouseY = window.innerHeight / 2;
+    let ringX = mouseX;
+    let ringY = mouseY;
 
-    cosmicBtn.addEventListener('click', () => {
-      if (cosmicAudio.paused) {
-        cosmicAudio.volume = 0.5;
-        cosmicAudio.play().then(() => {
-          isCosmicPlaying = true;
-          cosmicIcon.setAttribute('data-lucide', 'volume-2');
-          cosmicBtn.classList.add('border-brand-lime', 'text-brand-lime');
-          lucide.createIcons();
-        }).catch(e => console.log('Audio autoplay prevented'));
-      } else {
-        cosmicAudio.pause();
-        isCosmicPlaying = false;
-        cosmicIcon.setAttribute('data-lucide', 'volume-x');
-        cosmicBtn.classList.remove('border-brand-lime', 'text-brand-lime');
-        lucide.createIcons();
+    window.addEventListener('mousemove', (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+      if (cursorDot) {
+        cursorDot.style.left = `${mouseX}px`;
+        cursorDot.style.top = `${mouseY}px`;
       }
     });
 
-    // 2. ДЕМО-ТРЕК ВИТРИНЫ
-    const demoAudio = document.getElementById('demo-player');
+    function renderCursor() {
+      ringX += (mouseX - ringX) * 0.18;
+      ringY += (mouseY - ringY) * 0.18;
+      if (cursorRing) {
+        cursorRing.style.left = `${ringX}px`;
+        cursorRing.style.top = `${ringY}px`;
+      }
+      requestAnimationFrame(renderCursor);
+    }
+    renderCursor();
+
+    // Эффект увеличения курсора на интерактивных элементах
+    document.querySelectorAll('a, button').forEach(el => {
+      el.addEventListener('mouseenter', () => {
+        if (cursorRing) {
+          cursorRing.style.width = '48px';
+          cursorRing.style.height = '48px';
+          cursorRing.style.borderColor = '#00F0FF';
+        }
+      });
+      el.addEventListener('mouseleave', () => {
+        if (cursorRing) {
+          cursorRing.style.width = '32px';
+          cursorRing.style.height = '32px';
+          cursorRing.style.borderColor = 'rgba(204, 255, 0, 0.6)';
+        }
+      });
+    });
+
+    // 2. ГЛУБОКИЙ КОСМИЧЕСКИЙ ЭМБИЕНТ (100% РАБОЧИЙ WEB AUDIO API)
+    let audioCtx = null;
+    let isCosmicPlaying = false;
+    let cosmicNodes = [];
+
+    const cosmicBtn = document.getElementById('cosmic-sound-toggle');
+    const cosmicIcon = document.getElementById('cosmic-sound-icon');
+
+    function startCosmicSound() {
+      if (!audioCtx) {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      }
+      if (audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+
+      const masterGain = audioCtx.createGain();
+      masterGain.gain.setValueAtTime(0.001, audioCtx.currentTime);
+      masterGain.gain.exponentialRampToValueAtTime(0.18, audioCtx.currentTime + 3);
+      masterGain.connect(audioCtx.destination);
+
+      // Частоты космического аккорда (Dm9)
+      const freqs = [55.0, 110.0, 164.81, 220.0, 293.66, 349.23];
+      cosmicNodes = [];
+
+      freqs.forEach((freq, idx) => {
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        const filter = audioCtx.createBiquadFilter();
+
+        osc.type = idx % 2 === 0 ? 'sine' : 'triangle';
+        osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+
+        // LFO для медленного "дыхания" космоса
+        const lfo = audioCtx.createOscillator();
+        const lfoGain = audioCtx.createGain();
+        lfo.frequency.setValueAtTime(0.08 + idx * 0.02, audioCtx.currentTime);
+        lfoGain.gain.setValueAtTime(4.0, audioCtx.currentTime);
+        lfo.connect(osc.frequency);
+        lfo.start();
+
+        filter.type = 'lowpass';
+        filter.frequency.setValueAtTime(450 + idx * 80, audioCtx.currentTime);
+
+        gain.gain.setValueAtTime(0.12 / freqs.length, audioCtx.currentTime);
+
+        osc.connect(filter);
+        filter.connect(gain);
+        gain.connect(masterGain);
+
+        osc.start();
+        cosmicNodes.push(osc, lfo);
+      });
+
+      cosmicNodes.push(masterGain);
+      isCosmicPlaying = true;
+      cosmicIcon.setAttribute('data-lucide', 'volume-2');
+      cosmicBtn.classList.add('border-brand-lime', 'text-brand-lime');
+      lucide.createIcons();
+    }
+
+    function stopCosmicSound() {
+      if (cosmicNodes.length > 0) {
+        const masterGain = cosmicNodes[cosmicNodes.length - 1];
+        if (masterGain && masterGain.gain) {
+          masterGain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 1.2);
+          setTimeout(() => {
+            cosmicNodes.forEach(node => {
+              try { node.stop(); } catch(e){}
+            });
+            cosmicNodes = [];
+          }, 1250);
+        }
+      }
+      isCosmicPlaying = false;
+      cosmicIcon.setAttribute('data-lucide', 'volume-x');
+      cosmicBtn.classList.remove('border-brand-lime', 'text-brand-lime');
+      lucide.createIcons();
+    }
+
+    cosmicBtn.addEventListener('click', () => {
+      if (!isCosmicPlaying) {
+        startCosmicSound();
+      } else {
+        stopCosmicSound();
+      }
+    });
+
+    // 3. ДЕМО-ТРЕК ПЛЕЕРА (АВТОНОМНЫЙ КИБЕРПАНК СИНТЕЗАТОР)
+    let demoCtx = null;
+    let isDemoPlaying = false;
+    let demoTimer = null;
     const demoPlayBtn = document.getElementById('demo-play-btn');
     const demoPlayIcon = document.getElementById('demo-play-icon');
     const demoPlayText = document.getElementById('demo-play-text');
-    const demoEqBars = document.getElementById('demo-eq-bars');
+    const specBars = document.getElementById('spectrum-bars');
+
+    const notes = [146.83, 174.61, 220.0, 261.63, 293.66, 329.63, 349.23, 440.0]; // D minor scale
 
     function toggleDemoTrack() {
-      if (demoAudio.paused) {
-        // При запуске трека мягко приглушаем фоновый космос
-        if (!cosmicAudio.paused) cosmicAudio.volume = 0.15;
-        
-        demoAudio.volume = 0.85;
-        demoAudio.play().then(() => {
-          demoPlayIcon.setAttribute('data-lucide', 'pause');
-          demoPlayText.textContent = 'Пауза';
-          demoPlayBtn.classList.replace('bg-brand-cyan', 'bg-brand-lime');
-          demoEqBars.classList.remove('opacity-40');
-          demoEqBars.classList.add('opacity-100');
-          lucide.createIcons();
-        });
+      if (!isDemoPlaying) {
+        if (!demoCtx) demoCtx = new (window.AudioContext || window.webkitAudioContext)();
+        if (demoCtx.state === 'suspended') demoCtx.resume();
+
+        isDemoPlaying = true;
+        demoPlayIcon.setAttribute('data-lucide', 'pause');
+        demoPlayText.textContent = 'Стоп сэмпл';
+        demoPlayBtn.classList.replace('bg-brand-cyan', 'bg-brand-lime');
+        specBars.classList.replace('opacity-50', 'opacity-100');
+        lucide.createIcons();
+
+        let step = 0;
+        demoTimer = setInterval(() => {
+          if (!isDemoPlaying) return;
+          const osc = demoCtx.createOscillator();
+          const gain = demoCtx.createGain();
+          const filter = demoCtx.createBiquadFilter();
+
+          osc.type = 'sawtooth';
+          const freq = notes[step % notes.length];
+          osc.frequency.setValueAtTime(freq, demoCtx.currentTime);
+
+          filter.type = 'lowpass';
+          filter.frequency.setValueAtTime(800 + (step % 4) * 400, demoCtx.currentTime);
+
+          gain.gain.setValueAtTime(0.08, demoCtx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.001, demoCtx.currentTime + 0.35);
+
+          osc.connect(filter);
+          filter.connect(gain);
+          gain.connect(demoCtx.destination);
+
+          osc.start();
+          osc.stop(demoCtx.currentTime + 0.36);
+
+          step++;
+        }, 180);
+
       } else {
-        demoAudio.pause();
-        if (!cosmicAudio.paused) cosmicAudio.volume = 0.5;
+        isDemoPlaying = false;
+        clearInterval(demoTimer);
         demoPlayIcon.setAttribute('data-lucide', 'play');
-        demoPlayText.textContent = 'Слушать';
+        demoPlayText.textContent = 'Слушать сэмпл';
         demoPlayBtn.classList.replace('bg-brand-lime', 'bg-brand-cyan');
-        demoEqBars.classList.remove('opacity-100');
-        demoEqBars.classList.add('opacity-40');
+        specBars.classList.replace('opacity-100', 'opacity-50');
         lucide.createIcons();
       }
     }
 
-    demoAudio.addEventListener('ended', () => {
-      demoPlayIcon.setAttribute('data-lucide', 'play');
-      demoPlayText.textContent = 'Слушать';
-      demoPlayBtn.classList.replace('bg-brand-lime', 'bg-brand-cyan');
-      demoEqBars.classList.remove('opacity-100');
-      demoEqBars.classList.add('opacity-40');
-      lucide.createIcons();
-    });
-
-    // 3. ФУНКЦИОНАЛЬНАЯ КНОПКА «НАВЕРХ» С ЗАЩИТОЙ ОТ ПЕРЕКРЫТИЯ ПОДВАЛА
-    const backToTopBtn = document.getElementById('back-to-top');
-    const footerSection = document.getElementById('footer-section');
-
-    window.addEventListener('scroll', () => {
-      if (window.scrollY > 300) {
-        backToTopBtn.classList.remove('opacity-0', 'translate-y-10', 'pointer-events-none');
-        backToTopBtn.classList.add('opacity-100', 'translate-y-0', 'pointer-events-auto');
-      } else {
-        backToTopBtn.classList.add('opacity-0', 'translate-y-10', 'pointer-events-none');
-        backToTopBtn.classList.remove('opacity-100', 'translate-y-0', 'pointer-events-auto');
-      }
-
-      if (footerSection) {
-        const footerRect = footerSection.getBoundingClientRect();
-        const windowHeight = window.innerHeight;
-        if (footerRect.top < windowHeight) {
-          backToTopBtn.style.bottom = `${(windowHeight - footerRect.top) + 24}px`;
-        } else {
-          backToTopBtn.style.bottom = '';
-        }
-      }
-    });
-
-    backToTopBtn.addEventListener('click', () => {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
-
-    // 4. ТРЁХМЕРНАЯ СЦЕНА THREE.JS
+    // 4. ТРЁХМЕРНАЯ СЦЕНА THREE.JS (ЯРКИЙ ВРАЩАЮЩИЙСЯ КРИСТАЛЛ С ОРБИТОЙ)
     const container = document.getElementById('three-canvas-container');
     const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
-    camera.position.z = 7;
+    const camera = new THREE.PerspectiveCamera(55, window.innerWidth / window.innerHeight, 0.1, 1000);
+    camera.position.z = 6.5;
 
     const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     container.appendChild(renderer.domElement);
 
-    // Центральный кристалл арт-хаба
-    const crystalGeo = new THREE.IcosahedronGeometry(2, 0);
-    const crystalMat = new THREE.MeshStandardMaterial({
-      color: 0x00F0FF,
-      roughness: 0.1,
-      metalness: 0.9,
-      wireframe: false
-    });
-    const crystal = new THREE.Mesh(crystalGeo, crystalMat);
-    scene.add(crystal);
+    // Группа объектов для общего органичного вращения
+    const rootGroup = new THREE.Group();
+    scene.add(rootGroup);
 
-    // Внешняя защитная сфера
-    const wireGeo = new THREE.IcosahedronGeometry(2.8, 1);
+    // Главный кристалл (Икосаэдр)
+    const crystalGeo = new THREE.IcosahedronGeometry(1.9, 0);
+    const crystalMat = new THREE.MeshPhysicalMaterial({
+      color: 0x00F0FF,
+      emissive: 0x081525,
+      roughness: 0.15,
+      metalness: 0.85,
+      reflectivity: 0.9,
+      clearcoat: 1.0,
+      flatShading: true
+    });
+    const crystalMesh = new THREE.Mesh(crystalGeo, crystalMat);
+    rootGroup.add(crystalMesh);
+
+    // Внешняя защитная кибер-сетка
+    const wireGeo = new THREE.IcosahedronGeometry(2.55, 1);
     const wireMat = new THREE.MeshBasicMaterial({
       color: 0xCCFF00,
       wireframe: true,
       transparent: true,
-      opacity: 0.25
+      opacity: 0.3
     });
-    const wireframeSphere = new THREE.Mesh(wireGeo, wireMat);
-    scene.add(wireframeSphere);
+    const wireMesh = new THREE.Mesh(wireGeo, wireMat);
+    rootGroup.add(wireMesh);
 
-    // Кольцо арт-орбиты
-    const torusGeo = new THREE.TorusGeometry(3.6, 0.04, 16, 100);
-    const torusMat = new THREE.MeshBasicMaterial({ color: 0xFF0055, transparent: true, opacity: 0.4 });
-    const torus = new THREE.Mesh(torusGeo, torusMat);
-    torus.rotation.x = Math.PI / 3;
-    scene.add(torus);
+    // Орбитальное неоновое кольцо
+    const ringGeo = new THREE.TorusGeometry(3.3, 0.035, 16, 100);
+    const ringMat = new THREE.MeshBasicMaterial({
+      color: 0xFF0055,
+      transparent: true,
+      opacity: 0.55
+    });
+    const ringMesh = new THREE.Mesh(ringGeo, ringMat);
+    ringMesh.rotation.x = Math.PI / 2.6;
+    ringMesh.rotation.y = Math.PI / 6;
+    rootGroup.add(ringMesh);
 
     // Освещение
-    const light1 = new THREE.PointLight(0xCCFF00, 2, 50);
-    light1.position.set(5, 5, 5);
-    scene.add(light1);
+    const pointLime = new THREE.PointLight(0xCCFF00, 3, 50);
+    pointLime.position.set(5, 5, 4);
+    scene.add(pointLime);
 
-    const light2 = new THREE.PointLight(0x00F0FF, 2, 50);
-    light2.position.set(-5, -5, 5);
-    scene.add(light2);
+    const pointCyan = new THREE.PointLight(0x00F0FF, 3, 50);
+    pointCyan.position.set(-5, -4, 4);
+    scene.add(pointCyan);
 
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
-    scene.add(ambientLight);
+    const pointPink = new THREE.PointLight(0xFF0055, 2, 50);
+    pointPink.position.set(0, 5, -3);
+    scene.add(pointPink);
 
-    // Интерактив на мышь
-    let mouseX = 0;
-    let mouseY = 0;
+    const ambLight = new THREE.AmbientLight(0xffffff, 0.35);
+    scene.add(ambLight);
+
+    // Реакция на мышь
+    let targetRotX = 0;
+    let targetRotY = 0;
     window.addEventListener('mousemove', (e) => {
-      mouseX = (e.clientX / window.innerWidth) * 2 - 1;
-      mouseY = -(e.clientY / window.innerHeight) * 2 + 1;
+      const nx = (e.clientX / window.innerWidth) * 2 - 1;
+      const ny = -(e.clientY / window.innerHeight) * 2 + 1;
+      targetRotY = nx * 0.45;
+      targetRotX = -ny * 0.45;
     });
 
     function animate3D() {
       requestAnimationFrame(animate3D);
 
-      crystal.rotation.x += 0.005;
-      crystal.rotation.y += 0.008;
+      // Непрерывное фоновое вращение
+      crystalMesh.rotation.x += 0.006;
+      crystalMesh.rotation.y += 0.009;
 
-      wireframeSphere.rotation.x -= 0.003;
-      wireframeSphere.rotation.y -= 0.004;
+      wireMesh.rotation.x -= 0.004;
+      wireMesh.rotation.y -= 0.005;
 
-      torus.rotation.z += 0.004;
+      ringMesh.rotation.z += 0.007;
 
-      crystal.position.x += (mouseX * 0.5 - crystal.position.x) * 0.05;
-      crystal.position.y += (mouseY * 0.5 - crystal.position.y) * 0.05;
+      // Плавное следование за курсором
+      rootGroup.rotation.y += (targetRotY - rootGroup.rotation.y) * 0.05;
+      rootGroup.rotation.x += (targetRotX - rootGroup.rotation.x) * 0.05;
 
       renderer.render(scene, camera);
     }
@@ -727,6 +882,22 @@
       camera.aspect = window.innerWidth / window.innerHeight;
       camera.updateProjectionMatrix();
       renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+
+    // 5. КНОПКА «НАВЕРХ»
+    const backToTopBtn = document.getElementById('back-to-top');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 300) {
+        backToTopBtn.classList.remove('opacity-0', 'translate-y-10', 'pointer-events-none');
+        backToTopBtn.classList.add('opacity-100', 'translate-y-0', 'pointer-events-auto');
+      } else {
+        backToTopBtn.classList.add('opacity-0', 'translate-y-10', 'pointer-events-none');
+        backToTopBtn.classList.remove('opacity-100', 'translate-y-0', 'pointer-events-auto');
+      }
+    });
+
+    backToTopBtn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     });
   </script>
 </body>
