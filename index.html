@@ -90,6 +90,19 @@
     .langs { display: flex; border: 1px solid var(--line); border-radius: 99px; padding: 2px; }
     .langs button { border: 0; padding: 5px 10px; font-size: 11px; font-weight: 700; font-family: 'JetBrains Mono', monospace; }
     .langs [aria-pressed="true"] { background: var(--cyan); color: #000; border-radius: 99px; }
+    
+    /* Кнопка динамика в шапке */
+    .ambient-btn {
+      width: 38px; height: 38px; display: grid; place-items: center; padding: 0;
+      border-radius: 50%; border: 1px solid var(--line); background: rgba(255, 255, 255, 0.04);
+      color: var(--muted); transition: all 0.3s;
+    }
+    .ambient-btn.active {
+      border-color: var(--cyan); color: var(--cyan);
+      box-shadow: 0 0 16px rgba(0, 240, 255, 0.35);
+      background: rgba(0, 240, 255, 0.08);
+    }
+
     .icon-btn { width: 38px; height: 38px; display: grid; place-items: center; padding: 0; }
     .menu-toggle { display: none; }
 
@@ -277,6 +290,9 @@
   <div class="glow-cyan"></div>
   <div class="glow-magenta"></div>
 
+  <!-- СКРЫТЫЙ ТЕГ ДЛЯ ФОНОВОГО ТРЕКА В ШАПКЕ -->
+  <audio id="ambient-audio" loop preload="none" src="assets/audio/Infinite%20Creative%20Universe_v2.mp3"></audio>
+
   <!-- ШАПКА -->
   <header>
     <div class="wrap bar">
@@ -299,6 +315,16 @@
           <button data-lang="kk" aria-pressed="false">ҚАЗ</button>
           <button data-lang="en" aria-pressed="false">EN</button>
         </div>
+
+        <!-- КНОПКА КОЛОНКИ / ДИНАМИКА ДЛЯ ФОНОВОГО ТРЕКА -->
+        <button id="ambient-btn" class="ambient-btn" title="Фоновый саундтрек: Infinite Creative Universe" aria-label="Включить фоновый звук">
+          <svg id="ambient-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+            <line x1="23" y1="9" x2="17" y2="15"></line>
+            <line x1="17" y1="9" x2="23" y2="15"></line>
+          </svg>
+        </button>
+
         <button class="icon-btn" id="access" aria-label="Настройки доступности">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="4" r="2"/><path d="M3 8h18M12 7v7m0-3-5 10m5-10 5 10"/></svg>
         </button>
@@ -546,38 +572,34 @@
 
     let currentLang = 'ru';
 
-    // 4 ТРЕКА И ИХ ИНДИВИДУАЛЬНЫЙ СТИЛЬ ЗВУКОВОЙ ДОРОЖКИ (ПО ВАШЕМУ РЕФЕРЕНСУ 4)
+    // 4 ТРЕКА И ИХ ИНДИВИДУАЛЬНЫЙ СТИЛЬ ЗВУКОВОЙ ДОРОЖКИ
     const tracks = [
       { 
         title: 'Creative Pulse', 
         file: 'creative-pulse', 
         genre: 'Электроника / Творческий импульс',
-        style: 'pulse', // Многослойные волны Cyan -> Pink
-        colors: ['#00F0FF', '#8B5CF6', '#FF007A'],
+        style: 'pulse',
         accent: '#00F0FF'
       },
       { 
         title: 'Neural Steppe', 
         file: 'neural-steppe', 
         genre: 'Кибер-этно / Пространство степи',
-        style: 'steppe', // Песчаные дюны-волны Cyan -> Gold/Amber
-        colors: ['#00F0FF', '#38BDF8', '#F59E0B', '#D97706'],
+        style: 'steppe',
         accent: '#F59E0B'
       },
       { 
         title: 'Digital Rebellion', 
         file: 'digital-rebellion', 
         genre: 'Альтернативная электроника / Энергия',
-        style: 'rebellion', // Пиковый цифровой неоновый эквалайзер
-        colors: ['#8B5CF6', '#C084FC', '#FF007A'],
+        style: 'rebellion',
         accent: '#C084FC'
       },
       { 
         title: 'Beyond the Code', 
         file: 'beyond-the-code', 
         genre: 'Эмбиент / За пределами кода',
-        style: 'space', // Космические парящие кольцевые синусоиды
-        colors: ['#1D4ED8', '#3B82F6', '#00F0FF', '#E0F2FE'],
+        style: 'space',
         accent: '#3B82F6'
       }
     ];
@@ -592,6 +614,40 @@
     const titleEl = document.getElementById('title');
     const genreEl = document.getElementById('genre');
     const coverEl = document.getElementById('cover');
+
+    // Фоновый эмбиент в шапке (Infinite Creative Universe)
+    const ambientAudio = document.getElementById('ambient-audio');
+    const ambientBtn = document.getElementById('ambient-btn');
+    const ambientIcon = document.getElementById('ambient-icon');
+    let isAmbientPlaying = false;
+
+    ambientBtn.addEventListener('click', () => {
+      if (ambientAudio.paused) {
+        // Если играет основной плеер — мягко его останавливаем
+        if (!audio.paused) audio.pause();
+        
+        ambientAudio.volume = 0.5;
+        ambientAudio.play().then(() => {
+          isAmbientPlaying = true;
+          ambientBtn.classList.add('active');
+          ambientIcon.innerHTML = `
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+            <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+          `;
+        }).catch(err => {
+          console.warn('Autoplay prevented or file missing:', err);
+        });
+      } else {
+        ambientAudio.pause();
+        isAmbientPlaying = false;
+        ambientBtn.classList.remove('active');
+        ambientIcon.innerHTML = `
+          <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+          <line x1="23" y1="9" x2="17" y2="15"></line>
+          <line x1="17" y1="9" x2="23" y2="15"></line>
+        `;
+      }
+    });
 
     function applyLocalization(lang) {
       currentLang = lang;
@@ -671,7 +727,19 @@
       genreEl.style.color = tr.accent;
       coverEl.innerHTML = `<img src="assets/images/music/${tr.file}.png" alt="${tr.title}" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%23000%22/><text x=%2250%22 y=%2250%22 fill=%22%2300F0FF%22 font-size=%227%22 text-anchor=%22middle%22>${tr.title}</text></svg>'">`;
       renderPlaylist();
+
       if (autoPlay) {
+        // Если играл фоновый трек в шапке — ставим его на паузу
+        if (!ambientAudio.paused) {
+          ambientAudio.pause();
+          ambientBtn.classList.remove('active');
+          ambientIcon.innerHTML = `
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+            <line x1="23" y1="9" x2="17" y2="15"></line>
+            <line x1="17" y1="9" x2="23" y2="15"></line>
+          `;
+        }
+
         initAudioGraph();
         if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
         audio.play().catch(() => {});
@@ -679,6 +747,17 @@
     }
 
     playBtn.addEventListener('click', () => {
+      // При включении основного плеера глушим фоновый эмбиент
+      if (!ambientAudio.paused) {
+        ambientAudio.pause();
+        ambientBtn.classList.remove('active');
+        ambientIcon.innerHTML = `
+          <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+          <line x1="23" y1="9" x2="17" y2="15"></line>
+          <line x1="17" y1="9" x2="23" y2="15"></line>
+        `;
+      }
+
       initAudioGraph();
       if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
       if (audio.paused) {
@@ -718,7 +797,7 @@
       return `${m}:${sec < 10 ? '0' : ''}${sec}`;
     }
 
-    // ИНДИВИДУАЛЬНАЯ ОТРИСОВКА ЗВУКОВОЙ ДОРОЖКИ (ПО 4 ТИПАМ ВОЛН ИЗ РЕФЕРЕНСА)
+    // ИНДИВИДУАЛЬНАЯ ОТРИСОВКА ЗВУКОВОЙ ДОРОЖКИ (ПО 4 ТИПАМ ВОЛН)
     const waveCanvas = document.getElementById('waves');
     const wctx = waveCanvas.getContext('2d');
 
@@ -735,7 +814,7 @@
         energy = dataArray.reduce((acc, v) => acc + v, 0) / dataArray.length;
       }
 
-      // ТИП 1: CREATIVE PULSE — Плавные неоновые ленты Cyan / Magenta
+      // ТИП 1: CREATIVE PULSE
       if (tr.style === 'pulse') {
         const grad = wctx.createLinearGradient(0, 0, w, 0);
         grad.addColorStop(0, '#00F0FF'); grad.addColorStop(0.5, '#8B5CF6'); grad.addColorStop(1, '#FF007A');
@@ -754,8 +833,7 @@
           wctx.stroke();
         }
       }
-
-      // ТИП 2: NEURAL STEPPE — Двойные переплетающиеся дюны Cyan и Amber/Gold
+      // ТИП 2: NEURAL STEPPE
       else if (tr.style === 'steppe') {
         for (let j = 0; j < 6; j++) {
           wctx.beginPath();
@@ -776,8 +854,7 @@
           wctx.shadowBlur = 0;
         }
       }
-
-      // ТИП 3: DIGITAL REBELLION — Острый цифровой пиковый эквалайзер Magenta/Violet
+      // ТИП 3: DIGITAL REBELLION
       else if (tr.style === 'rebellion') {
         const barCount = 64;
         const barWidth = (w / barCount) - 2;
@@ -796,8 +873,7 @@
         }
         wctx.shadowBlur = 0;
       }
-
-      // ТИП 4: BEYOND THE CODE — Глубокие сферические космические дуги Electric Blue
+      // ТИП 4: BEYOND THE CODE
       else if (tr.style === 'space') {
         const grad = wctx.createLinearGradient(0, 0, w, 0);
         grad.addColorStop(0, '#1D4ED8'); grad.addColorStop(0.5, '#00F0FF'); grad.addColorStop(1, '#3B82F6');
@@ -819,7 +895,7 @@
     }
     drawCustomWave();
 
-    // 3D СЦЕНА THREE.JS: ТОЧНОЕ ВОПЛОЩЕНИЕ КРИСТАЛЛОВ С ОРБИТАМИ И ПОСТАМЕНТОМ (РЕФЕРЕНСЫ 2 И 3)
+    // 3D СЦЕНА THREE.JS
     const container = document.getElementById('scene-container');
     const sceneCanvas = document.getElementById('sculpture');
     const scene = new THREE.Scene();
@@ -829,7 +905,6 @@
     const renderer = new THREE.WebGLRenderer({ canvas: sceneCanvas, alpha: true, antialias: true });
     renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
 
-    // Освещение для кристаллических и металлических граней
     const ambLight = new THREE.AmbientLight(0xffffff, 0.9);
     scene.add(ambLight);
 
@@ -848,7 +923,7 @@
     const masterGroup = new THREE.Group();
     scene.add(masterGroup);
 
-    // Хромированный неоновый постамент (как на фото 2 и 3)
+    // Хромированный неоновый постамент
     const baseGroup = new THREE.Group();
     const baseDiskGeo = new THREE.CylinderGeometry(2.3, 2.5, 0.25, 48);
     const baseDiskMat = new THREE.MeshStandardMaterial({
@@ -869,11 +944,9 @@
 
     masterGroup.add(baseGroup);
 
-    // Группа самого арт-объекта (кристалл + кольца + парящие сферы)
     const artworkGroup = new THREE.Group();
     masterGroup.add(artworkGroup);
 
-    // Материалы
     const chromeCrystalMat = new THREE.MeshPhysicalMaterial({
       color: 0x00F0FF,
       emissive: 0x040814,
@@ -900,40 +973,34 @@
     let floatingBubbles = [];
 
     function buildModel(type) {
-      // Очистка предыдущей геометрии
       while (artworkGroup.children.length > 0) {
         artworkGroup.remove(artworkGroup.children[0]);
       }
       floatingBubbles = [];
 
-      // 1. LIQUID CHROME (Кристалл-Алмаз с орбитами и сферами — фото 2)
+      // 1. LIQUID CHROME
       if (type === 0) {
         const crystalGeo = new THREE.OctahedronGeometry(1.9, 0);
-        // Масштабируем по вертикали для получения высокого ромба-алмаза
         crystalGeo.scale(1, 1.45, 1);
         currentArtMesh = new THREE.Mesh(crystalGeo, chromeCrystalMat);
         artworkGroup.add(currentArtMesh);
 
-        // Внутреннее светящееся ядро
         const coreGeo = new THREE.IcosahedronGeometry(0.85, 0);
         const core = new THREE.Mesh(coreGeo, innerCoreMat);
         currentArtMesh.add(core);
 
-        // Орбитальное кольцо 1 (Cyan)
         const ringGeo1 = new THREE.TorusGeometry(2.5, 0.035, 16, 80);
         orbitRing1 = new THREE.Mesh(ringGeo1, orbitMatCyan);
         orbitRing1.rotation.x = Math.PI / 2.7;
         orbitRing1.rotation.y = Math.PI / 7;
         artworkGroup.add(orbitRing1);
 
-        // Орбитальное кольцо 2 (Pink)
         const ringGeo2 = new THREE.TorusGeometry(2.3, 0.03, 16, 80);
         orbitRing2 = new THREE.Mesh(ringGeo2, orbitMatPink);
         orbitRing2.rotation.x = -Math.PI / 2.5;
         orbitRing2.rotation.z = Math.PI / 4;
         artworkGroup.add(orbitRing2);
 
-        // Парящие хромированные пузыри/сферы
         for (let i = 0; i < 6; i++) {
           const sphereGeo = new THREE.SphereGeometry(0.16 + (i % 3) * 0.06, 16, 16);
           const sphere = new THREE.Mesh(sphereGeo, bubbleMat);
@@ -943,18 +1010,15 @@
           floatingBubbles.push(sphere);
         }
       }
-
-      // 2. QUANTUM CRYSTAL (Ступенчатая друза кристаллов — фото 3)
+      // 2. QUANTUM CRYSTAL
       else if (type === 1) {
         currentArtMesh = new THREE.Group();
 
-        // Главный центральный кристаллический пик
         const mainCone = new THREE.ConeGeometry(0.9, 3.2, 5);
         const mMesh = new THREE.Mesh(mainCone, chromeCrystalMat);
         mMesh.position.y = 0.2;
         currentArtMesh.add(mMesh);
 
-        // Боковые кристаллы
         const side1 = new THREE.ConeGeometry(0.65, 2.4, 5);
         const s1Mesh = new THREE.Mesh(side1, chromeCrystalMat);
         s1Mesh.position.set(-0.7, -0.3, 0.4);
@@ -969,7 +1033,6 @@
 
         artworkGroup.add(currentArtMesh);
 
-        // Вьющаяся спиральная световая орбита
         const ringGeo = new THREE.TorusGeometry(2.2, 0.04, 16, 80);
         orbitRing1 = new THREE.Mesh(ringGeo, orbitMatCyan);
         orbitRing1.rotation.x = Math.PI / 2.2;
@@ -985,8 +1048,7 @@
           floatingBubbles.push(sphere);
         }
       }
-
-      // 3. PRISM SHIFT (Октаэдрическая многогранная звезда с цветовым спектром)
+      // 3. PRISM SHIFT
       else if (type === 2) {
         const prismMat = new THREE.MeshPhysicalMaterial({
           color: 0x8B5CF6,
@@ -1008,7 +1070,6 @@
         artworkGroup.add(orbitRing1);
       }
 
-      // Переключение кнопок интерфейса
       document.querySelectorAll('[data-model]').forEach(btn => {
         btn.setAttribute('aria-pressed', Number(btn.dataset.model) === type);
       });
@@ -1029,7 +1090,6 @@
     window.addEventListener('resize', resize3D);
     resize3D();
 
-    // Вращение мышью / тачем
     let isDragging = false, prevX = 0, prevY = 0;
     container.addEventListener('pointerdown', e => { isDragging = true; prevX = e.clientX; prevY = e.clientY; });
     window.addEventListener('pointermove', e => {
