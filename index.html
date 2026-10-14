@@ -1,98 +1,876 @@
 <!doctype html>
-<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="dark"><meta name="description" content="CreativeArt — Living Digital Gallery"><title>CreativeArt — Living Digital Gallery</title>
-<style>
-:root{--bg:#080a0d;--panel:#11151b;--ink:#f2f3ed;--muted:#a6adb7;--line:#2a3038;--lime:#d6f988;--cyan:#89dedc;--pink:#e8a4ca}*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:100px}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 Arial,sans-serif}button,input,textarea,select{font:inherit}a{color:inherit;text-decoration:none}button,a,input,select,textarea{-webkit-tap-highlight-color:transparent}button{cursor:pointer;color:inherit}button:disabled{opacity:.4;cursor:default}:focus-visible{outline:3px solid var(--lime);outline-offset:5px}button{border:1px solid var(--line);background:transparent;border-radius:99px;padding:10px 17px}button:hover,a.cta:hover{border-color:var(--lime)}.wrap{width:min(1280px,calc(100% - 80px));margin:auto}.skip{position:fixed;left:20px;top:-100px;z-index:99;background:var(--lime);color:#080a0d;padding:12px}.skip:focus{top:12px}header{position:fixed;inset:0 0 auto;z-index:20;background:#080a0def;backdrop-filter:blur(18px);border-bottom:1px solid var(--line)}.bar{min-height:80px;display:flex;align-items:center;gap:30px}.logo{font-weight:800;font-size:24px;letter-spacing:-1px;white-space:nowrap}.logo span{color:var(--lime)}nav{display:flex;gap:25px;margin:auto;font-size:13px}nav a{color:var(--muted)}nav a:hover{color:var(--ink)}.tools{display:flex;gap:10px;align-items:center}.langs{display:flex;border:1px solid var(--line);border-radius:99px;padding:3px}.langs button{border:0;padding:6px 9px;font-size:11px}.langs [aria-pressed=true]{background:var(--ink);color:var(--bg)}.icon{width:40px;height:40px;padding:8px;display:grid;place-items:center}.icon svg{width:21px;fill:none;stroke:currentColor;stroke-width:1.6}.menu{display:none}main{padding-top:80px}.eyebrow{font-size:11px;letter-spacing:2.5px;text-transform:uppercase;color:var(--muted)}.hero{padding:72px 0 38px;position:relative}.hero-top{display:flex;justify-content:space-between;align-items:center}.dot{display:inline-block;width:6px;height:6px;background:var(--lime);border-radius:50%;margin-right:8px}.hero-grid{display:grid;grid-template-columns:1.2fr 1fr;align-items:center;gap:25px}h1{font-size:clamp(48px,6.5vw,91px);line-height:1.04;letter-spacing:-5px;margin:35px 0 25px;font-weight:500}h1 em{color:var(--lime);font-style:normal}p{color:var(--muted)}.intro{max-width:480px;font-size:17px}.cta{display:inline-flex;align-items:center;gap:30px;border:1px solid var(--lime);border-radius:99px;padding:15px 23px;background:var(--lime);color:#10140c;font-size:13px;font-weight:700}.hero-art{height:390px;position:relative;min-width:0;background:radial-gradient(ellipse,#7e9f5720,transparent 65%)}#sculpture{width:100%;height:100%;display:block}.art-caption{position:absolute;bottom:5px;left:0;right:0;text-align:center;font-size:10px;letter-spacing:2px;color:var(--muted)}.hero-foot{margin-top:45px;display:flex;justify-content:space-between;border-top:1px solid var(--line);padding-top:18px;font-size:11px;color:var(--muted)}section{scroll-margin-top:100px}.sound{margin-top:35px;background:linear-gradient(125deg,#171d23,#101419);border:1px solid #333c43;border-radius:24px;padding:28px;display:grid;grid-template-columns:1.05fr 1fr;gap:35px}.now{display:flex;gap:20px;align-items:center}.cover{flex-shrink:0;width:90px;height:90px;border-radius:12px;overflow:hidden}.cover svg{display:block;width:100%;height:100%}.track-name{font-size:25px;letter-spacing:-1px;margin:5px 0}.track-meta{font-size:12px;color:var(--muted)}#waves{width:100%;height:105px;display:block;margin:10px 0}.transport{display:flex;gap:14px;align-items:center}.play{background:var(--lime);border:0;color:#111;width:48px;height:48px;padding:0;font-size:19px;flex-shrink:0}.seekrow{display:flex;align-items:center;gap:10px;margin-top:15px;font:10px monospace;color:var(--muted)}input[type=range]{accent-color:var(--lime);min-width:0;width:100%}.volume{display:flex;gap:8px;align-items:center;margin-left:auto;width:120px;font-size:12px}.playlist{border-left:1px solid var(--line);padding-left:28px}.playlist-head{display:flex;justify-content:space-between;margin:0 0 14px;font-size:11px;color:var(--muted)}.track{width:100%;border:0;border-top:1px solid var(--line);border-radius:0;display:flex;align-items:center;gap:12px;text-align:left;padding:12px 5px}.track[aria-current=true]{color:var(--lime);background:#d6f98808}.track .cover{width:43px;height:43px;border-radius:7px}.track b{font-size:13px;font-weight:500;display:block}.track small{display:block;color:var(--muted);font-size:10px}.track .arrow{margin-left:auto;font-size:16px}.status{font-size:11px;min-height:18px;margin:10px 0 0}.section-head{margin:100px 0 30px;display:flex;justify-content:space-between;align-items:end;gap:20px}h2{font-size:clamp(32px,4vw,52px);line-height:1.15;letter-spacing:-2px;font-weight:500;margin:10px 0}.section-head p{max-width:360px;font-size:13px}.gallery{display:grid;grid-template-columns:1fr 1fr;gap:20px}.card{border:1px solid var(--line);border-radius:22px;padding:30px;min-width:0;position:relative;overflow:hidden;background:#101419}.card-art{height:160px;position:relative;margin:-30px -30px 25px;overflow:hidden;background:radial-gradient(ellipse at 70% 80%,var(--glow),transparent 65%),#131820}.card-art svg{height:100%;width:100%}.card:nth-child(1){--glow:#78bfc737}.card:nth-child(2){--glow:#b6d87537}.card:nth-child(3){--glow:#c78db137}.card:nth-child(4){--glow:#dfb87137}.card h3{font-size:26px;letter-spacing:-.8px;font-weight:500;margin:10px 0}.card p{font-size:14px;max-width:470px}.card ul{padding:0;list-style:none;display:flex;gap:7px;flex-wrap:wrap;margin:22px 0}.card li{font-size:11px;border:1px solid var(--line);border-radius:99px;padding:6px 10px;color:#c1c7cf}.card-link{border-top:1px solid var(--line);padding-top:18px;display:flex;justify-content:space-between;font-size:12px;color:var(--lime)}.brief{margin:100px 0 60px;padding:40px;border:1px solid var(--line);border-radius:24px;display:grid;grid-template-columns:1fr 1.1fr;gap:50px;background:#101419}.brief p{font-size:14px}form{display:grid;gap:15px}label{display:block;font-size:12px;color:var(--muted)}input:not([type=range],[type=checkbox]),textarea,select{width:100%;display:block;padding:12px;margin-top:6px;background:#090c10;border:1px solid #39414c;border-radius:9px;color:var(--ink)}textarea{resize:vertical;min-height:110px}footer{border-top:1px solid var(--line);padding:25px 0 35px;font-size:11px;color:var(--muted)}footer .wrap{display:flex;justify-content:space-between;gap:15px;flex-wrap:wrap}dialog{width:min(440px,calc(100% - 30px));background:#141920;color:var(--ink);border:1px solid var(--line);border-radius:20px;padding:25px}dialog::backdrop{background:#000a}dialog h2{font-size:26px}dialog label{padding:12px 0;display:flex;align-items:center;gap:12px}dialog .close{float:right}.large{font-size:19px}.large p,.large .card p,.large nav,.large label{font-size:1rem}.contrast{--bg:#000;--panel:#000;--ink:#fff;--muted:#eee;--line:#aaa}.contrast .card,.contrast .sound,.contrast .brief{background:#000}body.calm *,body.calm{scroll-behavior:auto!important;animation:none!important;transition:none!important}@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}@media(min-width:1600px){.hero-art{height:440px}}@media(max-width:1000px){.wrap{width:calc(100% - 40px)}.bar{gap:15px}nav{gap:14px;font-size:11px}h1{letter-spacing:-3px}.sound{gap:20px;padding:22px}.playlist{padding-left:20px}.hero-art{height:330px}.brief{gap:25px}}@media(max-width:760px){.bar{min-height:72px;flex-wrap:wrap;gap:12px}.logo{font-size:22px}.tools{margin-left:auto;gap:6px}.langs button{padding:5px 7px}.menu{display:grid}nav{display:none;width:100%;order:3;padding:0 0 18px;font-size:14px;flex-wrap:wrap}nav.open{display:flex}main{padding-top:72px}.hero{padding-top:35px}.hero-top{font-size:9px}.hero-top>span:last-child{display:none}.hero-grid{grid-template-columns:1fr;gap:0}h1{font-size:clamp(48px,10vw,72px);letter-spacing:-3px}.intro{font-size:15px}.hero-art{height:260px;margin-top:12px}.hero-foot{margin-top:20px;gap:15px;font-size:9px}.sound{grid-template-columns:1fr;margin-top:15px}.playlist{padding:20px 0 0;border-left:0;border-top:1px solid var(--line)}.gallery{grid-template-columns:1fr}.section-head{margin-top:65px;display:block}.brief{grid-template-columns:1fr;padding:24px;margin-top:65px}.card{padding:24px}.card-art{margin:-24px -24px 22px}.track-name{font-size:23px}.cover{width:75px;height:75px}.section-head p{max-width:100%}}@media(max-width:380px){.wrap{width:calc(100% - 24px)}.logo{font-size:18px}.tools{gap:4px}.icon{width:34px;height:36px}.langs button{padding:5px}.bar{gap:4px}.volume{width:95px}}
+<html lang="ru" class="scroll-smooth">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <meta name="description" content="PAVLIKneMOROZOFF CreativeArt — Living Digital Gallery">
+  <title>PAVLIKneMOROZOFF CreativeArt — Living Digital Gallery</title>
 
-/* Layout corrections: header occupies its actual height, including expanded navigation. */
-header{position:sticky;top:0;inset:auto;max-height:100dvh;overflow:auto}.bar{flex-wrap:wrap;padding-block:14px;min-height:80px}.logo{font-size:21px}.logo small{display:block;font-size:10px;letter-spacing:1px;color:var(--muted)}main{padding-top:0}nav{flex-wrap:wrap;justify-content:center}nav a{padding:5px 0}html{scroll-padding-top:180px}section{scroll-margin-top:180px}.hero-grid>*{min-width:0}h1{overflow-wrap:break-word;letter-spacing:-.045em}.hero-art{height:440px;display:flex;flex-direction:column;gap:12px}.scene-stage{position:relative;flex:1;min-height:260px;border-radius:24px;overflow:hidden}.scene-stage canvas,.scene-stage img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}.scene-stage canvas{touch-action:pan-y;cursor:grab;opacity:0}.scene-stage canvas.ready{opacity:1}.scene-stage canvas:active{cursor:grabbing}.art-caption{position:static;letter-spacing:1px}.scene-controls{display:flex;justify-content:center;gap:6px;flex-wrap:wrap}.scene-controls button{font-size:11px;padding:8px 12px}.scene-controls [aria-pressed=true]{background:var(--lime);color:#10140c}.scene-status{font-size:11px;text-align:center;min-height:1.6em;margin:0}.cover img,.card-art img{width:100%;height:100%;object-fit:cover;display:block}.object-gallery{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}.object-gallery button{padding:0;overflow:hidden;border-radius:22px;text-align:left;background:var(--panel)}.object-gallery img{display:block;width:100%;aspect-ratio:1;object-fit:cover}.object-gallery span{display:block;padding:18px}.gallery{align-items:stretch}.transport{flex-wrap:wrap}.large .bar{gap:15px}.large nav{width:100%;order:3}.large .tools{margin-left:auto}body.large h1{font-size:clamp(48px,7vw,100px)}.contrast button{border-color:#aaa}.contrast .scene-status{color:#fff}.scene-stage .failed{visibility:hidden}.image-note{position:absolute;inset:0;display:grid;place-items:center;color:var(--muted);padding:20px;text-align:center;font-size:12px}.card-art,.cover{position:relative}.object-gallery button{position:relative}.object-gallery .image-note{position:static;min-height:200px}
-@media(max-width:1100px){nav{width:100%;order:3}.tools{margin-left:auto}.hero-grid{grid-template-columns:1fr 1fr}.wrap{width:calc(100% - 40px)}}
-@media(max-width:760px){main{padding-top:0}.hero-grid{grid-template-columns:1fr}.hero-art{height:410px}.object-gallery{grid-template-columns:1fr}.bar{gap:10px}.logo{font-size:18px}.logo small{font-size:9px}.tools{gap:5px}nav{justify-content:flex-start}.section-head{overflow-wrap:anywhere}.brief{gap:20px}html{scroll-padding-top:150px}section{scroll-margin-top:150px}}
-@media(max-width:420px){.bar .tools{width:100%;justify-content:flex-end}.logo{font-size:20px}.hero-art{height:390px}.now{gap:12px}.track-name{overflow-wrap:anywhere}.wrap{width:calc(100% - 28px)}.sound{padding:18px}.hero-foot{flex-wrap:wrap}}
-img.failed{display:none}.brief{margin-inline:auto}.scene-stage canvas{touch-action:none}.scene-stage:has(canvas.ready) .image-note{display:none}</style><script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.180.0/examples/jsm/"}}</script></head><body>
-<a class="skip" href="#directions" data-t="skip">К содержимому</a>
-<header><div class="wrap bar"><a class="logo" href="#home">Creative<span>Art</span><small>PAVLIKneMOROZOFF</small></a><nav id="nav" aria-label="Navigation"><a href="#sound" data-t="navSound"></a><a href="#directions" data-t="navGallery"></a><a href="#artworks" data-t="navArt">Галерея 3D</a><a href="#brief" data-t="navBrief"></a></nav><div class="tools"><div class="langs" role="group" aria-label="Language"><button lang="ru" data-lang="ru">RU</button><button lang="kk" data-lang="kk">ҚАЗ</button><button lang="en" data-lang="en">EN</button></div><button class="icon" id="access" data-label="access" aria-haspopup="dialog"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="4" r="2"/><path d="M3 8h18M12 7v7m0-3-5 10m5-10 5 10"/></svg></button><button class="icon menu" id="menu" aria-controls="nav" aria-expanded="false" data-label="menu">☰</button></div></div></header>
-<main id="home"><section class="hero wrap"><div class="hero-top eyebrow"><span><i class="dot"></i>Living Digital Gallery</span><span>PAVLIKneMOROZOFF / CREATIVEART</span></div><div class="hero-grid"><div><h1 data-t="headline"></h1><p class="intro" data-t="intro"></p><a class="cta" href="#directions"><span data-t="explore"></span><span aria-hidden="true">↗</span></a></div><div class="hero-art"><div class="scene-stage"><img id="scenePoster" src="assets/images/gallery/liquid-chrome.png" alt="Liquid Chrome"><canvas id="sculpture" tabindex="0" data-label="rotate"></canvas></div><div class="scene-controls" role="group" data-label="chooseModel"><button data-model="0" aria-pressed="true">Liquid Chrome</button><button data-model="1" aria-pressed="false">Quantum Crystal</button><button data-model="2" aria-pressed="false">Prism Shift</button></div><p id="sceneStatus" class="scene-status" role="status"></p><div class="art-caption" data-t="sculpture"></div></div></div><div class="hero-foot"><span data-t="heroFoot"></span><span data-t="scroll"></span></div></section>
-<section id="sound" class="wrap sound" aria-labelledby="soundHeading"><div><div class="now"><div id="cover" class="cover" aria-hidden="true"></div><div><div class="eyebrow" id="soundHeading" data-t="soundLab"></div><h2 class="track-name" id="title">Creative Pulse</h2><div class="track-meta" id="genre"></div></div></div><canvas id="waves" aria-hidden="true"></canvas><div class="transport"><button id="prev" class="icon" data-label="prev">‹</button><button id="play" class="play" data-label="play">▶</button><button id="next" class="icon" data-label="next">›</button><label class="volume"><span data-t="volume"></span><input id="volume" type="range" min="0" max="1" step=".01" value=".7" data-label="volume"></label></div><div class="seekrow"><span id="elapsed">0:00</span><input id="seek" type="range" min="0" max="100" value="0" step=".1" disabled data-label="seek"><span id="duration">0:00</span></div><p id="status" class="status" role="status" aria-live="polite"></p><audio id="audio" preload="none"></audio></div><div class="playlist"><div class="playlist-head"><span data-t="playlist"></span><span>01—04</span></div><div id="tracks"></div></div></section>
-<section class="wrap" id="directions"><div class="section-head"><div><span class="eyebrow" data-t="four"></span><h2 data-t="galleryTitle"></h2></div><p data-t="galleryIntro"></p></div><div class="gallery" id="cards"></div></section>
-<section id="artworks" class="wrap" aria-labelledby="artHeading"><div class="section-head"><div><span class="eyebrow">02 / CREATIVEART</span><h2 id="artHeading" data-t="artTitle">Цифровая материя</h2></div><p data-t="artIntro"></p></div><div class="object-gallery"><button data-model="0" data-gallery="true"><img loading="lazy" src="assets/images/gallery/liquid-chrome.png" alt=""><span>Liquid Chrome</span></button><button data-model="1" data-gallery="true"><img loading="lazy" src="assets/images/gallery/quantum-crystal.png" alt=""><span>Quantum Crystal</span></button><button data-model="2" data-gallery="true"><img loading="lazy" src="assets/images/gallery/prism-shift.png" alt=""><span>Prism Shift</span></button></div></section><section class="wrap brief" id="brief"><div><span class="eyebrow">CREATIVEART / NEXT CHAPTER</span><h2 data-t="briefTitle"></h2><p data-t="briefIntro"></p><p data-t="privacy"></p></div><form id="briefForm"><label><span data-t="name"></span><input name="name" autocomplete="name" required maxlength="100"></label><label><span data-t="direction"></span><select name="direction" id="direction"></select></label><label><span data-t="idea"></span><textarea name="idea" required maxlength="5000"></textarea></label><button class="cta" type="submit"><span data-t="download"></span><span aria-hidden="true">↗</span></button><p id="briefStatus" class="status" role="status" aria-live="polite"></p></form></section></main>
-<footer><div class="wrap"><span>CreativeArt · PAVLIKneMOROZOFF</span><span>Living Digital Gallery</span><a href="#home" data-t="top"></a></div></footer>
-<dialog id="settings" aria-labelledby="settingsTitle"><button class="close icon" id="close" data-label="close">×</button><h2 id="settingsTitle" data-t="access"></h2><label><input id="large" type="checkbox"><span data-t="large"></span></label><label><input id="contrast" type="checkbox"><span data-t="contrast"></span></label><label><input id="calm" type="checkbox"><span data-t="calm"></span></label><p data-t="systemMotion"></p></dialog>
-<script>
-'use strict';
-const translations={
-ru:{skip:'К содержимому',navSound:'Звук',navGallery:'Направления',navBrief:'Создать вместе ↗',access:'Доступность',menu:'Меню',headline:'Искусство.<br>За пределами<br><em>привычного.</em>',intro:'Музыка, истории и цифровые миры. Пространство, где идея обретает голос, образ и форму.',explore:'Исследовать галерею',sculpture:'ЦИФРОВАЯ СКУЛЬПТУРА / РЕАКЦИЯ НА ЗВУК',heroFoot:'04 направления · одна творческая вселенная',scroll:'Прокрутите, чтобы исследовать ↓',soundLab:'Звуковая галерея',volume:'Звук',prev:'Предыдущий трек',next:'Следующий трек',play:'Воспроизвести',pause:'Пауза',seek:'Позиция воспроизведения',playlist:'ВЫБЕРИТЕ НАСТРОЕНИЕ',four:'01 / Четыре направления',galleryTitle:'Разные формы.<br>Один творческий импульс.',galleryIntro:'От первой ноты до осязаемого объекта. Выберите, с чего начнётся ваша история.',briefTitle:'Давайте создадим<br>что-то ваше.',briefIntro:'Расскажите о задумке. Сохраните бриф и передайте его команде удобным для вас способом.',privacy:'Это локальный черновик: данные не отправляются на сервер. Введённый текст хранится только до закрытия страницы.',name:'Ваше имя',direction:'Направление',idea:'Ваша идея',download:'Скачать бриф',saved:'Бриф скачан. Передайте файл команде самостоятельно.',top:'Наверх ↑',close:'Закрыть',large:'Крупный текст',contrast:'Высокий контраст',calm:'Уменьшить движение',systemMotion:'Системная настройка уменьшения движения учитывается автоматически.',ready:'Нажмите ▶, чтобы начать. Звук включается только по вашему действию.',loading:'Загрузка аудио…',playing:'Воспроизведение · волны реагируют на звук',paused:'Пауза',error:'Не удалось загрузить MP3. Проверьте файл и подключение.',audioFallback:'Аудио воспроизводится. Анализ звука недоступен в этом браузере.',open:'Открыть звуковую галерею',create:'Подготовить бриф',genres:['Электроника / творческий импульс','Кибер-этно / пространство степи','Альтернативная электроника / энергия','Эмбиент / за пределами кода'],names:['Смотреть & слушать','Творчество на заказ','Детская студия','3D арт & печать'],descs:['Авторская музыка, вокальные релизы и кинематографичные визуальные истории. Звук как самостоятельное произведение.','Слова, которые становятся музыкой. Персональные стихи, тексты песен, песни под ключ и музыкальные клипы.','Миры, в которых ребёнок — главный герой. Индивидуальные истории, иллюстрации и персонажи.','Из цифрового мира — в реальный. Моделирование, арт-объекты и печать ваших персонажей и идей.'],tags:[['Музыка & AI Sound','Песни','Клипы & визуалы'],['Стихи & поэмы','Тексты песен','Песни под ключ','Съёмка & клипы'],['Именная полиграфия','Персональные арт-книги','Мультфильмы'],['3D-моделирование','Фигурки & мерч','FDM & Resin']]},
-kk:{skip:'Мазмұнға өту',navSound:'Дыбыс',navGallery:'Бағыттар',navBrief:'Бірге жасайық ↗',access:'Қолжетімділік',menu:'Мәзір',headline:'Өнер.<br>Үйреншікті шектен<br><em>тыс әлем.</em>',intro:'Музыка, оқиғалар және цифрлық әлемдер. Идея үнге, бейнеге және пішінге айналатын кеңістік.',explore:'Галереяны зерттеу',sculpture:'ЦИФРЛЫҚ МҮСІН / ДЫБЫСҚА ЖАУАП',heroFoot:'04 бағыт · бір шығармашылық әлем',scroll:'Зерттеу үшін төмен жылжытыңыз ↓',soundLab:'Дыбыс галереясы',volume:'Дыбыс',prev:'Алдыңғы трек',next:'Келесі трек',play:'Ойнату',pause:'Кідірту',seek:'Ойнату орны',playlist:'КӨҢІЛ КҮЙДІ ТАҢДАҢЫЗ',four:'01 / Төрт бағыт',galleryTitle:'Пішіндер әртүрлі.<br>Шығармашылық серпін бір.',galleryIntro:'Алғашқы нотадан қолға ұстайтын нысанға дейін. Өз оқиғаңыздың бастауын таңдаңыз.',briefTitle:'Сізге арналған<br>туынды жасайық.',briefIntro:'Идеяңызды сипаттаңыз. Брифті сақтап, командаға өзіңізге ыңғайлы жолмен жіберіңіз.',privacy:'Бұл жергілікті нобай: деректер серверге жіберілмейді. Мәтін бет жабылғанға дейін ғана сақталады.',name:'Атыңыз',direction:'Бағыт',idea:'Идеяңыз',download:'Брифті жүктеп алу',saved:'Бриф жүктелді. Файлды командаға өзіңіз жіберіңіз.',top:'Жоғары ↑',close:'Жабу',large:'Ірі мәтін',contrast:'Жоғары контраст',calm:'Қозғалысты азайту',systemMotion:'Жүйенің қозғалысты азайту параметрі автоматты түрде ескеріледі.',ready:'Бастау үшін ▶ басыңыз. Дыбыс тек сіздің әрекетіңізден кейін қосылады.',loading:'Аудио жүктелуде…',playing:'Ойнатылуда · толқындар дыбысқа жауап береді',paused:'Кідіртілді',error:'MP3 жүктелмеді. Файл мен қосылымды тексеріңіз.',audioFallback:'Аудио ойнатылуда. Бұл браузерде дыбысты талдау қолжетімсіз.',open:'Дыбыс галереясын ашу',create:'Бриф дайындау',genres:['Электроника / шығармашылық серпін','Кибер-этно / дала кеңістігі','Баламалы электроника / қуат','Эмбиент / код шегінен тыс'],names:['Көру және тыңдау','Тапсырыспен шығармашылық','Балалар студиясы','3D өнер және басып шығару'],descs:['Авторлық музыка, вокалдық туындылар және кинематографиялық бейнелер. Дыбыс — дербес өнер туындысы.','Музыкаға айналатын сөздер. Жеке өлеңдер, ән мәтіндері, дайын әндер және музыкалық бейнеклиптер.','Бала басты кейіпкер болатын әлемдер. Жеке оқиғалар, суреттер мен кейіпкерлер.','Цифрлық әлемнен шынайы өмірге. Кейіпкерлер мен идеяларды модельдеу, арт-нысандар және басып шығару.'],tags:[['Музыка және AI Sound','Әндер','Клиптер және бейнелер'],['Өлеңдер мен поэмалар','Ән мәтіндері','Дайын әндер','Түсірілім және клиптер'],['Атаулы баспа өнімдері','Жеке арт-кітаптар','Мультфильмдер'],['3D-модельдеу','Мүсіншелер және мерч','FDM & Resin']]},
-en:{skip:'Skip to content',navSound:'Sound',navGallery:'Directions',navBrief:'Create together ↗',access:'Accessibility',menu:'Menu',headline:'Art.<br>Beyond the<br><em>ordinary.</em>',intro:'Music, stories and digital worlds. A space where an idea finds its voice, image and form.',explore:'Explore the gallery',sculpture:'DIGITAL SCULPTURE / SOUND RESPONSIVE',heroFoot:'04 directions · one creative universe',scroll:'Scroll to explore ↓',soundLab:'Sound gallery',volume:'Volume',prev:'Previous track',next:'Next track',play:'Play',pause:'Pause',seek:'Playback position',playlist:'CHOOSE YOUR MOOD',four:'01 / Four directions',galleryTitle:'Different forms.<br>One creative impulse.',galleryIntro:'From the first note to a tangible object. Choose where your story begins.',briefTitle:'Let’s create<br>something yours.',briefIntro:'Describe your idea. Save your brief and share it with the team in whichever way suits you.',privacy:'This is a local draft: no data is sent to a server. Your text stays only until this page closes.',name:'Your name',direction:'Direction',idea:'Your idea',download:'Download brief',saved:'Brief downloaded. Share the file with the team yourself.',top:'Back to top ↑',close:'Close',large:'Larger text',contrast:'High contrast',calm:'Reduce motion',systemMotion:'Your system’s reduced motion preference is respected automatically.',ready:'Press ▶ to begin. Sound starts only after your action.',loading:'Loading audio…',playing:'Playing · waves respond to the sound',paused:'Paused',error:'Could not load MP3. Check the file and connection.',audioFallback:'Audio is playing. Sound analysis is unavailable in this browser.',open:'Open sound gallery',create:'Prepare a brief',genres:['Electronic / creative impulse','Cyber-ethnic / open steppe','Alternative electronic / energy','Ambient / beyond the code'],names:['Watch & listen','Made for you','Children’s studio','3D art & printing'],descs:['Original music, vocal releases and cinematic visual stories. Sound as a work of art in its own right.','Words that become music. Personal poems, lyrics, complete songs and music videos.','Worlds where your child is the hero. Personal stories, illustrations and characters.','From the digital world into your hands. Modelling, art objects and printing your characters and ideas.'],tags:[['Music & AI Sound','Songs','Clips & visuals'],['Poems','Lyrics','Complete songs','Filming & music videos'],['Personal stationery','Personal art books','Cartoons'],['3D modelling','Figurines & merchandise','FDM & Resin']]}}
-const $=s=>document.querySelector(s), tracks=[['Creative Pulse','creative-pulse','#8bd7d4','#b8eb85'],['Neural Steppe','neural-steppe','#e4b971','#82d5c0'],['Digital Rebellion','digital-rebellion','#d390c7','#9b91e6'],['Beyond the Code','beyond-the-code','#91a5ec','#80d6ce']];
-let lang='ru',index=0,state='ready',ctx,analyser,source,frequency,wave,graphFailed=false;
-const audio=$('#audio'); audio.volume=.7;
-const studioImages=['sound-studio','custom-creation','kids-studio','3d-art-printing'];
-function art(i,studio=false){return '<img loading="lazy" src="assets/images/'+(studio?'studio/'+studioImages[i]:'music/'+tracks[i][1])+'.png" alt="">'}
-Object.assign(translations.ru,{navArt:'Галерея 3D',artTitle:'Цифровая материя',artIntro:'Три объекта. Выберите работу, чтобы рассмотреть её в сцене.',rotate:'3D-объект. Перетаскивайте горизонтально или используйте стрелки. Home сбрасывает вращение.',chooseModel:'Выбор 3D-объекта',modelLoading:'Загрузка 3D…',modelReady:'Вращайте объект · ← → ↑ ↓',modelError:'3D недоступно. Показано изображение.',imageError:'Изображение недоступно'});
-Object.assign(translations.kk,{navArt:'3D галереясы',artTitle:'Цифрлық материя',artIntro:'Үш нысан. Сахнада көру үшін туындыны таңдаңыз.',rotate:'3D нысан. Көлденең сүйреңіз немесе көрсеткілерді қолданыңыз. Home айналуды қалпына келтіреді.',chooseModel:'3D нысанды таңдау',modelLoading:'3D жүктелуде…',modelReady:'Нысанды айналдырыңыз · ← → ↑ ↓',modelError:'3D қолжетімсіз. Сурет көрсетілді.',imageError:'Сурет қолжетімсіз'});
-Object.assign(translations.en,{navArt:'3D gallery',artTitle:'Digital matter',artIntro:'Three objects. Select a work to explore it in the scene.',rotate:'3D object. Drag horizontally or use arrow keys. Home resets rotation.',chooseModel:'Choose a 3D object',modelLoading:'Loading 3D…',modelReady:'Rotate the object · ← → ↑ ↓',modelError:'3D unavailable. Showing the image.',imageError:'Image unavailable'});
-document.addEventListener('error',e=>{if(e.target instanceof HTMLImageElement){e.target.classList.add('failed');if(!e.target.parentElement.querySelector('.image-note')){const n=document.createElement('span');n.className='image-note';n.dataset.t='imageError';n.textContent=translations[lang].imageError;e.target.parentElement.append(n)}}},true);
-function render(){const t=translations[lang];document.documentElement.lang=lang;document.querySelectorAll('[data-t]').forEach(e=>{if(['headline','galleryTitle','briefTitle'].includes(e.dataset.t))e.innerHTML=t[e.dataset.t];else e.textContent=t[e.dataset.t]});document.querySelectorAll('[data-label]').forEach(e=>e.setAttribute('aria-label',t[e.dataset.label]));document.querySelectorAll('[data-lang]').forEach(e=>e.setAttribute('aria-pressed',e.dataset.lang===lang));$('#tracks').innerHTML=tracks.map((a,i)=>`<button class="track" data-track="${i}" aria-current="${i===index}" aria-label="${t.play}: ${a[0]}"><span class="cover" aria-hidden="true">${art(i)}</span><span><b>${a[0]}</b><small>${t.genres[i]}</small></span><span class="arrow" aria-hidden="true">${i===index?'♪':'↗'}</span></button>`).join('');$('#cards').innerHTML=t.names.map((n,i)=>`<article class="card"><div class="card-art" aria-hidden="true">${art(i,true)}</div><span class="eyebrow">0${i+1} / CREATIVEART</span><h3>${n}</h3><p>${t.descs[i]}</p><ul>${t.tags[i].map(x=>`<li>${x}</li>`).join('')}</ul><a class="card-link" href="${i?'#brief':'#sound'}" ${i?`data-direction="${i}"`:''}><span>${i?t.create:t.open}</span><span aria-hidden="true">↗</span></a></article>`).join('');const previous=$('#direction').value;$('#direction').innerHTML=t.names.map((n,i)=>`<option value="${i}">${n}</option>`).join('');if(previous)$('#direction').value=previous;$('#genre').textContent=t.genres[index];$('#cover').innerHTML=art(index);$('#title').textContent=tracks[index][0];updatePlay();setStatus(state);if($('#briefStatus').textContent)$('#briefStatus').textContent=t.saved;window.dispatchEvent(new Event('site-language'))}
-function setStatus(s){state=s;$('#status').textContent=translations[lang][s]}
-function updatePlay(){$('#play').textContent=audio.paused?'▶':'Ⅱ';$('#play').setAttribute('aria-label',translations[lang][audio.paused?'play':'pause'])}
-async function graph(){if(ctx||graphFailed)return;try{const AudioContext=window.AudioContext||window.webkitAudioContext;if(!AudioContext)throw Error();ctx=new AudioContext();analyser=ctx.createAnalyser();analyser.fftSize=2048;frequency=new Uint8Array(analyser.frequencyBinCount);wave=new Uint8Array(analyser.fftSize);source=ctx.createMediaElementSource(audio);source.connect(analyser);analyser.connect(ctx.destination)}catch(e){graphFailed=true}}
-async function play(){setStatus('loading');try{await graph();if(ctx?.state==='suspended')await ctx.resume();await audio.play()}catch(e){if(e.name!=='AbortError')setStatus('error');updatePlay()}}
-function select(i,start=true){audio.pause();index=(i+tracks.length)%tracks.length;audio.src='assets/audio/'+tracks[index][1]+'.mp3';audio.loop=index===3;$('#seek').value=0;$('#seek').disabled=true;$('#elapsed').textContent=$('#duration').textContent='0:00';state='ready';render();if(start)play()}
-$('#play').onclick=()=>audio.paused?play():audio.pause();$('#prev').onclick=()=>select(index-1);$('#next').onclick=()=>select(index+1);$('#tracks').onclick=e=>{const b=e.target.closest('[data-track]');if(b)select(Number(b.dataset.track))};$('#volume').oninput=e=>audio.volume=Number(e.target.value);$('#seek').oninput=e=>{if(Number.isFinite(audio.duration))audio.currentTime=audio.duration*Number(e.target.value)/100};
-function time(n){return Number.isFinite(n)?Math.floor(n/60)+':'+String(Math.floor(n%60)).padStart(2,'0'):'0:00'}
-audio.addEventListener('loadedmetadata',()=>{$('#duration').textContent=time(audio.duration);$('#seek').disabled=!Number.isFinite(audio.duration)});audio.addEventListener('timeupdate',()=>{$('#elapsed').textContent=time(audio.currentTime);if(audio.duration)$('#seek').value=audio.currentTime/audio.duration*100});audio.addEventListener('playing',()=>{updatePlay();setStatus(graphFailed?'audioFallback':'playing')});audio.addEventListener('pause',()=>{updatePlay();if(state!=='error')setStatus('paused')});audio.addEventListener('error',()=>setStatus('error'));audio.addEventListener('ended',()=>select(index+1));audio.addEventListener('waiting',()=>{if(!audio.paused)setStatus('loading')});
-document.querySelectorAll('[data-lang]').forEach(b=>b.onclick=()=>{lang=b.dataset.lang;render();try{localStorage.setItem('creativeart-lang',lang)}catch(e){}});$('#menu').onclick=()=>{const open=$('#nav').classList.toggle('open');$('#menu').setAttribute('aria-expanded',open)};document.addEventListener('click',e=>{if(e.target.closest('nav a')){$('#nav').classList.remove('open');$('#menu').setAttribute('aria-expanded','false')}const link=e.target.closest('[data-direction]');if(link)$('#direction').value=link.dataset.direction});$('#access').onclick=()=>$('#settings').showModal();$('#close').onclick=()=>$('#settings').close();$('#settings').addEventListener('click',e=>{if(e.target===$('#settings')){const r=e.target.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)e.target.close()}});['large','contrast','calm'].forEach(k=>{try{$('#'+k).checked=localStorage.getItem('creativeart-'+k)==='true'}catch(e){}document.body.classList.toggle(k,$('#'+k).checked);$('#'+k).onchange=e=>{document.body.classList.toggle(k,e.target.checked);try{localStorage.setItem('creativeart-'+k,e.target.checked)}catch(e){}}});document.addEventListener('keydown',e=>{if(e.key==='Escape'){$('#nav').classList.remove('open');$('#menu').setAttribute('aria-expanded','false')}});
-$('#briefForm').onsubmit=e=>{e.preventDefault();const f=new FormData(e.target),t=translations[lang];const content=`CreativeArt — ${t.briefTitle.replace('<br>',' ')}\n\n${t.name}: ${f.get('name')}\n${t.direction}: ${t.names[Number(f.get('direction'))]}\n${t.idea}:\n${f.get('idea')}\n\n${t.privacy}`;const url=URL.createObjectURL(new Blob(['\ufeff'+content],{type:'text/plain;charset=utf-8'})),a=document.createElement('a');a.href=url;a.download='CreativeArt-brief.txt';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);$('#briefStatus').textContent=t.saved};
-try{const saved=localStorage.getItem('creativeart-lang');if(translations[saved])lang=saved}catch(e){}select(0,false);
-// Real audio samples drive the waves. Idle strokes remain still; no simulated beat.
-const motion=matchMedia('(prefers-reduced-motion: reduce)'), wc=$('#waves'),sc=$('#sculpture'), wctx=wc.getContext('2d'),sctx=null;let last=0,angle=.5;
-function fit(c){const d=Math.min(devicePixelRatio||1,2),r=c.getBoundingClientRect();if(c.width!==Math.round(r.width*d)||c.height!==Math.round(r.height*d)){c.width=Math.round(r.width*d);c.height=Math.round(r.height*d)}return [c.width,c.height]}
-function draw(ts){requestAnimationFrame(draw);if(document.hidden||ts-last<40)return;last=ts;const calm=motion.matches||$('#calm').checked;let energy=0;if(analyser&&!audio.paused){analyser.getByteFrequencyData(frequency);analyser.getByteTimeDomainData(wave);energy=frequency.reduce((a,b)=>a+b,0)/frequency.length/255}if(wctx){const [w,h]=fit(wc);wctx.clearRect(0,0,w,h);for(let j=0;j<7;j++){wctx.beginPath();for(let x=0;x<=w;x+=2){const u=x/w,sample=wave&&!audio.paused&&!calm?(wave[Math.min(wave.length-1,Math.floor(u*wave.length))]-128)/128:0;const envelope=Math.sin(u*Math.PI);const y=h*.5+Math.sin(u*Math.PI*3+j*.34)*h*.13+sample*h*(.22+j*.025)*envelope; x?wctx.lineTo(x,y):wctx.moveTo(x,y)}wctx.strokeStyle=['#d6f988','#89dedc','#97a6e0'][j%3];wctx.globalAlpha=.3+j*.08;wctx.lineWidth=1;wctx.stroke()}wctx.globalAlpha=1}
-// A bounded 3D ribbon sculpture, perspective-projected from XYZ coordinates.
-if(false){const [w,h]=fit(sc);sctx.clearRect(0,0,w,h);if(!calm)angle+=.003;const radius=Math.min(w,h)*.27*(1+(calm?0:energy*.10));for(let j=0;j<36;j++){sctx.beginPath();for(let k=0;k<=180;k++){const u=k/180*Math.PI*2,v=(j/35-.5)*1.3;const r=1+v*.36*Math.cos(u*1.5);let x=r*Math.cos(u),y=r*Math.sin(u),z=v*.7*Math.sin(u*1.5);const rx=x*Math.cos(angle)-z*Math.sin(angle),rz=x*Math.sin(angle)+z*Math.cos(angle);const ry=y*.62-rz*.5,depth=y*.5+rz*.62;const perspective=3.8/(3.8+depth);const px=w*.5+rx*radius*perspective,py=h*.46+ry*radius*perspective;k?sctx.lineTo(px,py):sctx.moveTo(px,py)}sctx.strokeStyle=j%3===0?'#a6d3df':'#c8e6a1';sctx.globalAlpha=.28+j/100;sctx.lineWidth=.8;sctx.stroke()}sctx.globalAlpha=1}}
-requestAnimationFrame(draw);
-window.creativeAudio={energy:()=>{if(!analyser||audio.paused)return 0;analyser.getByteFrequencyData(frequency);return frequency.slice(0,64).reduce((a,b)=>a+b,0)/64/255},calm:()=>motion.matches||$('#calm').checked};
-</script><script type="module">
-// Dynamic imports allow a readable fallback even when the CDN is unavailable.
-const names=['Liquid Chrome','Quantum Crystal','Prism Shift'];
-const files=['liquid-chrome','quantum-crystal','prism-shift'];
-const canvas=document.querySelector('#sculpture'),poster=document.querySelector('#scenePoster'),status=document.querySelector('#sceneStatus');
-let statusKey='modelLoading',selected=0,request=0,renderer,current,outgoing,transition=1;
-function message(key){statusKey=key;status.dataset.t=key;status.textContent=translations[lang][key]}
-window.addEventListener('site-language',()=>message(statusKey));
-function mark(i){document.querySelectorAll('[data-model]').forEach(b=>b.setAttribute('aria-pressed',Number(b.dataset.model)===i));poster.src='assets/images/gallery/'+files[i]+'.png';poster.alt=names[i];poster.classList.remove('failed');poster.parentElement.querySelector('.image-note')?.remove()}
-try{
- const [THREE,{GLTFLoader},{RoomEnvironment}]=await Promise.all([import('three'),import('three/addons/loaders/GLTFLoader.js'),import('three/addons/environments/RoomEnvironment.js')]);
- renderer=new THREE.WebGLRenderer({canvas,alpha:true,antialias:true,powerPreference:'high-performance'});
- renderer.setPixelRatio(Math.min(devicePixelRatio||1,2));renderer.outputColorSpace=THREE.SRGBColorSpace;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.1;
- const scene=new THREE.Scene(),camera=new THREE.PerspectiveCamera(36,1,.1,100);camera.position.set(0,0,5.8);
- const pmrem=new THREE.PMREMGenerator(renderer),room=new RoomEnvironment(),environment=pmrem.fromScene(room,.04);scene.environment=environment.texture;room.dispose();pmrem.dispose();
- scene.add(new THREE.HemisphereLight(0xddeeff,0x17191d,1.4));
- for(const [color,intensity,pos] of [[0xffffff,4,[3,4,4]],[0x89dedc,3,[-4,1,2]],[0xd6f988,3,[1,3,-3]]]){const l=new THREE.DirectionalLight(color,intensity);l.position.set(...pos);scene.add(l)}
- const pivot=new THREE.Group();scene.add(pivot);const loader=new GLTFLoader(),cache=new Map();
- function dispose(root){root.traverse(o=>{o.geometry?.dispose();for(const m of (Array.isArray(o.material)?o.material:[o.material]))if(m){for(const v of Object.values(m))if(v?.isTexture)v.dispose();m.dispose()}})}
- function resize(){const r=canvas.parentElement.getBoundingClientRect();if(r.width&&r.height){renderer.setSize(r.width,r.height,false);camera.aspect=r.width/r.height;camera.updateProjectionMatrix()}}
- const observer=new ResizeObserver(resize);observer.observe(canvas.parentElement);resize();
- async function selectModel(i){selected=i;mark(i);const token=++request;message('modelLoading');try{
-  let promise=cache.get(i);if(!promise){promise=loader.loadAsync('assets/models/'+files[i]+'.glb');cache.set(i,promise);promise.catch(()=>cache.delete(i))}const gltf=await promise;if(token!==request)return;
-  const root=gltf.scene.clone(true);root.traverse(o=>{if(o.isMesh)o.material=Array.isArray(o.material)?o.material.map(m=>m.clone()):o.material.clone()});
-  const box=new THREE.Box3().setFromObject(root),size=box.getSize(new THREE.Vector3()),center=box.getCenter(new THREE.Vector3()),extent=Math.max(size.x,size.y,size.z);if(!Number.isFinite(extent)||extent<=0)throw Error('Empty GLB');
-  root.position.sub(center);const group=new THREE.Group();group.add(root);group.scale.setScalar(2.5/extent);group.userData.base=2.5/extent;
-  if(outgoing){pivot.remove(outgoing);outgoing.traverse(o=>{for(const m of (Array.isArray(o.material)?o.material:[o.material]))m?.dispose()})}
-  group.userData.file=files[i];outgoing=current;current=group;pivot.add(current);transition=window.creativeAudio.calm()?1:0;
-  canvas.classList.add('ready');poster.hidden=true;poster.parentElement.querySelector('.image-note')?.remove();message('modelReady');
- }catch(e){if(token!==request)return;console.warn('Model load failed',files[i],e);message('modelError');canvas.classList.remove('ready');poster.hidden=false;}}
- document.querySelectorAll('[data-model]').forEach(b=>b.addEventListener('click',()=>{selectModel(Number(b.dataset.model));if(b.dataset.gallery){canvas.scrollIntoView({block:'center',behavior:window.creativeAudio.calm()?'auto':'smooth'});canvas.focus({preventScroll:true})}}));
- let yaw=.35,pitch=.1,vx=0,vy=0,drag=null,prev=performance.now();
- canvas.addEventListener('pointerdown',e=>{if(e.button!==0)return;drag={id:e.pointerId,x:e.clientX,y:e.clientY,time:performance.now()};vx=vy=0;canvas.setPointerCapture(e.pointerId)});
- canvas.addEventListener('pointermove',e=>{if(!drag||e.pointerId!==drag.id)return;const now=performance.now(),dt=Math.max(.008,(now-drag.time)/1000),dx=(e.clientX-drag.x)*.006,dy=(e.clientY-drag.y)*.006;yaw+=dx;pitch=Math.max(-.8,Math.min(.8,pitch+dy));vx=Math.max(-3,Math.min(3,dx/dt));vy=Math.max(-3,Math.min(3,dy/dt));drag={id:e.pointerId,x:e.clientX,y:e.clientY,time:now}});
- for(const event of ['pointerup','pointercancel','lostpointercapture'])canvas.addEventListener(event,()=>{drag=null});
- canvas.addEventListener('keydown',e=>{const k=e.key;if(!['ArrowLeft','ArrowRight','ArrowUp','ArrowDown','Home'].includes(k))return;e.preventDefault();vx=vy=0;if(k==='Home'){yaw=.35;pitch=.1}else{yaw+=k==='ArrowLeft'?-.15:k==='ArrowRight'?.15:0;pitch=Math.max(-.8,Math.min(.8,pitch+(k==='ArrowUp'?-.15:k==='ArrowDown'?.15:0)))}});
- let visible=true;const intersection=new IntersectionObserver(entries=>visible=entries[0].isIntersecting);intersection.observe(canvas);
- canvas.addEventListener('webglcontextlost',e=>{e.preventDefault();canvas.classList.remove('ready');poster.hidden=false;message('modelError')});canvas.addEventListener('webglcontextrestored',()=>{canvas.classList.add('ready');poster.hidden=true;message('modelReady')});
- renderer.setAnimationLoop(now=>{const dt=Math.min(.05,(now-prev)/1000);prev=now;if(document.hidden||!visible)return;const calm=window.creativeAudio.calm();if(!drag&&!calm){yaw+=vx*dt;pitch=Math.max(-.8,Math.min(.8,pitch+vy*dt));vx*=Math.exp(-4*dt);vy*=Math.exp(-4*dt);if(Math.abs(vx)<.01)yaw+=dt*.10}else if(calm){vx=vy=0}pivot.rotation.set(pitch,yaw,0);transition=calm?1:Math.min(1,transition+dt/0.6);const blend=transition*transition*(3-2*transition),energy=calm?0:window.creativeAudio.energy();if(current){current.scale.setScalar(current.userData.base*Math.max(.001,blend)*(1+energy*.06));current.position.x=(1-blend)*.6}if(outgoing){outgoing.scale.setScalar(outgoing.userData.base*Math.max(.001,1-blend));outgoing.position.x=-blend*.6;if(transition===1){pivot.remove(outgoing);outgoing.traverse(o=>{for(const m of (Array.isArray(o.material)?o.material:[o.material]))m?.dispose()});outgoing=null}}renderer.render(scene,camera)});
- await selectModel(0);
- window.addEventListener('pagehide',e=>{if(e.persisted)return;renderer.setAnimationLoop(null);observer.disconnect();intersection.disconnect();environment.dispose();renderer.dispose();for(const p of cache.values())p.then(g=>dispose(g.scene)).catch(()=>{})},{once:true});
-}catch(e){console.warn('3D initialization failed',e);renderer?.dispose();message('modelError');canvas.hidden=true;document.querySelectorAll('[data-model]').forEach(b=>b.addEventListener('click',()=>{mark(Number(b.dataset.model));message('modelError')}))}
+  <!-- Google Fonts & Three.js -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Syne:wght@700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
-</script></body></html>
+  <style>
+    :root {
+      --bg: #04060A;
+      --panel: #0A0E17;
+      --card: rgba(13, 19, 32, 0.75);
+      --ink: #F8FAFC;
+      --muted: #94A3B8;
+      --line: rgba(255, 255, 255, 0.1);
+      --cyan: #00F0FF;
+      --blue: #3B82F6;
+      --violet: #8B5CF6;
+      --magenta: #FF007A;
+      --gold: #FFB800;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; scroll-padding-top: 90px; }
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      line-height: 1.6;
+      overflow-x: hidden;
+      min-height: 100vh;
+      position: relative;
+    }
+
+    /* Фоновые неоновые световые пятна (согласно ТЗ 2.1) */
+    .glow-cyan {
+      position: fixed; top: -150px; left: -150px; width: 550px; height: 550px;
+      background: radial-gradient(circle, rgba(0, 240, 255, 0.12) 0%, transparent 70%);
+      pointer-events: none; z-index: 0;
+    }
+    .glow-magenta {
+      position: fixed; bottom: 10%; right: -150px; width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(255, 0, 122, 0.10) 0%, transparent 70%);
+      pointer-events: none; z-index: 0;
+    }
+
+    .wrap { width: min(1280px, calc(100% - 48px)); margin: auto; position: relative; z-index: 1; }
+    a { color: inherit; text-decoration: none; }
+    button, input, textarea, select { font: inherit; color: inherit; }
+    button { cursor: pointer; border: 1px solid var(--line); background: transparent; border-radius: 99px; transition: all 0.3s; }
+    button:hover { border-color: var(--cyan); }
+    button:focus-visible, a:focus-visible { outline: 2px solid var(--cyan); outline-offset: 4px; }
+
+    /* Шапка */
+    header {
+      position: sticky; top: 0; z-index: 40;
+      background: rgba(4, 6, 10, 0.85);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--line);
+    }
+    .bar {
+      min-height: 76px; display: flex; align-items: center; justify-content: space-between; gap: 20px;
+    }
+    .logo {
+      font-family: 'Syne', sans-serif; font-weight: 900; font-size: 22px;
+      letter-spacing: -0.5px; display: flex; flex-direction: column;
+    }
+    .logo span {
+      background: linear-gradient(135deg, #FFF 20%, var(--cyan) 60%, var(--magenta) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .logo small {
+      font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 2px;
+      color: var(--muted); text-transform: uppercase; font-weight: 600;
+    }
+
+    nav { display: flex; gap: 24px; font-size: 13px; font-weight: 600; }
+    nav a { color: var(--muted); transition: color 0.2s; }
+    nav a:hover { color: var(--cyan); }
+
+    .tools { display: flex; gap: 10px; align-items: center; }
+    .langs { display: flex; border: 1px solid var(--line); border-radius: 99px; padding: 2px; }
+    .langs button { border: 0; padding: 5px 10px; font-size: 11px; font-weight: 700; font-family: 'JetBrains Mono', monospace; }
+    .langs [aria-pressed="true"] { background: var(--cyan); color: #000; border-radius: 99px; }
+    .icon-btn { width: 38px; height: 38px; display: grid; place-items: center; padding: 0; }
+    .menu-toggle { display: none; }
+
+    /* Hero */
+    .hero { padding: 60px 0 40px; }
+    .hero-grid { display: grid; grid-template-columns: 1.15fr 1fr; gap: 40px; align-items: center; }
+    .eyebrow {
+      font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 2.5px;
+      text-transform: uppercase; color: var(--cyan); display: flex; align-items: center; gap: 8px;
+    }
+    .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--cyan); box-shadow: 0 0 10px var(--cyan); }
+    h1 {
+      font-family: 'Syne', sans-serif; font-size: clamp(42px, 5.5vw, 76px);
+      line-height: 1.05; letter-spacing: -2px; margin: 20px 0; font-weight: 800;
+    }
+    h1 em {
+      font-style: normal;
+      background: linear-gradient(135deg, var(--cyan) 0%, var(--violet) 50%, var(--magenta) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .intro { font-size: 16px; color: var(--muted); max-width: 500px; margin-bottom: 30px; }
+    
+    .cta-btn {
+      display: inline-flex; align-items: center; gap: 12px;
+      padding: 14px 28px; border-radius: 99px;
+      background: linear-gradient(135deg, var(--cyan), var(--blue));
+      color: #020617; font-weight: 800; font-size: 13px; text-transform: uppercase;
+      letter-spacing: 0.5px; border: none; box-shadow: 0 0 25px rgba(0, 240, 255, 0.3);
+      transition: all 0.3s;
+    }
+    .cta-btn:hover { transform: translateY(-2px); box-shadow: 0 0 35px rgba(0, 240, 255, 0.5); }
+
+    /* 3D Сцена */
+    .hero-art {
+      position: relative; height: 440px; border-radius: 28px;
+      background: radial-gradient(circle at center, rgba(139, 92, 246, 0.15) 0%, rgba(10, 14, 23, 0.8) 75%);
+      border: 1px solid var(--line); overflow: hidden; display: flex; flex-direction: column;
+    }
+    .scene-stage { flex: 1; position: relative; width: 100%; height: 100%; cursor: grab; }
+    .scene-stage:active { cursor: grabbing; }
+    #sculpture { width: 100%; height: 100%; display: block; }
+    .scene-controls {
+      position: absolute; bottom: 16px; left: 0; right: 0;
+      display: flex; justify-content: center; gap: 8px; z-index: 5;
+    }
+    .scene-controls button {
+      padding: 6px 14px; font-size: 11px; font-family: 'JetBrains Mono', monospace;
+      background: rgba(4, 6, 10, 0.7); backdrop-filter: blur(10px);
+    }
+    .scene-controls [aria-pressed="true"] {
+      background: var(--cyan); color: #000; border-color: var(--cyan); font-weight: 700;
+    }
+    .art-caption {
+      position: absolute; top: 16px; left: 20px; font-size: 10px;
+      font-family: 'JetBrains Mono', monospace; letter-spacing: 1.5px; color: var(--muted);
+    }
+
+    /* Звуковая галерея (Плеер) */
+    .sound {
+      margin-top: 40px; background: var(--card); border: 1px solid var(--line);
+      border-radius: 28px; padding: 32px; display: grid; grid-template-columns: 1.1fr 1fr;
+      gap: 36px; backdrop-filter: blur(20px); box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+    }
+    .now { display: flex; gap: 20px; align-items: center; }
+    .cover { width: 88px; height: 88px; border-radius: 16px; overflow: hidden; border: 1px solid var(--line); flex-shrink: 0; background: #000; }
+    .cover img { width: 100%; height: 100%; object-fit: cover; }
+    .track-name { font-family: 'Syne', sans-serif; font-size: 24px; font-weight: 700; margin: 4px 0; }
+    .track-meta { font-size: 12px; color: var(--cyan); font-family: 'JetBrains Mono', monospace; }
+    
+    #waves { width: 100%; height: 100px; display: block; margin: 16px 0; }
+    .transport { display: flex; gap: 14px; align-items: center; }
+    .play {
+      width: 48px; height: 48px; border-radius: 50%;
+      background: var(--cyan); color: #000; border: none; font-size: 18px;
+      display: grid; place-items: center; font-weight: 800;
+    }
+    .seekrow { display: flex; align-items: center; gap: 10px; margin-top: 14px; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--muted); }
+    input[type="range"] { accent-color: var(--cyan); flex: 1; }
+    .volume { display: flex; align-items: center; gap: 8px; margin-left: auto; width: 120px; font-size: 11px; font-family: 'JetBrains Mono', monospace; }
+
+    .playlist { border-left: 1px solid var(--line); padding-left: 32px; }
+    .playlist-head { display: flex; justify-content: space-between; font-size: 11px; font-family: 'JetBrains Mono', monospace; color: var(--muted); margin-bottom: 12px; }
+    .track {
+      width: 100%; border: none; border-top: 1px solid var(--line); border-radius: 0;
+      padding: 12px 6px; display: flex; align-items: center; gap: 14px; text-align: left;
+    }
+    .track[aria-current="true"] { background: rgba(0, 240, 255, 0.06); color: var(--cyan); }
+    .track .cover { width: 40px; height: 40px; border-radius: 8px; }
+    .track b { font-size: 13px; font-weight: 600; display: block; }
+    .track small { font-size: 10px; color: var(--muted); display: block; }
+    .track .arrow { margin-left: auto; font-size: 14px; font-weight: bold; }
+
+    /* 4 Направления */
+    .section-head { margin: 100px 0 32px; display: flex; justify-content: space-between; align-items: flex-end; }
+    h2 { font-family: 'Syne', sans-serif; font-size: clamp(32px, 4vw, 48px); font-weight: 800; letter-spacing: -1px; }
+    .gallery { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    .card {
+      background: var(--card); border: 1px solid var(--line); border-radius: 28px;
+      padding: 30px; overflow: hidden; backdrop-filter: blur(16px);
+      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .card:hover { border-color: rgba(0, 240, 255, 0.4); transform: translateY(-4px); }
+    .card-art {
+      height: 180px; margin: -30px -30px 24px; overflow: hidden; position: relative;
+      background: #0B111E;
+    }
+    .card-art img { width: 100%; height: 100%; object-fit: cover; }
+    .card h3 { font-family: 'Syne', sans-serif; font-size: 24px; font-weight: 700; margin: 10px 0; }
+    .card p { font-size: 14px; color: var(--muted); margin-bottom: 20px; }
+    .card ul { display: flex; flex-wrap: wrap; gap: 8px; list-style: none; margin-bottom: 24px; }
+    .card li { font-size: 11px; font-family: 'JetBrains Mono', monospace; border: 1px solid var(--line); border-radius: 99px; padding: 4px 12px; color: var(--muted); }
+    .card-link { display: flex; justify-content: space-between; font-size: 12px; font-weight: 700; font-family: 'JetBrains Mono', monospace; color: var(--cyan); border-top: 1px solid var(--line); padding-top: 16px; }
+
+    /* 3D Галерея #artworks */
+    .object-gallery { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .object-gallery button {
+      border: 1px solid var(--line); border-radius: 24px; overflow: hidden;
+      background: var(--card); padding: 0; text-align: left;
+    }
+    .object-gallery button:hover { border-color: var(--cyan); }
+    .object-gallery img { width: 100%; aspect-ratio: 1; object-fit: cover; display: block; }
+    .object-gallery span { display: block; padding: 18px; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 16px; }
+
+    /* Бриф */
+    .brief {
+      margin: 100px auto 60px; padding: 44px; background: var(--card);
+      border: 1px solid var(--line); border-radius: 32px; display: grid;
+      grid-template-columns: 1fr 1.1fr; gap: 48px; backdrop-filter: blur(20px);
+    }
+    .brief label { display: block; font-size: 12px; font-family: 'JetBrains Mono', monospace; color: var(--muted); margin-bottom: 14px; }
+    .brief input, .brief textarea, .brief select {
+      width: 100%; display: block; padding: 12px 16px; margin-top: 6px;
+      background: rgba(4, 6, 10, 0.7); border: 1px solid var(--line);
+      border-radius: 12px; color: var(--ink);
+    }
+    .brief textarea { resize: vertical; min-height: 100px; }
+
+    /* Подвал и разработчик */
+    footer { border-top: 1px solid var(--line); padding: 36px 0; font-size: 12px; font-family: 'JetBrains Mono', monospace; color: var(--muted); }
+    footer .wrap { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; }
+    .dev-badge {
+      display: flex; align-items: center; gap: 12px; padding: 8px 16px;
+      border-radius: 99px; background: rgba(255, 255, 255, 0.03); border: 1px solid var(--line);
+    }
+    .dev-badge .live-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--cyan); animation: pulse 2s infinite; }
+    @keyframes pulse { 0% { opacity: 0.4; } 50% { opacity: 1; } 100% { opacity: 0.4; } }
+
+    /* Кнопка наверх */
+    #back-to-top {
+      position: fixed; bottom: 32px; right: 32px; z-index: 50; width: 46px; height: 46px;
+      border-radius: 50%; background: var(--panel); border: 1px solid var(--cyan); color: var(--cyan);
+      display: grid; place-items: center; opacity: 0; pointer-events: none; transform: translateY(15px);
+      transition: all 0.3s; box-shadow: 0 0 20px rgba(0, 240, 255, 0.25);
+    }
+    #back-to-top.show { opacity: 1; pointer-events: auto; transform: translateY(0); }
+    #back-to-top:hover { background: var(--cyan); color: #000; transform: scale(1.1); }
+
+    /* Диалог настроек доступности */
+    dialog {
+      width: min(420px, calc(100% - 32px)); background: #0B0F19; color: var(--ink);
+      border: 1px solid var(--line); border-radius: 24px; padding: 28px; margin: auto;
+    }
+    dialog::backdrop { background: rgba(0,0,0,0.8); backdrop-filter: blur(8px); }
+    dialog label { display: flex; align-items: center; gap: 12px; padding: 12px 0; font-size: 14px; cursor: pointer; }
+    dialog .close-btn { float: right; width: 32px; height: 32px; display: grid; place-items: center; }
+
+    /* Режимы */
+    body.large { font-size: 18px; }
+    body.contrast { --bg: #000; --card: #000; --ink: #FFF; --line: #FFF; --muted: #DDD; }
+    body.calm * { animation: none !important; transition: none !important; }
+
+    /* Адаптивность */
+    @media (max-width: 992px) {
+      .hero-grid { grid-template-columns: 1fr; }
+      .sound { grid-template-columns: 1fr; }
+      .playlist { border-left: none; border-top: 1px solid var(--line); padding-left: 0; padding-top: 24px; }
+      .gallery { grid-template-columns: 1fr; }
+      .brief { grid-template-columns: 1fr; padding: 28px; }
+      .object-gallery { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 768px) {
+      nav { display: none; position: absolute; top: 100%; left: 0; right: 0; background: var(--bg); padding: 20px; border-bottom: 1px solid var(--line); flex-direction: column; }
+      nav.open { display: flex; }
+      .menu-toggle { display: grid; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="glow-cyan"></div>
+  <div class="glow-magenta"></div>
+
+  <!-- ШАПКА -->
+  <header>
+    <div class="wrap bar">
+      <a class="logo" href="#home">
+        <span>PAVLIKneMOROZOFF</span>
+        <small>CreativeArt Production</small>
+      </a>
+
+      <nav id="nav">
+        <a href="#home" data-t="navHome">Главная</a>
+        <a href="#sound" data-t="navSound">Смотреть &amp; Слушать</a>
+        <a href="#directions" data-t="navGallery">Творчество на заказ</a>
+        <a href="#artworks" data-t="navArt">Галерея 3D</a>
+        <a href="#brief" data-t="navBrief">Создать вместе ↗</a>
+      </nav>
+
+      <div class="tools">
+        <div class="langs" role="group" aria-label="Язык">
+          <button data-lang="ru" aria-pressed="true">RU</button>
+          <button data-lang="kk" aria-pressed="false">ҚАЗ</button>
+          <button data-lang="en" aria-pressed="false">EN</button>
+        </div>
+        <button class="icon-btn" id="access" aria-label="Настройки доступности">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="4" r="2"/><path d="M3 8h18M12 7v7m0-3-5 10m5-10 5 10"/></svg>
+        </button>
+        <button class="icon-btn menu-toggle" id="menu" aria-label="Меню">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <main id="home">
+    <!-- HERO -->
+    <section class="hero wrap">
+      <div class="hero-grid">
+        <div>
+          <div class="eyebrow"><i class="dot"></i><span data-t="livingGallery">Living Digital Gallery</span></div>
+          <h1 data-t="headline">Искусство.<br>За пределами<br><em>привычного.</em></h1>
+          <p class="intro" data-t="intro">Музыка, истории и цифровые миры. Пространство, где идея обретает голос, образ и осязаемую форму.</p>
+          <a class="cta-btn" href="#directions"><span data-t="explore">Исследовать галерею</span> <span>↗</span></a>
+        </div>
+
+        <div class="hero-art">
+          <div class="art-caption" id="model-caption">SCULPTURE // 01 LIQUID CHROME</div>
+          <div class="scene-stage" id="scene-container">
+            <canvas id="sculpture"></canvas>
+          </div>
+          <div class="scene-controls" role="group">
+            <button data-model="0" aria-pressed="true">Liquid Chrome</button>
+            <button data-model="1" aria-pressed="false">Quantum Crystal</button>
+            <button data-model="2" aria-pressed="false">Prism Shift</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ЗВУКОВАЯ ГАЛЕРЕЯ -->
+    <section id="sound" class="wrap">
+      <div class="sound">
+        <div>
+          <div class="now">
+            <div id="cover" class="cover"><img src="assets/images/music/creative-pulse.png" alt="Обложка"></div>
+            <div>
+              <div class="eyebrow" data-t="soundLab">Звуковая лаборатория</div>
+              <h2 class="track-name" id="title">Creative Pulse</h2>
+              <div class="track-meta" id="genre">Электроника / Творческий импульс</div>
+            </div>
+          </div>
+
+          <canvas id="waves"></canvas>
+
+          <div class="transport">
+            <button id="prev" class="icon-btn" aria-label="Предыдущий">‹</button>
+            <button id="play" class="play" aria-label="Воспроизвести">▶</button>
+            <button id="next" class="icon-btn" aria-label="Следующий">›</button>
+            <label class="volume">
+              <span>VOL</span>
+              <input id="volume" type="range" min="0" max="1" step="0.01" value="0.75">
+            </label>
+          </div>
+
+          <div class="seekrow">
+            <span id="elapsed">0:00</span>
+            <input id="seek" type="range" min="0" max="100" value="0" step="0.1">
+            <span id="duration">0:00</span>
+          </div>
+          <audio id="audio" preload="metadata"></audio>
+        </div>
+
+        <div class="playlist">
+          <div class="playlist-head">
+            <span data-t="playlistHead">АВТОРСКИЙ ПЛЕЙЛИСТ</span>
+            <span>01 — 04</span>
+          </div>
+          <div id="tracks"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ЧЕТЫРЕ НАПРАВЛЕНИЯ -->
+    <section class="wrap" id="directions">
+      <div class="section-head">
+        <div>
+          <span class="eyebrow" data-t="fourEyebrow">01 / ЧЕТЫРЕ НАПРАВЛЕНИЯ</span>
+          <h2 data-t="galleryTitle">Разные формы.<br>Один творческий импульс.</h2>
+        </div>
+        <p style="color:var(--muted); max-width:380px;" data-t="galleryIntro">От первой ноты до осязаемого арт-объекта в ваших руках. Выберите вектор реализации.</p>
+      </div>
+      <div class="gallery" id="cards"></div>
+    </section>
+
+    <!-- 3D ГАЛЕРЕЯ -->
+    <section id="artworks" class="wrap">
+      <div class="section-head">
+        <div>
+          <span class="eyebrow">02 / 3D ART &amp; EXHIBITION</span>
+          <h2 data-t="artTitle">Цифровая материя</h2>
+        </div>
+        <p style="color:var(--muted); max-width:380px;" data-t="artIntro">Выберите объект, чтобы открыть и исследовать его в интерактивной сцене выше.</p>
+      </div>
+      <div class="object-gallery">
+        <button data-model="0">
+          <img src="assets/images/gallery/liquid-chrome.png" alt="Liquid Chrome" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%23111%22/><text x=%2250%22 y=%2250%22 fill=%22%2300F0FF%22 font-size=%228%22 text-anchor=%22middle%22>Liquid Chrome</text></svg>'">
+          <span>Liquid Chrome</span>
+        </button>
+        <button data-model="1">
+          <img src="assets/images/gallery/quantum-crystal.png" alt="Quantum Crystal" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%23111%22/><text x=%2250%22 y=%2250%22 fill=%22%238B5CF6%22 font-size=%228%22 text-anchor=%22middle%22>Quantum Crystal</text></svg>'">
+          <span>Quantum Crystal</span>
+        </button>
+        <button data-model="2">
+          <img src="assets/images/gallery/prism-shift.png" alt="Prism Shift" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%23111%22/><text x=%2250%22 y=%2250%22 fill=%22%23FF007A%22 font-size=%228%22 text-anchor=%22middle%22>Prism Shift</text></svg>'">
+          <span>Prism Shift</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- БРИФ -->
+    <section class="wrap brief" id="brief">
+      <div>
+        <span class="eyebrow">CREATIVEART / CO-CREATION</span>
+        <h2 data-t="briefTitle">Давайте создадим<br>что-то ваше.</h2>
+        <p style="color:var(--muted); font-size:14px; margin: 16px 0;" data-t="briefIntro">Расскажите о вашей задаче. Сформируйте бриф и сохраните его для связи с продюсерской группой.</p>
+        <p style="color:var(--muted); font-size:11px; font-family:'JetBrains Mono',monospace;" data-t="privacy">Данные обрабатываются локально без передачи третьим лицам.</p>
+      </div>
+      <form id="briefForm">
+        <label><span data-t="fName">Ваше имя</span><input name="name" required placeholder="Как к вам обращаться"></label>
+        <label><span data-t="fDirection">Направление</span><select name="direction" id="direction"></select></label>
+        <label><span data-t="fIdea">Описание идеи</span><textarea name="idea" required placeholder="Опишите задачу: хронометраж, жанр, персонажи или детали 3D-модели..."></textarea></label>
+        <button class="cta-btn" type="submit" style="width:100%; justify-content:center; margin-top:8px;">
+          <span data-t="downloadBrief">Скачать готовый бриф</span> <span>↓</span>
+        </button>
+        <p id="briefStatus" style="font-size:12px; color:var(--cyan); margin-top:10px; font-family:'JetBrains Mono',monospace;"></p>
+      </form>
+    </section>
+  </main>
+
+  <!-- ПОДВАЛ -->
+  <footer id="footer">
+    <div class="wrap">
+      <div>
+        <span style="font-family:'Syne',sans-serif; font-weight:800; color:#FFF; font-size:14px;">PAVLIKneMOROZOFF CreativeArt</span>
+        <p style="font-size:11px; margin-top:4px;">Living Digital Gallery · Все авторские права защищены 2026</p>
+      </div>
+      <div class="dev-badge">
+        <div class="live-dot"></div>
+        <div>
+          <span style="color:#FFF; font-weight:700;">IT Life</span>
+          <span style="color:var(--muted); font-size:10px;">/ a PAVLIKneMOROZOFF company</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- КНОПКА «НАВЕРХ» -->
+  <button id="back-to-top" aria-label="Наверх">↑</button>
+
+  <!-- ОКНО ДОСТУПНОСТИ -->
+  <dialog id="settings">
+    <button class="close-btn icon-btn" id="closeSettings">✕</button>
+    <h3 style="font-family:'Syne',sans-serif; font-size:20px; margin-bottom:16px;">Доступность</h3>
+    <label><input id="chk-large" type="checkbox"> Крупный текст</label>
+    <label><input id="chk-contrast" type="checkbox"> Высокий контраст</label>
+    <label><input id="chk-calm" type="checkbox"> Уменьшить анимацию</label>
+  </dialog>
+
+  <!-- СКРИПТЫ: ПЛЕЕР + СПЕКТР + 3D + ЛОКАЛИЗАЦИЯ -->
+  <script>
+    'use strict';
+
+    const translations = {
+      ru: {
+        navHome: 'Главная', navSound: 'Смотреть & Слушать', navGallery: 'Творчество на заказ', navArt: 'Галерея 3D', navBrief: 'Создать вместе ↗',
+        livingGallery: 'Living Digital Gallery', headline: 'Искусство.<br>За пределами<br><em>привычного.</em>',
+        intro: 'Музыка, истории и цифровые миры. Пространство, где идея обретает голос, образ и осязаемую форму.',
+        explore: 'Исследовать галерею', soundLab: 'Звуковая лаборатория', playlistHead: 'АВТОРСКИЙ ПЛЕЙЛИСТ',
+        fourEyebrow: '01 / ЧЕТЫРЕ НАПРАВЛЕНИЯ', galleryTitle: 'Разные формы.<br>Один творческий импульс.',
+        galleryIntro: 'От первой ноты до осязаемого арт-объекта в ваших руках. Выберите вектор реализации.',
+        artTitle: 'Цифровая материя', artIntro: 'Выберите объект, чтобы открыть и исследовать его в интерактивной сцене выше.',
+        briefTitle: 'Давайте создадим<br>что-то ваше.', briefIntro: 'Расскажите о вашей задаче. Сформируйте бриф и сохраните его для связи с продюсерской группой.',
+        privacy: 'Данные обрабатываются локально без передачи третьим лицам.', fName: 'Ваше имя', fDirection: 'Направление', fIdea: 'Описание идеи', downloadBrief: 'Скачать готовый бриф',
+        saved: '✓ Бриф сформирован и скачан на ваше устройство.',
+        names: ['Смотреть & слушать', 'Творчество на заказ', 'Детская студия', '3D арт & печать'],
+        descs: [
+          'Авторская музыка, вокальные релизы, AI Sound и кинематографичные визуальные истории.',
+          'Слова, становящиеся музыкой: стихи, тексты песен, создание треков под ключ и съемка клипов.',
+          'Миры, где ребенок — главный герой. Индивидуальные арт-книги, сказки и персональная анимация.',
+          'Материализация идей: высокоточное 3D-моделирование, дизайнерские фигурки, мерч и печать 8K Resin/FDM.'
+        ],
+        tags: [
+          ['Музыка & AI Sound', 'Синглы', 'Клипы & Вижуалы'],
+          ['Стихи & Поэмы', 'Сонграйтинг', 'Песни под ключ', 'Клипы'],
+          ['Именная полиграфия', 'Персональные арт-книги', 'Мультфильмы'],
+          ['3D-моделирование', 'Фигурки героев', 'FDM & 8K Resin']
+        ]
+      },
+      kk: {
+        navHome: 'Басты бет', navSound: 'Көру және Тыңдау', navGallery: 'Тапсырыспен өнер', navArt: '3D Галереясы', navBrief: 'Бірге жасайық ↗',
+        livingGallery: 'Тірі цифрлық галерея', headline: 'Өнер.<br>Үйреншікті шектен<br><em>тыс әлем.</em>',
+        intro: 'Музыка, оқиғалар және цифрлық әлемдер. Идея үнге, бейнеге және пішінге айналатын кеңістік.',
+        explore: 'Галереяны зерттеу', soundLab: 'Дыбыс зертханасы', playlistHead: 'АВТОРЛЫҚ ПЛЕЙЛИСТ',
+        fourEyebrow: '01 / ТӨРТ БАҒЫТ', galleryTitle: 'Пішіндер әртүрлі.<br>Шығармашылық серпін бір.',
+        galleryIntro: 'Алғашқы нотадан қолға ұстайтын нысанға дейін. Өз оқиғаңыздың бастауын таңдаңыз.',
+        artTitle: 'Цифрлық материя', artIntro: 'Жоғарыдағы интерактивті сахнада зерттеу үшін нысанды таңдаңыз.',
+        briefTitle: 'Сізге арналған<br>туынды жасайық.', briefIntro: 'Идеяңызды сипаттаңыз. Брифті жүктеп алып, командаға жіберіңіз.',
+        privacy: 'Деректер тек жергілікті өңделеді.', fName: 'Атыңыз', fDirection: 'Бағыт', fIdea: 'Идеяның сипаттамасы', downloadBrief: 'Брифті жүктеп алу',
+        saved: '✓ Бриф дайындалып, құрылғыңызға жүктелді.',
+        names: ['Көру және тыңдау', 'Тапсырыспен шығармашылық', 'Балалар студиясы', '3D өнер және басып шығару'],
+        descs: [
+          'Авторлық музыка, вокалдық туындылар, AI Sound және кинематографиялық бейнелер.',
+          'Музыкаға айналатын сөздер: өлеңдер, ән мәтіндері, әндер жазу және клиптер түсіру.',
+          'Бала басты кейіпкер болатын әлемдер. Жеке арт-кітаптар, ертегілер мен анимациялар.',
+          'Идеяларды жүзеге асыру: 3D-модельдеу, мүсіншелер, мерч және 8K басып шығару.'
+        ],
+        tags: [
+          ['Музыка & AI Sound', 'Синглы', 'Клиптер'],
+          ['Өлеңдер', 'Ән мәтіндері', 'Дайын әндер', 'Клиптер'],
+          ['Атаулы баспа', 'Арт-кітаптар', 'Мультфильмдер'],
+          ['3D-модельдеу', 'Мүсіншелер', 'FDM & 8K Resin']
+        ]
+      },
+      en: {
+        navHome: 'Home', navSound: 'Watch & Listen', navGallery: 'Custom Art', navArt: '3D Gallery', navBrief: 'Create Together ↗',
+        livingGallery: 'Living Digital Gallery', headline: 'Art.<br>Beyond the<br><em>ordinary.</em>',
+        intro: 'Music, stories and digital worlds. A space where an idea finds its voice, image and tangible form.',
+        explore: 'Explore Gallery', soundLab: 'Sound Laboratory', playlistHead: 'AUTHOR PLAYLIST',
+        fourEyebrow: '01 / FOUR DIRECTIONS', galleryTitle: 'Different forms.<br>One creative impulse.',
+        galleryIntro: 'From the first note to a tangible physical piece. Choose where your story begins.',
+        artTitle: 'Digital Matter', artIntro: 'Select an artwork to explore it in the interactive 3D scene above.',
+        briefTitle: 'Let’s create<br>something yours.', briefIntro: 'Describe your vision. Generate a brief and save it to collaborate with our team.',
+        privacy: 'Data processed locally on your device.', fName: 'Your Name', fDirection: 'Direction', fIdea: 'Idea Description', downloadBrief: 'Download Brief',
+        saved: '✓ Brief created and downloaded to your device.',
+        names: ['Watch & Listen', 'Custom Art Production', 'Kids Creative Studio', '3D Art & Printing'],
+        descs: [
+          'Original music, vocal releases, AI Sound, and cinematic visual stories.',
+          'Words into music: bespoke poetry, songwriting, full music production, and music videos.',
+          'Worlds where your child is the hero. Personalized fairy tale books and custom animation.',
+          'Materializing ideas: high-precision 3D modelling, custom figurines, merch, and 8K printing.'
+        ],
+        tags: [
+          ['Music & AI Sound', 'Singles', 'Visuals'],
+          ['Poetry', 'Songwriting', 'Full Tracks', 'Videos'],
+          ['Stationery', 'Bespoke Books', 'Cartoons'],
+          ['3D Modelling', 'Figurines', 'FDM & 8K Resin']
+        ]
+      }
+    };
+
+    let currentLang = 'ru';
+    const tracks = [
+      { title: 'Creative Pulse', file: 'creative-pulse', genre: 'Электроника / Творческий импульс' },
+      { title: 'Neural Steppe', file: 'neural-steppe', genre: 'Кибер-этно / Пространство степи' },
+      { title: 'Digital Rebellion', file: 'digital-rebellion', genre: 'Альтернативная электроника' },
+      { title: 'Beyond the Code', file: 'beyond-the-code', genre: 'Эмбиент / Саундтрек' }
+    ];
+
+    let currentTrack = 0;
+    const audio = document.getElementById('audio');
+    const playBtn = document.getElementById('play');
+    const seek = document.getElementById('seek');
+    const volume = document.getElementById('volume');
+    const elapsed = document.getElementById('elapsed');
+    const duration = document.getElementById('duration');
+    const titleEl = document.getElementById('title');
+    const genreEl = document.getElementById('genre');
+    const coverEl = document.getElementById('cover');
+
+    // Отрисовка страницы
+    function applyLocalization(lang) {
+      currentLang = lang;
+      const t = translations[lang];
+      document.querySelectorAll('[data-t]').forEach(el => {
+        const key = el.dataset.t;
+        if (t[key]) el.innerHTML = t[key];
+      });
+      document.querySelectorAll('[data-lang]').forEach(b => {
+        b.setAttribute('aria-pressed', b.dataset.lang === lang);
+      });
+
+      // Карточки
+      const cardsCont = document.getElementById('cards');
+      const dirSelect = document.getElementById('direction');
+      const studioImgs = ['sound-studio', 'custom-creation', 'kids-studio', '3d-art-printing'];
+
+      cardsCont.innerHTML = t.names.map((name, i) => `
+        <article class="card">
+          <div class="card-art">
+            <img src="assets/images/studio/${studioImgs[i]}.png" alt="${name}" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%23111827%22/><text x=%2250%22 y=%2250%22 fill=%22%2300F0FF%22 font-size=%228%22 text-anchor=%22middle%22>${name}</text></svg>'">
+          </div>
+          <span class="eyebrow">0${i+1} / CREATIVEART</span>
+          <h3>${name}</h3>
+          <p>${t.descs[i]}</p>
+          <ul>${t.tags[i].map(tg => `<li>${tg}</li>`).join('')}</ul>
+          <a class="card-link" href="${i === 0 ? '#sound' : '#brief'}">
+            <span>${i === 0 ? 'Слушать витрину' : 'Заказать проект'}</span>
+            <span>↗</span>
+          </a>
+        </article>
+      `).join('');
+
+      dirSelect.innerHTML = t.names.map((n, i) => `<option value="${n}">${n}</option>`).join('');
+      renderPlaylist();
+    }
+
+    function renderPlaylist() {
+      const container = document.getElementById('tracks');
+      container.innerHTML = tracks.map((tr, i) => `
+        <button class="track" data-index="${i}" aria-current="${i === currentTrack}">
+          <div class="cover">
+            <img src="assets/images/music/${tr.file}.png" alt="${tr.title}" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%23080C14%22/><text x=%2250%22 y=%2250%22 fill=%22%2300F0FF%22 font-size=%227%22 text-anchor=%22middle%22>${tr.title}</text></svg>'">
+          </div>
+          <div>
+            <b>${tr.title}</b>
+            <small>${tr.genre}</small>
+          </div>
+          <span class="arrow">${i === currentTrack ? '●' : '↗'}</span>
+        </button>
+      `).join('');
+    }
+
+    // Аудиосистема с Web Audio API (Анализатор реального спектра)
+    let audioCtx = null, analyser = null, dataArray = null;
+    function initAudioGraph() {
+      if (audioCtx) return;
+      try {
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        audioCtx = new AudioContext();
+        analyser = audioCtx.createAnalyser();
+        analyser.fftSize = 256;
+        const source = audioCtx.createMediaElementSource(audio);
+        source.connect(analyser);
+        analyser.connect(audioCtx.destination);
+        dataArray = new Uint8Array(analyser.frequencyBinCount);
+      } catch (e) {
+        console.warn('Web Audio API restricted or fallback mode');
+      }
+    }
+
+    function loadTrack(idx, autoPlay = false) {
+      currentTrack = idx;
+      const tr = tracks[idx];
+      audio.src = `assets/audio/${tr.file}.mp3`;
+      titleEl.textContent = tr.title;
+      genreEl.textContent = tr.genre;
+      coverEl.innerHTML = `<img src="assets/images/music/${tr.file}.png" alt="${tr.title}" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%23000%22/><text x=%2250%22 y=%2250%22 fill=%22%2300F0FF%22 font-size=%227%22 text-anchor=%22middle%22>${tr.title}</text></svg>'">`;
+      renderPlaylist();
+      if (autoPlay) {
+        initAudioGraph();
+        if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
+        audio.play().catch(() => {});
+      }
+    }
+
+    playBtn.addEventListener('click', () => {
+      initAudioGraph();
+      if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
+      if (audio.paused) {
+        if (!audio.src) loadTrack(0, true);
+        else audio.play();
+      } else {
+        audio.pause();
+      }
+    });
+
+    audio.addEventListener('play', () => { playBtn.textContent = 'Ⅱ'; });
+    audio.addEventListener('pause', () => { playBtn.textContent = '▶'; });
+    document.getElementById('prev').addEventListener('click', () => loadTrack((currentTrack - 1 + tracks.length) % tracks.length, true));
+    document.getElementById('next').addEventListener('click', () => loadTrack((currentTrack + 1) % tracks.length, true));
+    document.getElementById('tracks').addEventListener('click', e => {
+      const btn = e.target.closest('[data-index]');
+      if (btn) loadTrack(Number(btn.dataset.index), true);
+    });
+
+    audio.addEventListener('timeupdate', () => {
+      if (audio.duration) {
+        seek.value = (audio.currentTime / audio.duration) * 100;
+        elapsed.textContent = formatTime(audio.currentTime);
+        duration.textContent = formatTime(audio.duration);
+      }
+    });
+    seek.addEventListener('input', () => {
+      if (audio.duration) audio.currentTime = (seek.value / 100) * audio.duration;
+    });
+    volume.addEventListener('input', () => { audio.volume = volume.value; });
+    audio.addEventListener('ended', () => loadTrack((currentTrack + 1) % tracks.length, true));
+
+    function formatTime(s) {
+      if (!Number.isFinite(s)) return '0:00';
+      const m = Math.floor(s / 60);
+      const sec = Math.floor(s % 60);
+      return `${m}:${sec < 10 ? '0' : ''}${sec}`;
+    }
+
+    // Отрисовка звуковых волн (cyan → violet → magenta согласно ТЗ 3.3)
+    const waveCanvas = document.getElementById('waves');
+    const wctx = waveCanvas.getContext('2d');
+    function drawWaves() {
+      requestAnimationFrame(drawWaves);
+      const w = waveCanvas.width = waveCanvas.clientWidth * (window.devicePixelRatio || 1);
+      const h = waveCanvas.height = waveCanvas.clientHeight * (window.devicePixelRatio || 1);
+      wctx.clearRect(0, 0, w, h);
+
+      let energy = 0;
+      if (analyser && !audio.paused) {
+        analyser.getByteFrequencyData(dataArray);
+        energy = dataArray.reduce((acc, v) => acc + v, 0) / dataArray.length;
+      }
+
+      const grad = wctx.createLinearGradient(0, 0, w, 0);
+      grad.addColorStop(0, '#00F0FF');
+      grad.addColorStop(0.5, '#8B5CF6');
+      grad.addColorStop(1, '#FF007A');
+
+      for (let j = 0; j < 4; j++) {
+        wctx.beginPath();
+        for (let x = 0; x <= w; x += 3) {
+          const u = x / w;
+          const freqOffset = dataArray ? dataArray[Math.floor(u * 32)] / 255 : 0;
+          const amp = !audio.paused ? (15 + freqOffset * 35) : 8;
+          const y = h * 0.5 + Math.sin(u * Math.PI * 4 + Date.now() * 0.003 + j * 0.8) * amp;
+          if (x === 0) wctx.moveTo(x, y);
+          else wctx.lineTo(x, y);
+        }
+        wctx.strokeStyle = grad;
+        wctx.globalAlpha = 0.35 + j * 0.2;
+        wctx.lineWidth = 1.8;
+        wctx.stroke();
+      }
+    }
+    drawWaves();
+
+    // 3D Сцена Three.js (Liquid Chrome, Quantum Crystal, Prism Shift)
+    const container = document.getElementById('scene-container');
+    const sceneCanvas = document.getElementById('sculpture');
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 1000);
+    camera.position.z = 6.5;
+
+    const renderer = new THREE.WebGLRenderer({ canvas: sceneCanvas, alpha: true, antialias: true });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+
+    const ambLight = new THREE.AmbientLight(0xffffff, 0.8);
+    scene.add(ambLight);
+    const pLight1 = new THREE.PointLight(0x00F0FF, 3, 50); pLight1.position.set(5, 5, 5); scene.add(pLight1);
+    const pLight2 = new THREE.PointLight(0xFF007A, 3, 50); pLight2.position.set(-5, -5, 5); scene.add(pLight2);
+
+    const modelGroup = new THREE.Group();
+    scene.add(modelGroup);
+
+    // Процедурные 3D арт-объекты
+    const materials = [
+      new THREE.MeshStandardMaterial({ color: 0xE2E8F0, metalness: 0.95, roughness: 0.08 }), // Chrome
+      new THREE.MeshPhysicalMaterial({ color: 0x8B5CF6, transmission: 0.85, opacity: 1, transparent: true, roughness: 0.1, ior: 1.5 }), // Crystal
+      new THREE.MeshStandardMaterial({ color: 0x00F0FF, metalness: 0.7, roughness: 0.2, wireframe: false }) // Prism
+    ];
+
+    let currentMesh = null;
+    function switchModel(type) {
+      if (currentMesh) modelGroup.remove(currentMesh);
+      let geom;
+      if (type === 0) {
+        geom = new THREE.TorusKnotGeometry(1.4, 0.42, 128, 32);
+      } else if (type === 1) {
+        geom = new THREE.IcosahedronGeometry(1.8, 0);
+      } else {
+        geom = new THREE.ConeGeometry(1.6, 2.8, 5);
+      }
+      currentMesh = new THREE.Mesh(geom, materials[type]);
+      modelGroup.add(currentMesh);
+
+      document.querySelectorAll('[data-model]').forEach(btn => {
+        btn.setAttribute('aria-pressed', Number(btn.dataset.model) === type);
+      });
+      const names = ['01 LIQUID CHROME', '02 QUANTUM CRYSTAL', '03 PRISM SHIFT'];
+      document.getElementById('model-caption').textContent = `SCULPTURE // ${names[type]}`;
+    }
+    switchModel(0);
+
+    function resize3D() {
+      const r = container.getBoundingClientRect();
+      if (r.width && r.height) {
+        renderer.setSize(r.width, r.height, false);
+        camera.aspect = r.width / r.height;
+        camera.updateProjectionMatrix();
+      }
+    }
+    window.addEventListener('resize', resize3D);
+    resize3D();
+
+    // Вращение мышью / тачем
+    let isDragging = false, prevX = 0, prevY = 0;
+    container.addEventListener('pointerdown', e => { isDragging = true; prevX = e.clientX; prevY = e.clientY; });
+    window.addEventListener('pointermove', e => {
+      if (!isDragging) return;
+      const dx = (e.clientX - prevX) * 0.008;
+      const dy = (e.clientY - prevY) * 0.008;
+      modelGroup.rotation.y += dx;
+      modelGroup.rotation.x += dy;
+      prevX = e.clientX; prevY = e.clientY;
+    });
+    window.addEventListener('pointerup', () => { isDragging = false; });
+
+    document.querySelectorAll('[data-model]').forEach(b => {
+      b.addEventListener('click', () => {
+        const id = Number(b.dataset.model);
+        switchModel(id);
+      });
+    });
+
+    function animate3D() {
+      requestAnimationFrame(animate3D);
+      let audioScale = 1;
+      if (analyser && !audio.paused) {
+        const avg = dataArray.slice(0, 16).reduce((a, b) => a + b, 0) / 16;
+        audioScale = 1 + (avg / 255) * 0.15;
+      }
+      if (!isDragging) {
+        modelGroup.rotation.y += 0.005;
+        modelGroup.rotation.x += 0.002;
+      }
+      modelGroup.scale.set(audioScale, audioScale, audioScale);
+      renderer.render(scene, camera);
+    }
+    animate3D();
+
+    // Языковые переключатели
+    document.querySelectorAll('[data-lang]').forEach(b => {
+      b.addEventListener('click', () => applyLocalization(b.dataset.lang));
+    });
+
+    // Мобильное меню
+    document.getElementById('menu').addEventListener('click', () => {
+      document.getElementById('nav').classList.toggle('open');
+    });
+
+    // Бриф
+    document.getElementById('briefForm').addEventListener('submit', e => {
+      e.preventDefault();
+      const fd = new FormData(e.target);
+      const content = `PAVLIKneMOROZOFF CreativeArt — Бриф проекта\n` +
+                      `Имя: ${fd.get('name')}\n` +
+                      `Направление: ${fd.get('direction')}\n` +
+                      `Идея:\n${fd.get('idea')}\n` +
+                      `Дата: ${new Date().toLocaleDateString()}`;
+      const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = `Brief-CreativeArt-${Date.now()}.txt`;
+      link.click();
+      document.getElementById('briefStatus').textContent = translations[currentLang].saved;
+    });
+
+    // Доступность
+    const modal = document.getElementById('settings');
+    document.getElementById('access').addEventListener('click', () => modal.showModal());
+    document.getElementById('closeSettings').addEventListener('click', () => modal.close());
+    document.getElementById('chk-large').addEventListener('change', e => document.body.classList.toggle('large', e.target.checked));
+    document.getElementById('chk-contrast').addEventListener('change', e => document.body.classList.toggle('contrast', e.target.checked));
+    document.getElementById('chk-calm').addEventListener('change', e => document.body.classList.toggle('calm', e.target.checked));
+
+    // Кнопка «Наверх»
+    const backBtn = document.getElementById('back-to-top');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 350) backBtn.classList.add('show');
+      else backBtn.classList.remove('show');
+    });
+    backBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+    // Старт
+    applyLocalization('ru');
+    loadTrack(0, false);
+  </script>
+</body>
+</html>
