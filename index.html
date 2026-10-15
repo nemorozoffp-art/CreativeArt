@@ -12,21 +12,21 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Syne:wght@700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
 
   <style>
+    /* ЦВЕТОВАЯ СИСТЕМА ИЗ ПРЕЗЕНТАЦИИ (СЛАЙД 03) */
     :root {
-      --bg: #030509;
-      --panel: #070B14;
-      --card: rgba(11, 16, 28, 0.78);
-      --ink: #F8FAFC;
-      --muted: #94A3B8;
+      --bg: #070A10;             /* Deep Space */
+      --panel: #101724;          /* Graphite */
+      --card: rgba(16, 23, 36, 0.78);
+      --ink: #F5F7FF;            /* Ice White */
+      --muted: #8E9BAE;
       --line: rgba(255, 255, 255, 0.08);
-      --cyan: #00F0FF;
+      --cyan: #30DBF4;           /* Electric Cyan */
+      --violet: #9B67FF;         /* Quantum Violet */
+      --magenta: #EF48CC;        /* Neon Magenta */
       --blue: #3B82F6;
-      --violet: #8B5CF6;
-      --magenta: #FF007A;
-      --gold: #F59E0B;
+      --gold: #FFB800;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -41,14 +41,15 @@
       position: relative;
     }
 
+    /* Фоновые мягкие неоновые туманности */
     .glow-cyan {
-      position: fixed; top: -160px; left: -160px; width: 620px; height: 620px;
-      background: radial-gradient(circle, rgba(0, 240, 255, 0.12) 0%, transparent 70%);
+      position: fixed; top: -140px; left: -140px; width: 550px; height: 550px;
+      background: radial-gradient(circle, rgba(48, 219, 244, 0.12) 0%, transparent 70%);
       pointer-events: none; z-index: 0;
     }
     .glow-magenta {
-      position: fixed; bottom: 5%; right: -160px; width: 650px; height: 650px;
-      background: radial-gradient(circle, rgba(255, 0, 122, 0.10) 0%, transparent 70%);
+      position: fixed; bottom: 8%; right: -140px; width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(239, 72, 204, 0.10) 0%, transparent 70%);
       pointer-events: none; z-index: 0;
     }
 
@@ -59,10 +60,10 @@
     button:hover { border-color: var(--cyan); }
     button:focus-visible, a:focus-visible { outline: 2px solid var(--cyan); outline-offset: 4px; }
 
-    /* Шапка */
+    /* ШАПКА */
     header {
       position: sticky; top: 0; z-index: 40;
-      background: rgba(3, 5, 9, 0.90);
+      background: rgba(7, 10, 16, 0.88);
       backdrop-filter: blur(20px);
       border-bottom: 1px solid var(--line);
     }
@@ -91,7 +92,7 @@
     .langs button { border: 0; padding: 5px 10px; font-size: 11px; font-weight: 700; font-family: 'JetBrains Mono', monospace; }
     .langs [aria-pressed="true"] { background: var(--cyan); color: #000; border-radius: 99px; }
     
-    /* Контейнер динамика и умная подсказка */
+    /* Кнопка фонового саундтрека */
     .ambient-wrapper { position: relative; display: flex; align-items: center; }
     .ambient-btn {
       width: 38px; height: 38px; display: grid; place-items: center; padding: 0;
@@ -100,35 +101,33 @@
     }
     .ambient-btn.active {
       border-color: var(--cyan); color: var(--cyan);
-      box-shadow: 0 0 16px rgba(0, 240, 255, 0.4);
-      background: rgba(0, 240, 255, 0.1);
+      box-shadow: 0 0 16px rgba(48, 219, 244, 0.4);
+      background: rgba(48, 219, 244, 0.1);
     }
     .ambient-btn:hover { border-color: var(--cyan); color: var(--ink); }
 
-    /* Полупрозрачная всплывающая подсказка "Включить атмосферу" */
+    /* Умная подсказка */
     .smart-hint {
       position: absolute; right: calc(100% + 12px); top: 50%; transform: translateY(-50%);
-      background: rgba(7, 11, 20, 0.85); backdrop-filter: blur(14px);
-      border: 1px solid rgba(0, 240, 255, 0.35); border-radius: 99px;
+      background: rgba(16, 23, 36, 0.9); backdrop-filter: blur(14px);
+      border: 1px solid rgba(48, 219, 244, 0.4); border-radius: 99px;
       padding: 6px 14px; font-size: 11px; font-family: 'JetBrains Mono', monospace;
       color: var(--cyan); white-space: nowrap; pointer-events: none;
-      box-shadow: 0 0 20px rgba(0, 240, 255, 0.15);
+      box-shadow: 0 0 20px rgba(48, 219, 244, 0.2);
       opacity: 0; transform: translateY(-50%) translateX(8px);
       transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
     }
-    .smart-hint.show {
-      opacity: 1; transform: translateY(-50%) translateX(0);
-    }
+    .smart-hint.show { opacity: 1; transform: translateY(-50%) translateX(0); }
     .smart-hint::after {
       content: ''; position: absolute; left: 100%; top: 50%; margin-top: -4px;
       border-width: 4px; border-style: solid;
-      border-color: transparent transparent transparent rgba(0, 240, 255, 0.35);
+      border-color: transparent transparent transparent rgba(48, 219, 244, 0.4);
     }
 
     .icon-btn { width: 38px; height: 38px; display: grid; place-items: center; padding: 0; }
     .menu-toggle { display: none; }
 
-    /* Hero */
+    /* HERO БЛОК */
     .hero { padding: 60px 0 40px; }
     .hero-grid { display: grid; grid-template-columns: 1.15fr 1fr; gap: 40px; align-items: center; }
     .eyebrow {
@@ -152,15 +151,15 @@
       padding: 14px 28px; border-radius: 99px;
       background: linear-gradient(135deg, var(--cyan), var(--blue));
       color: #020617; font-weight: 800; font-size: 13px; text-transform: uppercase;
-      letter-spacing: 0.5px; border: none; box-shadow: 0 0 25px rgba(0, 240, 255, 0.3);
+      letter-spacing: 0.5px; border: none; box-shadow: 0 0 25px rgba(48, 219, 244, 0.3);
       transition: all 0.3s;
     }
-    .cta-btn:hover { transform: translateY(-2px); box-shadow: 0 0 35px rgba(0, 240, 255, 0.5); }
+    .cta-btn:hover { transform: translateY(-2px); box-shadow: 0 0 35px rgba(48, 219, 244, 0.5); }
 
-    /* 3D Сцена */
+    /* 3D СЦЕНА */
     .hero-art {
-      position: relative; height: 460px; border-radius: 28px;
-      background: radial-gradient(circle at center, rgba(139, 92, 246, 0.18) 0%, rgba(7, 11, 20, 0.85) 75%);
+      position: relative; height: 470px; border-radius: 28px;
+      background: radial-gradient(circle at center, rgba(155, 103, 255, 0.16) 0%, rgba(16, 23, 36, 0.85) 75%);
       border: 1px solid var(--line); overflow: hidden; display: flex; flex-direction: column;
     }
     .scene-stage { flex: 1; position: relative; width: 100%; height: 100%; cursor: grab; }
@@ -172,7 +171,7 @@
     }
     .scene-controls button {
       padding: 6px 14px; font-size: 11px; font-family: 'JetBrains Mono', monospace;
-      background: rgba(3, 5, 9, 0.75); backdrop-filter: blur(10px);
+      background: rgba(7, 10, 16, 0.8); backdrop-filter: blur(10px);
     }
     .scene-controls [aria-pressed="true"] {
       background: var(--cyan); color: #000; border-color: var(--cyan); font-weight: 700;
@@ -182,7 +181,7 @@
       font-family: 'JetBrains Mono', monospace; letter-spacing: 1.5px; color: var(--muted);
     }
 
-    /* Звуковая галерея (Плеер) */
+    /* ЗВУКОВАЯ ГАЛЕРЕЯ */
     .sound {
       margin-top: 40px; background: var(--card); border: 1px solid var(--line);
       border-radius: 28px; padding: 32px; display: grid; grid-template-columns: 1.1fr 1fr;
@@ -194,10 +193,10 @@
     .track-name { font-family: 'Syne', sans-serif; font-size: 24px; font-weight: 700; margin: 4px 0; }
     .track-meta { font-size: 12px; font-family: 'JetBrains Mono', monospace; }
     
-    /* Цифровые волны (Canvas) */
+    /* Холст цифровой волновой ленты */
     #waves {
-      width: 100%; height: 110px; display: block; margin: 16px 0;
-      border-radius: 16px; background: rgba(3, 5, 10, 0.55);
+      width: 100%; height: 115px; display: block; margin: 16px 0;
+      border-radius: 16px; background: rgba(7, 10, 16, 0.6);
       border: 1px solid rgba(255, 255, 255, 0.05);
     }
     .transport { display: flex; gap: 14px; align-items: center; }
@@ -216,13 +215,13 @@
       width: 100%; border: none; border-top: 1px solid var(--line); border-radius: 0;
       padding: 12px 6px; display: flex; align-items: center; gap: 14px; text-align: left;
     }
-    .track[aria-current="true"] { background: rgba(0, 240, 255, 0.06); }
+    .track[aria-current="true"] { background: rgba(48, 219, 244, 0.06); }
     .track .cover { width: 44px; height: 44px; border-radius: 8px; }
     .track b { font-size: 13px; font-weight: 600; display: block; }
     .track small { font-size: 10px; color: var(--muted); display: block; }
     .track .arrow { margin-left: auto; font-size: 14px; font-weight: bold; }
 
-    /* 4 Направления */
+    /* 4 НАПРАВЛЕНИЯ */
     .section-head { margin: 100px 0 32px; display: flex; justify-content: space-between; align-items: flex-end; }
     h2 { font-family: 'Syne', sans-serif; font-size: clamp(32px, 4vw, 48px); font-weight: 800; letter-spacing: -1px; }
     .gallery { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
@@ -231,10 +230,10 @@
       padding: 30px; overflow: hidden; backdrop-filter: blur(16px);
       transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
     }
-    .card:hover { border-color: rgba(0, 240, 255, 0.4); transform: translateY(-4px); }
+    .card:hover { border-color: rgba(48, 219, 244, 0.4); transform: translateY(-4px); }
     .card-art {
       height: 180px; margin: -30px -30px 24px; overflow: hidden; position: relative;
-      background: #090E18;
+      background: #0B111E;
     }
     .card-art img { width: 100%; height: 100%; object-fit: cover; }
     .card h3 { font-family: 'Syne', sans-serif; font-size: 24px; font-weight: 700; margin: 10px 0; }
@@ -243,7 +242,7 @@
     .card li { font-size: 11px; font-family: 'JetBrains Mono', monospace; border: 1px solid var(--line); border-radius: 99px; padding: 4px 12px; color: var(--muted); }
     .card-link { display: flex; justify-content: space-between; font-size: 12px; font-weight: 700; font-family: 'JetBrains Mono', monospace; color: var(--cyan); border-top: 1px solid var(--line); padding-top: 16px; }
 
-    /* 3D Галерея #artworks */
+    /* 3D ГАЛЕРЕЯ #artworks */
     .object-gallery { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
     .object-gallery button {
       border: 1px solid var(--line); border-radius: 24px; overflow: hidden;
@@ -253,7 +252,7 @@
     .object-gallery img { width: 100%; aspect-ratio: 1; object-fit: cover; display: block; }
     .object-gallery span { display: block; padding: 18px; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 16px; }
 
-    /* Бриф */
+    /* БРИФ */
     .brief {
       margin: 100px auto 60px; padding: 44px; background: var(--card);
       border: 1px solid var(--line); border-radius: 32px; display: grid;
@@ -262,12 +261,12 @@
     .brief label { display: block; font-size: 12px; font-family: 'JetBrains Mono', monospace; color: var(--muted); margin-bottom: 14px; }
     .brief input, .brief textarea, .brief select {
       width: 100%; display: block; padding: 12px 16px; margin-top: 6px;
-      background: rgba(3, 5, 9, 0.75); border: 1px solid var(--line);
+      background: rgba(7, 10, 16, 0.8); border: 1px solid var(--line);
       border-radius: 12px; color: var(--ink);
     }
     .brief textarea { resize: vertical; min-height: 100px; }
 
-    /* Подвал */
+    /* ПОДВАЛ */
     footer { border-top: 1px solid var(--line); padding: 36px 0; font-size: 12px; font-family: 'JetBrains Mono', monospace; color: var(--muted); }
     footer .wrap { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; }
     .dev-badge {
@@ -277,17 +276,17 @@
     .dev-badge .live-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--cyan); animation: pulse 2s infinite; }
     @keyframes pulse { 0% { opacity: 0.4; } 50% { opacity: 1; } 100% { opacity: 0.4; } }
 
-    /* Кнопка наверх */
+    /* КНОПКА «НАВЕРХ» */
     #back-to-top {
       position: fixed; bottom: 32px; right: 32px; z-index: 50; width: 46px; height: 46px;
       border-radius: 50%; background: var(--panel); border: 1px solid var(--cyan); color: var(--cyan);
       display: grid; place-items: center; opacity: 0; pointer-events: none; transform: translateY(15px);
-      transition: all 0.3s; box-shadow: 0 0 20px rgba(0, 240, 255, 0.25);
+      transition: all 0.3s; box-shadow: 0 0 20px rgba(48, 219, 244, 0.25);
     }
     #back-to-top.show { opacity: 1; pointer-events: auto; transform: translateY(0); }
     #back-to-top:hover { background: var(--cyan); color: #000; transform: scale(1.1); }
 
-    /* Доступность */
+    /* ДОСТУПНОСТЬ */
     dialog {
       width: min(420px, calc(100% - 32px)); background: #070B14; color: var(--ink);
       border: 1px solid var(--line); border-radius: 24px; padding: 28px; margin: auto;
@@ -317,7 +316,7 @@
   <div class="glow-cyan"></div>
   <div class="glow-magenta"></div>
 
-  <!-- СКРЫТЫЙ ТЕГ ДЛЯ ФОНОВОГО ТРЕКА В ШАПКЕ -->
+  <!-- ТЕГ ДЛЯ ФОНОВОГО ТРЕКА В ШАПКЕ -->
   <audio id="ambient-audio" loop preload="none" src="assets/audio/Infinite%20Creative%20Universe_v2.mp3"></audio>
 
   <!-- ШАПКА -->
@@ -343,7 +342,7 @@
           <button data-lang="en" aria-pressed="false">EN</button>
         </div>
 
-        <!-- ДИНАМИК С УМНОЙ ПОДСКАЗКОЙ -->
+        <!-- КНОПКА ДИНАМИКА В ШАПКЕ С ПОДСКАЗКОЙ -->
         <div class="ambient-wrapper">
           <div id="smart-hint" class="smart-hint">✦ Включить атмосферу</div>
           <button id="ambient-btn" class="ambient-btn" title="Фоновый саундтрек: Infinite Creative Universe" aria-label="Включить фоновый звук">
@@ -397,11 +396,11 @@
             <div>
               <div class="eyebrow" data-t="soundLab">Звуковая лаборатория</div>
               <h2 class="track-name" id="title">Creative Pulse</h2>
-              <div class="track-meta" id="genre" style="color: #00F0FF;">Электроника / Творческий импульс</div>
+              <div class="track-meta" id="genre" style="color: #30DBF4;">Электроника / Творческий импульс</div>
             </div>
           </div>
 
-          <!-- Канвас индивидуальных цифровых световых волн -->
+          <!-- Металлическая рельефная волновая лента (Canvas) -->
           <canvas id="waves"></canvas>
 
           <div class="transport">
@@ -455,15 +454,15 @@
       </div>
       <div class="object-gallery">
         <button data-model="0">
-          <img src="assets/images/gallery/liquid-chrome.png" alt="Liquid Chrome" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%23080C14%22/><text x=%2250%22 y=%2250%22 fill=%22%2300F0FF%22 font-size=%228%22 text-anchor=%22middle%22>Liquid Chrome</text></svg>'">
+          <img src="assets/images/gallery/liquid-chrome.png" alt="Liquid Chrome" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%23080C14%22/><text x=%2250%22 y=%2250%22 fill=%22%2330DBF4%22 font-size=%228%22 text-anchor=%22middle%22>Liquid Chrome</text></svg>'">
           <span>Liquid Chrome</span>
         </button>
         <button data-model="1">
-          <img src="assets/images/gallery/quantum-crystal.png" alt="Quantum Crystal" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%23080C14%22/><text x=%2250%22 y=%2250%22 fill=%22%238B5CF6%22 font-size=%228%22 text-anchor=%22middle%22>Quantum Crystal</text></svg>'">
+          <img src="assets/images/gallery/quantum-crystal.png" alt="Quantum Crystal" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%23080C14%22/><text x=%2250%22 y=%2250%22 fill=%22%239B67FF%22 font-size=%228%22 text-anchor=%22middle%22>Quantum Crystal</text></svg>'">
           <span>Quantum Crystal</span>
         </button>
         <button data-model="2">
-          <img src="assets/images/gallery/prism-shift.png" alt="Prism Shift" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%23080C14%22/><text x=%2250%22 y=%2250%22 fill=%22%23FF007A%22 font-size=%228%22 text-anchor=%22middle%22>Prism Shift</text></svg>'">
+          <img src="assets/images/gallery/prism-shift.png" alt="Prism Shift" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%23080C14%22/><text x=%2250%22 y=%2250%22 fill=%22%23EF48CC%22 font-size=%228%22 text-anchor=%22middle%22>Prism Shift</text></svg>'">
           <span>Prism Shift</span>
         </button>
       </div>
@@ -509,7 +508,7 @@
   <!-- КНОПКА «НАВЕРХ» -->
   <button id="back-to-top" aria-label="Наверх">↑</button>
 
-  <!-- ОКНО ДОСТУПНОСТИ -->
+  <!-- НАСТРОЙКИ ДОСТУПНОСТИ -->
   <dialog id="settings">
     <button class="close-btn icon-btn" id="closeSettings">✕</button>
     <h3 style="font-family:'Syne',sans-serif; font-size:20px; margin-bottom:16px;">Доступность</h3>
@@ -602,14 +601,14 @@
 
     let currentLang = 'ru';
 
-    // 4 ТРЕКА И ИХ ИНДИВИДУАЛЬНЫЙ СТИЛЬ ЗВУКОВОЙ ДОРОЖКИ (ПО ВАШЕМУ РЕФЕРЕНСУ 4)
+    // БАЗА ТРЕКОВ СОГЛАСНО РЕНДЕРУ (СЛАЙД 06)
     const tracks = [
       { 
         title: 'Creative Pulse', 
         file: 'creative-pulse', 
         genre: 'Электроника / Творческий импульс',
         style: 'pulse',
-        accent: '#00F0FF'
+        accent: '#30DBF4'
       },
       { 
         title: 'Neural Steppe', 
@@ -623,7 +622,7 @@
         file: 'digital-rebellion', 
         genre: 'Альтернативная электроника / Энергия',
         style: 'rebellion',
-        accent: '#C084FC'
+        accent: '#EF48CC'
       },
       { 
         title: 'Beyond the Code', 
@@ -652,7 +651,6 @@
     const smartHint = document.getElementById('smart-hint');
     let isAmbientPlaying = false;
 
-    // Автоматический показ деликатной подсказки через 2.5 сек на 5 сек
     setTimeout(() => {
       if (!isAmbientPlaying && smartHint) {
         smartHint.classList.add('show');
@@ -709,7 +707,7 @@
       cardsCont.innerHTML = t.names.map((name, i) => `
         <article class="card">
           <div class="card-art">
-            <img src="assets/images/studio/${studioImgs[i]}.png" alt="${name}" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%23070B14%22/><text x=%2250%22 y=%2250%22 fill=%22%2300F0FF%22 font-size=%228%22 text-anchor=%22middle%22>${name}</text></svg>'">
+            <img src="assets/images/studio/${studioImgs[i]}.png" alt="${name}" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%23070B14%22/><text x=%2250%22 y=%2250%22 fill=%22%2330DBF4%22 font-size=%228%22 text-anchor=%22middle%22>${name}</text></svg>'">
           </div>
           <span class="eyebrow">0${i+1} / CREATIVEART</span>
           <h3>${name}</h3>
@@ -731,7 +729,7 @@
       container.innerHTML = tracks.map((tr, i) => `
         <button class="track" data-index="${i}" aria-current="${i === currentTrack}">
           <div class="cover">
-            <img src="assets/images/music/${tr.file}.png" alt="${tr.title}" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%23080C14%22/><text x=%2250%22 y=%2250%22 fill=%22%2300F0FF%22 font-size=%227%22 text-anchor=%22middle%22>${tr.title}</text></svg>'">
+            <img src="assets/images/music/${tr.file}.png" alt="${tr.title}" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%23070A10%22/><text x=%2250%22 y=%2250%22 fill=%22%2330DBF4%22 font-size=%227%22 text-anchor=%22middle%22>${tr.title}</text></svg>'">
           </div>
           <div>
             <b style="${i === currentTrack ? 'color:' + tr.accent : ''}">${tr.title}</b>
@@ -768,7 +766,7 @@
       titleEl.textContent = tr.title;
       genreEl.textContent = tr.genre;
       genreEl.style.color = tr.accent;
-      coverEl.innerHTML = `<img src="assets/images/music/${tr.file}.png" alt="${tr.title}" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%23000%22/><text x=%2250%22 y=%2250%22 fill=%22%2300F0FF%22 font-size=%227%22 text-anchor=%22middle%22>${tr.title}</text></svg>'">`;
+      coverEl.innerHTML = `<img src="assets/images/music/${tr.file}.png" alt="${tr.title}" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%23000%22/><text x=%2250%22 y=%2250%22 fill=%22%2330DBF4%22 font-size=%227%22 text-anchor=%22middle%22>${tr.title}</text></svg>'">`;
       renderPlaylist();
 
       if (autoPlay) {
@@ -836,7 +834,7 @@
       return `${m}:${sec < 10 ? '0' : ''}${sec}`;
     }
 
-    // НАСТОЯЩИЕ ЦИФРОВЫЕ СВЕТОВЫЕ ВОЛНЫ (DIGITAL RIBBON FLOW)
+    // РЕЛЬЕФНАЯ МЕТАЛЛИЧЕСКАЯ ВОЛНОВАЯ ЛЕНТА (WAVY METALLIC RIBBON)
     const waveCanvas = document.getElementById('waves');
     const wctx = waveCanvas.getContext('2d');
 
@@ -853,106 +851,115 @@
         energy = dataArray.reduce((acc, v) => acc + v, 0) / dataArray.length / 255;
       }
 
-      const time = Date.now() * 0.0025;
+      const time = Date.now() * 0.0022;
 
-      // 1. CREATIVE PULSE — Неоновые переплетающиеся ленты (Cyan / Magenta Glow)
+      // 1. CREATIVE PULSE — Объемная неоновая металлическая лента (Cyan / Violet / Magenta)
       if (tr.style === 'pulse') {
-        const grad = wctx.createLinearGradient(0, 0, w, 0);
-        grad.addColorStop(0, '#00F0FF'); grad.addColorStop(0.5, '#8B5CF6'); grad.addColorStop(1, '#FF007A');
-        
-        wctx.shadowColor = '#00F0FF';
-        wctx.shadowBlur = 12;
+        const ribbonGrad = wctx.createLinearGradient(0, 0, w, 0);
+        ribbonGrad.addColorStop(0, '#30DBF4'); ribbonGrad.addColorStop(0.5, '#9B67FF'); ribbonGrad.addColorStop(1, '#EF48CC');
 
-        for (let j = 0; j < 5; j++) {
-          wctx.beginPath();
-          const layerPhase = j * 0.65;
-          for (let x = 0; x <= w; x += 4) {
-            const u = x / w;
-            const envelope = Math.sin(u * Math.PI); // затухание по краям
-            const freqVal = dataArray && !audio.paused ? (dataArray[Math.floor(u * 40)] / 255) : 0.15;
-            const amp = (10 + freqVal * 38) * envelope;
-            const y = h * 0.5 + Math.sin(u * 14 + time + layerPhase) * amp;
-            if (x === 0) wctx.moveTo(x, y); else wctx.lineTo(x, y);
-          }
-          wctx.strokeStyle = grad;
-          wctx.globalAlpha = 0.35 + j * 0.15;
-          wctx.lineWidth = 2.2;
-          wctx.stroke();
+        // Теневая нижняя подложка
+        wctx.beginPath();
+        for (let x = 0; x <= w; x += 4) {
+          const u = x / w;
+          const env = Math.sin(u * Math.PI);
+          const freq = dataArray && !audio.paused ? (dataArray[Math.floor(u * 32)] / 255) : 0.16;
+          const amp = (12 + freq * 38) * env;
+          const y = h * 0.54 + Math.sin(u * 12 + time) * amp;
+          if (x === 0) wctx.moveTo(x, y); else wctx.lineTo(x, y);
         }
+        wctx.strokeStyle = 'rgba(155, 103, 255, 0.35)';
+        wctx.lineWidth = 10;
+        wctx.stroke();
+
+        // Основное светящееся хромированное ребро
+        wctx.shadowColor = '#30DBF4';
+        wctx.shadowBlur = 15;
+        wctx.beginPath();
+        for (let x = 0; x <= w; x += 3) {
+          const u = x / w;
+          const env = Math.sin(u * Math.PI);
+          const freq = dataArray && !audio.paused ? (dataArray[Math.floor(u * 32)] / 255) : 0.16;
+          const amp = (12 + freq * 38) * env;
+          const y = h * 0.5 + Math.sin(u * 12 + time) * amp;
+          if (x === 0) wctx.moveTo(x, y); else wctx.lineTo(x, y);
+        }
+        wctx.strokeStyle = ribbonGrad;
+        wctx.lineWidth = 3.5;
+        wctx.stroke();
         wctx.shadowBlur = 0;
       }
 
-      // 2. NEURAL STEPPE — Плавные лазурные и янтарные дюны-волны
+      // 2. NEURAL STEPPE — Двойные золотые и лазурные дюны
       else if (tr.style === 'steppe') {
-        for (let j = 0; j < 6; j++) {
+        for (let j = 0; j < 5; j++) {
           wctx.beginPath();
           const isAmber = j % 2 === 0;
-          wctx.strokeStyle = isAmber ? '#F59E0B' : '#00F0FF';
-          wctx.shadowColor = isAmber ? '#F59E0B' : '#00F0FF';
+          wctx.strokeStyle = isAmber ? '#F59E0B' : '#30DBF4';
+          wctx.shadowColor = isAmber ? '#F59E0B' : '#30DBF4';
           wctx.shadowBlur = 10;
           
           for (let x = 0; x <= w; x += 4) {
             const u = x / w;
-            const envelope = Math.sin(u * Math.PI);
-            const freqVal = dataArray && !audio.paused ? (dataArray[Math.floor(u * 32)] / 255) : 0.18;
-            const amp = (12 + freqVal * 42) * envelope;
-            const y = h * 0.5 + Math.cos(u * 11 + time * 0.8 + j * 0.8) * amp;
+            const env = Math.sin(u * Math.PI);
+            const freq = dataArray && !audio.paused ? (dataArray[Math.floor(u * 28)] / 255) : 0.18;
+            const amp = (14 + freq * 40) * env;
+            const y = h * 0.5 + Math.cos(u * 9 + time * 0.8 + j * 0.85) * amp;
             if (x === 0) wctx.moveTo(x, y); else wctx.lineTo(x, y);
           }
-          wctx.globalAlpha = 0.45 + (j / 12);
-          wctx.lineWidth = 2.0;
+          wctx.globalAlpha = 0.45 + (j / 10);
+          wctx.lineWidth = 2.4;
           wctx.stroke();
           wctx.shadowBlur = 0;
         }
       }
 
-      // 3. DIGITAL REBELLION — Неоновые высокочастотные интерференционные волны (Magenta / Violet)
+      // 3. DIGITAL REBELLION — Острый цифровой пиковый спектр (Neon Magenta / Violet)
       else if (tr.style === 'rebellion') {
-        wctx.shadowColor = '#FF007A';
-        wctx.shadowBlur = 14;
-
+        wctx.shadowColor = '#EF48CC';
+        wctx.shadowBlur = 16;
         const grad = wctx.createLinearGradient(0, 0, w, 0);
-        grad.addColorStop(0, '#8B5CF6'); grad.addColorStop(0.5, '#FF007A'); grad.addColorStop(1, '#C084FC');
+        grad.addColorStop(0, '#9B67FF'); grad.addColorStop(0.5, '#EF48CC'); grad.addColorStop(1, '#30DBF4');
 
-        for (let j = 0; j < 4; j++) {
+        for (let j = 0; j < 3; j++) {
           wctx.beginPath();
           for (let x = 0; x <= w; x += 3) {
             const u = x / w;
-            const envelope = Math.sin(u * Math.PI);
-            const freqVal = dataArray && !audio.paused ? (dataArray[Math.floor(u * 50)] / 255) : 0.22;
-            const fastNoise = Math.sin(u * 38 + time * 3 + j) * 4;
-            const amp = (14 + freqVal * 44) * envelope + fastNoise;
-            const y = h * 0.5 + Math.sin(u * 18 + time * 1.5 + j * 1.1) * amp;
+            const env = Math.sin(u * Math.PI);
+            const freq = dataArray && !audio.paused ? (dataArray[Math.floor(u * 48)] / 255) : 0.20;
+            const fastNoise = Math.sin(u * 32 + time * 2.5 + j) * 4;
+            const amp = (14 + freq * 42) * env + fastNoise;
+            const y = h * 0.5 + Math.sin(u * 16 + time * 1.4 + j * 1.2) * amp;
             if (x === 0) wctx.moveTo(x, y); else wctx.lineTo(x, y);
           }
           wctx.strokeStyle = grad;
-          wctx.globalAlpha = 0.4 + j * 0.2;
-          wctx.lineWidth = 2.2;
+          wctx.globalAlpha = 0.5 + j * 0.22;
+          wctx.lineWidth = 2.4;
           wctx.stroke();
         }
         wctx.shadowBlur = 0;
       }
 
-      // 4. BEYOND THE CODE — Глубокие медленные космические дуги Electric Blue
+      // 4. BEYOND THE CODE — Космические горизонты Electric Blue
       else if (tr.style === 'space') {
         const grad = wctx.createLinearGradient(0, 0, w, 0);
-        grad.addColorStop(0, '#1E40AF'); grad.addColorStop(0.5, '#00F0FF'); grad.addColorStop(1, '#3B82F6');
-        wctx.shadowColor = '#00F0FF';
-        wctx.shadowBlur = 16;
+        grad.addColorStop(0, '#1E40AF'); grad.addColorStop(0.5, '#30DBF4'); grad.addColorStop(1, '#3B82F6');
+        wctx.shadowColor = '#30DBF4';
+        wctx.shadowBlur = 18;
 
         for (let j = 0; j < 4; j++) {
           wctx.beginPath();
           for (let x = 0; x <= w; x += 4) {
             const u = x / w;
-            const envelope = Math.sin(u * Math.PI);
-            const freqVal = dataArray && !audio.paused ? (dataArray[Math.floor(u * 20)] / 255) : 0.12;
-            const amp = (10 + freqVal * 30) * envelope;
-            const y = h * 0.5 + Math.sin(u * 8 + time * 0.6 + j * 1.4) * amp;
+            const env = Math.sin(u * Math.PI);
+            const freq = dataArray && !audio.paused ? (dataArray[Math.floor(u * 18)] / 255) : 0.14;
+            const amp = (10 + freq * 32) * env;
+            const y = h * 0.5 + Math.sin(u * 7 + time * 0.65 + j * 1.4) * amp;
             if (x === 0) wctx.moveTo(x, y); else wctx.lineTo(x, y);
           }
           wctx.strokeStyle = grad;
           wctx.globalAlpha = 0.45 + j * 0.18;
-          wctx.lineWidth = 2.6;
+          wctx.lineWidth = 2.8;
           wctx.stroke();
         }
         wctx.shadowBlur = 0;
@@ -960,7 +967,7 @@
     }
     drawCustomWave();
 
-    // 3D СЦЕНА THREE.JS С ПОДДЕРЖКОЙ GLB И РЕЗЕРВНЫМ ВЫСОКОТОЧНЫМ КРИСТАЛЛОМ
+    // 3D СЦЕНА THREE.JS СОГЛАСНО ПРЕЗЕНТАЦИИ (СЛАЙД 04 И 05)
     const container = document.getElementById('scene-container');
     const sceneCanvas = document.getElementById('sculpture');
     const scene = new THREE.Scene();
@@ -973,11 +980,11 @@
     const ambLight = new THREE.AmbientLight(0xffffff, 0.95);
     scene.add(ambLight);
 
-    const keyCyan = new THREE.PointLight(0x00F0FF, 5.0, 60);
+    const keyCyan = new THREE.PointLight(0x30DBF4, 5.0, 60);
     keyCyan.position.set(6, 6, 8);
     scene.add(keyCyan);
 
-    const keyMagenta = new THREE.PointLight(0xFF007A, 5.0, 60);
+    const keyMagenta = new THREE.PointLight(0xEF48CC, 5.0, 60);
     keyMagenta.position.set(-6, -4, 8);
     scene.add(keyMagenta);
 
@@ -988,18 +995,18 @@
     const masterGroup = new THREE.Group();
     scene.add(masterGroup);
 
-    // Хромированный неоновый постамент
+    // Хромированный неоновый постамент (как на слайдах 01, 04, 05)
     const baseGroup = new THREE.Group();
     const baseDisk = new THREE.Mesh(
       new THREE.CylinderGeometry(2.3, 2.5, 0.25, 48),
-      new THREE.MeshStandardMaterial({ color: 0x0B0F19, metalness: 0.95, roughness: 0.15 })
+      new THREE.MeshStandardMaterial({ color: 0x070A10, metalness: 0.95, roughness: 0.15 })
     );
     baseDisk.position.y = -2.1;
     baseGroup.add(baseDisk);
 
     const baseRing = new THREE.Mesh(
       new THREE.TorusGeometry(2.35, 0.04, 16, 64),
-      new THREE.MeshBasicMaterial({ color: 0x00F0FF })
+      new THREE.MeshBasicMaterial({ color: 0x30DBF4 })
     );
     baseRing.rotation.x = Math.PI / 2;
     baseRing.position.y = -2.0;
@@ -1009,15 +1016,13 @@
     const artworkGroup = new THREE.Group();
     masterGroup.add(artworkGroup);
 
-    const gltfLoader = new THREE.GLTFLoader();
-    const glbFiles = ['liquid-chrome.glb', 'quantum-crystal.glb', 'prism-shift.glb'];
     let currentArtMesh = null;
     let orbitRing1 = null, orbitRing2 = null;
     let floatingBubbles = [];
 
-    // Материалы
+    // Премиальные материалы PBR
     const chromeCrystalMat = new THREE.MeshPhysicalMaterial({
-      color: 0x00F0FF,
+      color: 0x30DBF4,
       emissive: 0x040814,
       metalness: 0.92,
       roughness: 0.06,
@@ -1027,48 +1032,23 @@
     });
 
     const innerCoreMat = new THREE.MeshBasicMaterial({
-      color: 0xFF007A,
+      color: 0xEF48CC,
       wireframe: true,
       transparent: true,
       opacity: 0.65
     });
 
-    const orbitMatCyan = new THREE.MeshBasicMaterial({ color: 0x00F0FF, transparent: true, opacity: 0.85 });
-    const orbitMatPink = new THREE.MeshBasicMaterial({ color: 0xFF007A, transparent: true, opacity: 0.85 });
+    const orbitMatCyan = new THREE.MeshBasicMaterial({ color: 0x30DBF4, transparent: true, opacity: 0.85 });
+    const orbitMatPink = new THREE.MeshBasicMaterial({ color: 0xEF48CC, transparent: true, opacity: 0.85 });
     const bubbleMat = new THREE.MeshStandardMaterial({ color: 0xFFFFFF, metalness: 0.95, roughness: 0.05 });
 
-    function loadOrBuildModel(type) {
+    function buildModel(type) {
       while (artworkGroup.children.length > 0) {
         artworkGroup.remove(artworkGroup.children[0]);
       }
       floatingBubbles = [];
 
-      const glbPath = `assets/models/${glbFiles[type]}`;
-
-      // Попытка загрузить реальный файл GLB с GitHub
-      gltfLoader.load(glbPath, (gltf) => {
-        const root = gltf.scene;
-        const box = new THREE.Box3().setFromObject(root);
-        const center = box.getCenter(new THREE.Vector3());
-        const size = box.getSize(new THREE.Vector3());
-        const maxDim = Math.max(size.x, size.y, size.z);
-        root.position.sub(center);
-        root.scale.setScalar(3.2 / maxDim);
-        artworkGroup.add(root);
-        currentArtMesh = root;
-      }, undefined, () => {
-        // Если файла GLB нет — строим кристалл Three.js (по референсам)
-        buildProceduralModel(type);
-      });
-
-      document.querySelectorAll('[data-model]').forEach(btn => {
-        btn.setAttribute('aria-pressed', Number(btn.dataset.model) === type);
-      });
-      const names = ['01 LIQUID CHROME', '02 QUANTUM CRYSTAL', '03 PRISM SHIFT'];
-      document.getElementById('model-caption').textContent = `SCULPTURE // ${names[type]}`;
-    }
-
-    function buildProceduralModel(type) {
+      // 1. LIQUID CHROME (Хромированные ленты + алмаз + сферы, Слайд 01 и 04)
       if (type === 0) {
         const crystalGeo = new THREE.OctahedronGeometry(1.9, 0);
         crystalGeo.scale(1, 1.45, 1);
@@ -1095,7 +1075,9 @@
           artworkGroup.add(sphere);
           floatingBubbles.push(sphere);
         }
-      } else if (type === 1) {
+      }
+      // 2. QUANTUM CRYSTAL (Ступенчатая друза кристаллов со спиралью, Слайд 02 и 05)
+      else if (type === 1) {
         currentArtMesh = new THREE.Group();
         const mainCone = new THREE.Mesh(new THREE.ConeGeometry(0.9, 3.2, 5), chromeCrystalMat);
         mainCone.position.y = 0.2;
@@ -1119,21 +1101,29 @@
           artworkGroup.add(sphere);
           floatingBubbles.push(sphere);
         }
-      } else {
+      }
+      // 3. PRISM SHIFT (Спектральная призма, Слайд 05)
+      else {
         const starGeo = new THREE.IcosahedronGeometry(1.85, 0);
-        currentArtMesh = new THREE.Mesh(starGeo, new THREE.MeshPhysicalMaterial({ color: 0x8B5CF6, metalness: 0.85, roughness: 0.12, clearcoat: 1.0, flatShading: true }));
+        currentArtMesh = new THREE.Mesh(starGeo, new THREE.MeshPhysicalMaterial({ color: 0x9B67FF, metalness: 0.85, roughness: 0.12, clearcoat: 1.0, flatShading: true }));
         artworkGroup.add(currentArtMesh);
 
-        const wire = new THREE.Mesh(new THREE.IcosahedronGeometry(2.35, 1), new THREE.MeshBasicMaterial({ color: 0x00F0FF, wireframe: true, opacity: 0.35, transparent: true }));
+        const wire = new THREE.Mesh(new THREE.IcosahedronGeometry(2.35, 1), new THREE.MeshBasicMaterial({ color: 0x30DBF4, wireframe: true, opacity: 0.35, transparent: true }));
         currentArtMesh.add(wire);
 
         orbitRing1 = new THREE.Mesh(new THREE.TorusGeometry(2.7, 0.04, 16, 80), orbitMatPink);
         orbitRing1.rotation.x = Math.PI / 2.8;
         artworkGroup.add(orbitRing1);
       }
+
+      document.querySelectorAll('[data-model]').forEach(btn => {
+        btn.setAttribute('aria-pressed', Number(btn.dataset.model) === type);
+      });
+      const names = ['01 LIQUID CHROME', '02 QUANTUM CRYSTAL', '03 PRISM SHIFT'];
+      document.getElementById('model-caption').textContent = `SCULPTURE // ${names[type]}`;
     }
 
-    loadOrBuildModel(0);
+    buildModel(0);
 
     function resize3D() {
       const r = container.getBoundingClientRect();
@@ -1161,7 +1151,7 @@
     document.querySelectorAll('[data-model]').forEach(b => {
       b.addEventListener('click', () => {
         const id = Number(b.dataset.model);
-        loadOrBuildModel(id);
+        buildModel(id);
       });
     });
 
@@ -1195,17 +1185,17 @@
     }
     animate3D();
 
-    // Языковые переключатели
+    // ЯЗЫКИ
     document.querySelectorAll('[data-lang]').forEach(b => {
       b.addEventListener('click', () => applyLocalization(b.dataset.lang));
     });
 
-    // Меню
+    // МОБИЛЬНОЕ МЕНЮ
     document.getElementById('menu').addEventListener('click', () => {
       document.getElementById('nav').classList.toggle('open');
     });
 
-    // Бриф
+    // БРИФ
     document.getElementById('briefForm').addEventListener('submit', e => {
       e.preventDefault();
       const fd = new FormData(e.target);
@@ -1222,7 +1212,7 @@
       document.getElementById('briefStatus').textContent = translations[currentLang].saved;
     });
 
-    // Доступность
+    // ДОСТУПНОСТЬ
     const modal = document.getElementById('settings');
     document.getElementById('access').addEventListener('click', () => modal.showModal());
     document.getElementById('closeSettings').addEventListener('click', () => modal.close());
@@ -1230,7 +1220,7 @@
     document.getElementById('chk-contrast').addEventListener('change', e => document.body.classList.toggle('contrast', e.target.checked));
     document.getElementById('chk-calm').addEventListener('change', e => document.body.classList.toggle('calm', e.target.checked));
 
-    // Кнопка «Наверх»
+    // КНОПКА «НАВЕРХ»
     const backBtn = document.getElementById('back-to-top');
     window.addEventListener('scroll', () => {
       if (window.scrollY > 350) backBtn.classList.add('show');
@@ -1238,7 +1228,7 @@
     });
     backBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 
-    // Старт
+    // СТАРТ
     applyLocalization('ru');
     loadTrack(0, false);
   </script>
