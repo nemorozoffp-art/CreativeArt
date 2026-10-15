@@ -14,7 +14,6 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
   <style>
-    /* ЦВЕТОВАЯ СИСТЕМА ИЗ ПРЕЗЕНТАЦИИ (СЛАЙД 03) */
     :root {
       --bg: #070A10;             /* Deep Space */
       --panel: #101724;          /* Graphite */
@@ -41,7 +40,6 @@
       position: relative;
     }
 
-    /* Фоновые мягкие неоновые туманности */
     .glow-cyan {
       position: fixed; top: -140px; left: -140px; width: 550px; height: 550px;
       background: radial-gradient(circle, rgba(48, 219, 244, 0.12) 0%, transparent 70%);
@@ -92,7 +90,6 @@
     .langs button { border: 0; padding: 5px 10px; font-size: 11px; font-weight: 700; font-family: 'JetBrains Mono', monospace; }
     .langs [aria-pressed="true"] { background: var(--cyan); color: #000; border-radius: 99px; }
     
-    /* Кнопка фонового саундтрека */
     .ambient-wrapper { position: relative; display: flex; align-items: center; }
     .ambient-btn {
       width: 38px; height: 38px; display: grid; place-items: center; padding: 0;
@@ -106,7 +103,6 @@
     }
     .ambient-btn:hover { border-color: var(--cyan); color: var(--ink); }
 
-    /* Умная подсказка */
     .smart-hint {
       position: absolute; right: calc(100% + 12px); top: 50%; transform: translateY(-50%);
       background: rgba(16, 23, 36, 0.9); backdrop-filter: blur(14px);
@@ -184,7 +180,7 @@
     /* ЗВУКОВАЯ ГАЛЕРЕЯ */
     .sound {
       margin-top: 40px; background: var(--card); border: 1px solid var(--line);
-      border-radius: 28px; padding: 32px; display: grid; grid-template-columns: 1.1fr 1fr;
+      border-radius: 28px; padding: 32px; display: grid; grid-template-columns: 1.15fr 1fr;
       gap: 36px; backdrop-filter: blur(20px); box-shadow: 0 20px 40px rgba(0,0,0,0.4);
     }
     .now { display: flex; gap: 20px; align-items: center; }
@@ -193,11 +189,11 @@
     .track-name { font-family: 'Syne', sans-serif; font-size: 24px; font-weight: 700; margin: 4px 0; }
     .track-meta { font-size: 12px; font-family: 'JetBrains Mono', monospace; }
     
-    /* Холст цифровой волновой ленты */
+    /* Холст цифровой волновой ленты увеличен для объёма */
     #waves {
-      width: 100%; height: 115px; display: block; margin: 16px 0;
-      border-radius: 16px; background: rgba(7, 10, 16, 0.6);
-      border: 1px solid rgba(255, 255, 255, 0.05);
+      width: 100%; height: 135px; display: block; margin: 16px 0;
+      border-radius: 18px; background: rgba(5, 8, 14, 0.75);
+      border: 1px solid rgba(255, 255, 255, 0.06);
     }
     .transport { display: flex; gap: 14px; align-items: center; }
     .play {
@@ -242,7 +238,7 @@
     .card li { font-size: 11px; font-family: 'JetBrains Mono', monospace; border: 1px solid var(--line); border-radius: 99px; padding: 4px 12px; color: var(--muted); }
     .card-link { display: flex; justify-content: space-between; font-size: 12px; font-weight: 700; font-family: 'JetBrains Mono', monospace; color: var(--cyan); border-top: 1px solid var(--line); padding-top: 16px; }
 
-    /* 3D ГАЛЕРЕЯ #artworks */
+    /* 3D ГАЛЕРЕЯ */
     .object-gallery { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
     .object-gallery button {
       border: 1px solid var(--line); border-radius: 24px; overflow: hidden;
@@ -316,7 +312,7 @@
   <div class="glow-cyan"></div>
   <div class="glow-magenta"></div>
 
-  <!-- ТЕГ ДЛЯ ФОНОВОГО ТРЕКА В ШАПКЕ -->
+  <!-- ФОНОВЫЙ САУНДТРЕК В ШАПКЕ -->
   <audio id="ambient-audio" loop preload="none" src="assets/audio/Infinite%20Creative%20Universe_v2.mp3"></audio>
 
   <!-- ШАПКА -->
@@ -342,7 +338,6 @@
           <button data-lang="en" aria-pressed="false">EN</button>
         </div>
 
-        <!-- КНОПКА ДИНАМИКА В ШАПКЕ С ПОДСКАЗКОЙ -->
         <div class="ambient-wrapper">
           <div id="smart-hint" class="smart-hint">✦ Включить атмосферу</div>
           <button id="ambient-btn" class="ambient-btn" title="Фоновый саундтрек: Infinite Creative Universe" aria-label="Включить фоновый звук">
@@ -400,7 +395,7 @@
             </div>
           </div>
 
-          <!-- Металлическая рельефная волновая лента (Canvas) -->
+          <!-- КАНВАС ДЛЯ ШИРОКОЙ ОБЪЕМНОЙ ВОЛНОВОЙ ЛЕНТЫ -->
           <canvas id="waves"></canvas>
 
           <div class="transport">
@@ -601,7 +596,7 @@
 
     let currentLang = 'ru';
 
-    // БАЗА ТРЕКОВ СОГЛАСНО РЕНДЕРУ (СЛАЙД 06)
+    // 4 ТРЕКА И ИХ ИНДИВИДУАЛЬНЫЕ СТИЛИ ВОЛН
     const tracks = [
       { 
         title: 'Creative Pulse', 
@@ -644,7 +639,7 @@
     const genreEl = document.getElementById('genre');
     const coverEl = document.getElementById('cover');
 
-    // Фоновый эмбиент в шапке (Infinite Creative Universe)
+    // Фоновый эмбиент в шапке
     const ambientAudio = document.getElementById('ambient-audio');
     const ambientBtn = document.getElementById('ambient-btn');
     const ambientIcon = document.getElementById('ambient-icon');
@@ -834,7 +829,9 @@
       return `${m}:${sec < 10 ? '0' : ''}${sec}`;
     }
 
-    // РЕЛЬЕФНАЯ МЕТАЛЛИЧЕСКАЯ ВОЛНОВАЯ ЛЕНТА (WAVY METALLIC RIBBON)
+    // =========================================================================
+    // ГЕНЕРАТОР ОБЪЕМНЫХ НЕОНОВЫХ ВОЛН (ТОЧНО ПО СТИЛЯМ ИЗ РЕНДЕРА 1-4)
+    // =========================================================================
     const waveCanvas = document.getElementById('waves');
     const wctx = waveCanvas.getContext('2d');
 
@@ -853,121 +850,198 @@
 
       const time = Date.now() * 0.0022;
 
-      // 1. CREATIVE PULSE — Объемная неоновая металлическая лента (Cyan / Violet / Magenta)
+      // -------------------------------------------------------------
+      // 1. CREATIVE PULSE: МНОГОСЛОЙНЫЕ НЕОНОВЫЕ ШЕЛКОВЫЕ ЛЕНТЫ (CYAN / MAGENTA)
+      // -------------------------------------------------------------
       if (tr.style === 'pulse') {
-        const ribbonGrad = wctx.createLinearGradient(0, 0, w, 0);
-        ribbonGrad.addColorStop(0, '#30DBF4'); ribbonGrad.addColorStop(0.5, '#9B67FF'); ribbonGrad.addColorStop(1, '#EF48CC');
+        const layers = [
+          { phase: 0.0, speed: 1.0, colorStart: '#30DBF4', colorEnd: '#9B67FF', width: 22, alpha: 0.45 },
+          { phase: 1.4, speed: 0.8, colorStart: '#9B67FF', colorEnd: '#EF48CC', width: 18, alpha: 0.55 },
+          { phase: 2.8, speed: 1.2, colorStart: '#30DBF4', colorEnd: '#EF48CC', width: 14, alpha: 0.70 }
+        ];
 
-        // Теневая нижняя подложка
-        wctx.beginPath();
-        for (let x = 0; x <= w; x += 4) {
-          const u = x / w;
-          const env = Math.sin(u * Math.PI);
-          const freq = dataArray && !audio.paused ? (dataArray[Math.floor(u * 32)] / 255) : 0.16;
-          const amp = (12 + freq * 38) * env;
-          const y = h * 0.54 + Math.sin(u * 12 + time) * amp;
-          if (x === 0) wctx.moveTo(x, y); else wctx.lineTo(x, y);
-        }
-        wctx.strokeStyle = 'rgba(155, 103, 255, 0.35)';
-        wctx.lineWidth = 10;
-        wctx.stroke();
+        layers.forEach(layer => {
+          const grad = wctx.createLinearGradient(0, 0, w, 0);
+          grad.addColorStop(0, layer.colorStart);
+          grad.addColorStop(1, layer.colorEnd);
 
-        // Основное светящееся хромированное ребро
-        wctx.shadowColor = '#30DBF4';
-        wctx.shadowBlur = 15;
-        wctx.beginPath();
-        for (let x = 0; x <= w; x += 3) {
-          const u = x / w;
-          const env = Math.sin(u * Math.PI);
-          const freq = dataArray && !audio.paused ? (dataArray[Math.floor(u * 32)] / 255) : 0.16;
-          const amp = (12 + freq * 38) * env;
-          const y = h * 0.5 + Math.sin(u * 12 + time) * amp;
-          if (x === 0) wctx.moveTo(x, y); else wctx.lineTo(x, y);
-        }
-        wctx.strokeStyle = ribbonGrad;
-        wctx.lineWidth = 3.5;
-        wctx.stroke();
-        wctx.shadowBlur = 0;
+          const topPoints = [];
+          const botPoints = [];
+          const step = 4;
+
+          for (let x = 0; x <= w; x += step) {
+            const u = x / w;
+            const env = Math.sin(u * Math.PI); // затухание по краям
+            const freq = dataArray && !audio.paused ? (dataArray[Math.floor(u * 32)] / 255) : 0.14;
+            const amp = (16 + freq * 36) * env;
+            const cy = h * 0.5 + Math.sin(u * 10 + time * layer.speed + layer.phase) * amp;
+            const ribbonThick = (layer.width * 0.5) * env;
+
+            topPoints.push({ x, y: cy - ribbonThick });
+            botPoints.push({ x, y: cy + ribbonThick });
+          }
+
+          // Отрисовка объёмной ленты с заполнением
+          wctx.save();
+          wctx.beginPath();
+          topPoints.forEach((p, idx) => { if (idx === 0) wctx.moveTo(p.x, p.y); else wctx.lineTo(p.x, p.y); });
+          for (let idx = botPoints.length - 1; idx >= 0; idx--) { wctx.lineTo(botPoints[idx].x, botPoints[idx].y); }
+          wctx.closePath();
+          wctx.fillStyle = grad;
+          wctx.globalAlpha = layer.alpha * 0.65;
+          wctx.shadowColor = layer.colorStart;
+          wctx.shadowBlur = 18;
+          wctx.fill();
+
+          // Яркое контурное ребро сверху
+          wctx.beginPath();
+          topPoints.forEach((p, idx) => { if (idx === 0) wctx.moveTo(p.x, p.y); else wctx.lineTo(p.x, p.y); });
+          wctx.strokeStyle = '#FFFFFF';
+          wctx.globalAlpha = layer.alpha * 0.9;
+          wctx.lineWidth = 1.5;
+          wctx.stroke();
+          wctx.restore();
+        });
       }
 
-      // 2. NEURAL STEPPE — Двойные золотые и лазурные дюны
+      // -------------------------------------------------------------
+      // 2. NEURAL STEPPE: ПЕСЧАНЫЕ ДЮНЫ И ЛАЗУРЬ (CYAN & GOLD/AMBER)
+      // -------------------------------------------------------------
       else if (tr.style === 'steppe') {
-        for (let j = 0; j < 5; j++) {
-          wctx.beginPath();
-          const isAmber = j % 2 === 0;
-          wctx.strokeStyle = isAmber ? '#F59E0B' : '#30DBF4';
-          wctx.shadowColor = isAmber ? '#F59E0B' : '#30DBF4';
-          wctx.shadowBlur = 10;
-          
-          for (let x = 0; x <= w; x += 4) {
+        const waves = [
+          { color: '#30DBF4', offset: 0, ampMult: 1.0, freq: 7 },
+          { color: '#F59E0B', offset: 1.6, ampMult: 1.15, freq: 8 },
+          { color: '#D97706', offset: 3.2, ampMult: 0.9, freq: 6.5 }
+        ];
+
+        waves.forEach(wv => {
+          const topPoints = [];
+          const botPoints = [];
+          const step = 4;
+
+          for (let x = 0; x <= w; x += step) {
             const u = x / w;
             const env = Math.sin(u * Math.PI);
-            const freq = dataArray && !audio.paused ? (dataArray[Math.floor(u * 28)] / 255) : 0.18;
-            const amp = (14 + freq * 40) * env;
-            const y = h * 0.5 + Math.cos(u * 9 + time * 0.8 + j * 0.85) * amp;
-            if (x === 0) wctx.moveTo(x, y); else wctx.lineTo(x, y);
+            const freq = dataArray && !audio.paused ? (dataArray[Math.floor(u * 28)] / 255) : 0.16;
+            const amp = (18 + freq * 38) * env * wv.ampMult;
+            const cy = h * 0.5 + Math.cos(u * wv.freq + time * 0.85 + wv.offset) * amp;
+            const thickness = (16 * env);
+
+            topPoints.push({ x, y: cy - thickness });
+            botPoints.push({ x, y: cy + thickness });
           }
-          wctx.globalAlpha = 0.45 + (j / 10);
-          wctx.lineWidth = 2.4;
+
+          wctx.save();
+          wctx.beginPath();
+          topPoints.forEach((p, idx) => { if (idx === 0) wctx.moveTo(p.x, p.y); else wctx.lineTo(p.x, p.y); });
+          for (let idx = botPoints.length - 1; idx >= 0; idx--) { wctx.lineTo(botPoints[idx].x, botPoints[idx].y); }
+          wctx.closePath();
+          wctx.fillStyle = wv.color;
+          wctx.globalAlpha = 0.38;
+          wctx.shadowColor = wv.color;
+          wctx.shadowBlur = 16;
+          wctx.fill();
+
+          // Контурная подсветка
+          wctx.beginPath();
+          topPoints.forEach((p, idx) => { if (idx === 0) wctx.moveTo(p.x, p.y); else wctx.lineTo(p.x, p.y); });
+          wctx.strokeStyle = '#FFFFFF';
+          wctx.globalAlpha = 0.85;
+          wctx.lineWidth = 1.8;
           wctx.stroke();
-          wctx.shadowBlur = 0;
-        }
+          wctx.restore();
+        });
       }
 
-      // 3. DIGITAL REBELLION — Острый цифровой пиковый спектр (Neon Magenta / Violet)
+      // -------------------------------------------------------------
+      // 3. DIGITAL REBELLION: ПЛОТНЫЙ НЕОНОВЫЙ ГАРМОНИЧЕСКИЙ СПЕКТР (VIOLET/MAGENTA)[cite: 38]
+      // -------------------------------------------------------------
       else if (tr.style === 'rebellion') {
-        wctx.shadowColor = '#EF48CC';
-        wctx.shadowBlur = 16;
         const grad = wctx.createLinearGradient(0, 0, w, 0);
-        grad.addColorStop(0, '#9B67FF'); grad.addColorStop(0.5, '#EF48CC'); grad.addColorStop(1, '#30DBF4');
+        grad.addColorStop(0, '#9B67FF');
+        grad.addColorStop(0.5, '#EF48CC');
+        grad.addColorStop(1, '#9B67FF');
 
-        for (let j = 0; j < 3; j++) {
-          wctx.beginPath();
-          for (let x = 0; x <= w; x += 3) {
-            const u = x / w;
-            const env = Math.sin(u * Math.PI);
-            const freq = dataArray && !audio.paused ? (dataArray[Math.floor(u * 48)] / 255) : 0.20;
-            const fastNoise = Math.sin(u * 32 + time * 2.5 + j) * 4;
-            const amp = (14 + freq * 42) * env + fastNoise;
-            const y = h * 0.5 + Math.sin(u * 16 + time * 1.4 + j * 1.2) * amp;
-            if (x === 0) wctx.moveTo(x, y); else wctx.lineTo(x, y);
-          }
-          wctx.strokeStyle = grad;
-          wctx.globalAlpha = 0.5 + j * 0.22;
-          wctx.lineWidth = 2.4;
-          wctx.stroke();
+        const barCount = 72;
+        const barWidth = (w / barCount);
+        
+        wctx.save();
+        wctx.shadowColor = '#EF48CC';
+        wctx.shadowBlur = 14;
+
+        for (let i = 0; i < barCount; i++) {
+          const u = i / barCount;
+          const env = Math.sin(u * Math.PI);
+          const raw = dataArray && !audio.paused ? (dataArray[i % 32] / 255) : (Math.sin(u * 20 + time * 3) * 0.25 + 0.35);
+          const hVal = (raw * h * 0.75 + 6) * env;
+          const x = i * barWidth;
+          const y = (h - hVal) / 2;
+
+          wctx.fillStyle = grad;
+          wctx.globalAlpha = 0.8;
+          wctx.fillRect(x + 1, y, barWidth - 2, hVal);
+
+          // Яркие кончики пиков
+          wctx.fillStyle = '#FFFFFF';
+          wctx.fillRect(x + 1, y - 2, barWidth - 2, 2.5);
+          wctx.fillRect(x + 1, y + hVal, barWidth - 2, 2.5);
         }
-        wctx.shadowBlur = 0;
+        wctx.restore();
       }
 
-      // 4. BEYOND THE CODE — Космические горизонты Electric Blue
+      // -------------------------------------------------------------
+      // 4. BEYOND THE CODE: КОСМИЧЕСКИЕ ДУГИ ГОРИЗОНТА (DEEP BLUE / ELECTRIC CYAN)[cite: 38]
+      // -------------------------------------------------------------
       else if (tr.style === 'space') {
         const grad = wctx.createLinearGradient(0, 0, w, 0);
-        grad.addColorStop(0, '#1E40AF'); grad.addColorStop(0.5, '#30DBF4'); grad.addColorStop(1, '#3B82F6');
-        wctx.shadowColor = '#30DBF4';
-        wctx.shadowBlur = 18;
+        grad.addColorStop(0, '#1E3A8A');
+        grad.addColorStop(0.5, '#30DBF4');
+        grad.addColorStop(1, '#3B82F6');
 
         for (let j = 0; j < 4; j++) {
-          wctx.beginPath();
-          for (let x = 0; x <= w; x += 4) {
+          const topPoints = [];
+          const botPoints = [];
+          const step = 4;
+          const offset = j * 1.2;
+
+          for (let x = 0; x <= w; x += step) {
             const u = x / w;
             const env = Math.sin(u * Math.PI);
-            const freq = dataArray && !audio.paused ? (dataArray[Math.floor(u * 18)] / 255) : 0.14;
-            const amp = (10 + freq * 32) * env;
-            const y = h * 0.5 + Math.sin(u * 7 + time * 0.65 + j * 1.4) * amp;
-            if (x === 0) wctx.moveTo(x, y); else wctx.lineTo(x, y);
+            const freq = dataArray && !audio.paused ? (dataArray[Math.floor(u * 16)] / 255) : 0.12;
+            const amp = (12 + freq * 26) * env;
+            const cy = h * 0.5 + Math.sin(u * 6 + time * 0.6 + offset) * amp;
+            const thickness = (14 * env * (1 - j * 0.15));
+
+            topPoints.push({ x, y: cy - thickness });
+            botPoints.push({ x, y: cy + thickness });
           }
-          wctx.strokeStyle = grad;
-          wctx.globalAlpha = 0.45 + j * 0.18;
-          wctx.lineWidth = 2.8;
+
+          wctx.save();
+          wctx.beginPath();
+          topPoints.forEach((p, idx) => { if (idx === 0) wctx.moveTo(p.x, p.y); else wctx.lineTo(p.x, p.y); });
+          for (let idx = botPoints.length - 1; idx >= 0; idx--) { wctx.lineTo(botPoints[idx].x, botPoints[idx].y); }
+          wctx.closePath();
+          wctx.fillStyle = grad;
+          wctx.globalAlpha = 0.32 + (j * 0.12);
+          wctx.shadowColor = '#30DBF4';
+          wctx.shadowBlur = 18;
+          wctx.fill();
+
+          wctx.beginPath();
+          topPoints.forEach((p, idx) => { if (idx === 0) wctx.moveTo(p.x, p.y); else wctx.lineTo(p.x, p.y); });
+          wctx.strokeStyle = '#FFFFFF';
+          wctx.globalAlpha = 0.75;
+          wctx.lineWidth = 1.6;
           wctx.stroke();
+          wctx.restore();
         }
-        wctx.shadowBlur = 0;
       }
     }
     drawCustomWave();
 
-    // 3D СЦЕНА THREE.JS СОГЛАСНО ПРЕЗЕНТАЦИИ (СЛАЙД 04 И 05)
+    // =========================================================================
+    // 3D СЦЕНА THREE.JS[cite: 32, 33]
+    // =========================================================================
     const container = document.getElementById('scene-container');
     const sceneCanvas = document.getElementById('sculpture');
     const scene = new THREE.Scene();
@@ -995,7 +1069,7 @@
     const masterGroup = new THREE.Group();
     scene.add(masterGroup);
 
-    // Хромированный неоновый постамент (как на слайдах 01, 04, 05)
+    // Хромированный неоновый постамент
     const baseGroup = new THREE.Group();
     const baseDisk = new THREE.Mesh(
       new THREE.CylinderGeometry(2.3, 2.5, 0.25, 48),
@@ -1020,7 +1094,6 @@
     let orbitRing1 = null, orbitRing2 = null;
     let floatingBubbles = [];
 
-    // Премиальные материалы PBR
     const chromeCrystalMat = new THREE.MeshPhysicalMaterial({
       color: 0x30DBF4,
       emissive: 0x040814,
@@ -1048,7 +1121,7 @@
       }
       floatingBubbles = [];
 
-      // 1. LIQUID CHROME (Хромированные ленты + алмаз + сферы, Слайд 01 и 04)
+      // 1. LIQUID CHROME
       if (type === 0) {
         const crystalGeo = new THREE.OctahedronGeometry(1.9, 0);
         crystalGeo.scale(1, 1.45, 1);
@@ -1076,7 +1149,7 @@
           floatingBubbles.push(sphere);
         }
       }
-      // 2. QUANTUM CRYSTAL (Ступенчатая друза кристаллов со спиралью, Слайд 02 и 05)
+      // 2. QUANTUM CRYSTAL
       else if (type === 1) {
         currentArtMesh = new THREE.Group();
         const mainCone = new THREE.Mesh(new THREE.ConeGeometry(0.9, 3.2, 5), chromeCrystalMat);
@@ -1102,7 +1175,7 @@
           floatingBubbles.push(sphere);
         }
       }
-      // 3. PRISM SHIFT (Спектральная призма, Слайд 05)
+      // 3. PRISM SHIFT
       else {
         const starGeo = new THREE.IcosahedronGeometry(1.85, 0);
         currentArtMesh = new THREE.Mesh(starGeo, new THREE.MeshPhysicalMaterial({ color: 0x9B67FF, metalness: 0.85, roughness: 0.12, clearcoat: 1.0, flatShading: true }));
